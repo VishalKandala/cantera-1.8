@@ -1,0 +1,4 @@
+rotor.o: rotor.cpp ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h rotor.h
+LineBroadener.o: LineBroadener.cpp ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h LineBroadener.h ../base/ctexceptions.h

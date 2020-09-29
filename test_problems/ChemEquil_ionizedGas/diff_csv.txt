@@ -1,0 +1,30 @@
+
+----------------------------------------------------------
+csvdiff: CSVFile comparison utility program
+         Version $Revision: 432 $
+         Harry K. Moffat Div. 9114 Sandia National Labs
+         
+         First  CSV File = table.csv
+         Second CSV file = table_blessed.csv
+
+         Absolute tol = 1e-19
+         Relative tol = 0.001
+----------------------------------------------------------
+
+Number of Title Lines in each file = 0
+Number of column title lines in each file = 1
+Number of Data rows in both files = 42
+Number of column variables in both files = 13
+Column variable Temperature passed
+Column variable Pressure passed
+Column variable N2 passed
+Column variable O2 passed
+Column variable N passed
+Column variable O passed
+Column variable NO passed
+Column variable NO+ passed
+Column variable Electron passed
+Column variable N+ passed
+Column variable O+ passed
+Column variable N2+ passed
+Column variable O2+ passed

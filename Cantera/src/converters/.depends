@@ -1,0 +1,21 @@
+CKParser.o: CKParser.cpp CKParser.h ckr_defs.h Element.h Species.h \
+ Constituent.h Reaction.h ckr_utils.h RxnSpecies.h writelog.h
+CKReader.o: CKReader.cpp CKParser.h ckr_defs.h Element.h Species.h \
+ Constituent.h Reaction.h ckr_utils.h RxnSpecies.h CKReader.h \
+ thermoFunctions.h writelog.h
+NASA9Parser.o: NASA9Parser.cpp CKParser.h ckr_defs.h Element.h Species.h \
+ Constituent.h Reaction.h ckr_utils.h RxnSpecies.h writelog.h
+Reaction.o: Reaction.cpp Reaction.h ckr_defs.h ckr_utils.h RxnSpecies.h
+Species.o: Species.cpp Species.h ckr_defs.h Constituent.h
+atomicWeightDB.o: atomicWeightDB.cpp
+ck2ct.o: ck2ct.cpp ../base/config.h ../base/../../../config.h CKReader.h \
+ CKParser.h ckr_defs.h Element.h Species.h Constituent.h Reaction.h \
+ ckr_utils.h RxnSpecies.h writelog.h ck2ct.h ../base/stringUtils.h \
+ ../base/ct_defs.h ../base/config.h ../base/ct_defs.h ../base/ctml.h \
+ ../base/xml.h ../base/ctexceptions.h ../base/global.h ../base/Array.h \
+ ../base/utilities.h
+ckr_utils.o: ckr_utils.cpp ckr_utils.h
+thermoFunctions.o: thermoFunctions.cpp thermoFunctions.h Species.h \
+ ckr_defs.h Constituent.h
+writelog.o: writelog.cpp writelog.h Species.h ckr_defs.h Constituent.h \
+ Reaction.h ckr_utils.h RxnSpecies.h

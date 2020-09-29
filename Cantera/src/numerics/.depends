@@ -1,0 +1,43 @@
+DenseMatrix.o: DenseMatrix.cpp ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ctlapack.h ../base/utilities.h \
+ ../base/ct_defs.h DenseMatrix.h ../base/Array.h ../base/ctexceptions.h \
+ ../base/utilities.h ../base/stringUtils.h
+funcs.o: funcs.cpp ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../base/ctexceptions.h ../base/stringUtils.h \
+ ../base/ct_defs.h funcs.h polyfit.h
+Func1.o: Func1.cpp Func1.h ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../base/stringUtils.h ../base/ct_defs.h \
+ ../base/global.h
+ODE_integrators.o: ODE_integrators.cpp ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h Integrator.h FuncEval.h ../base/global.h \
+ ../base/ct_defs.h CVodesIntegrator.h ../base/ctexceptions.h
+BandMatrix.o: BandMatrix.cpp BandMatrix.h ../base/ct_defs.h \
+ ../base/config.h ../base/../../../config.h ctlapack.h \
+ ../base/utilities.h ../base/ct_defs.h ../base/ctexceptions.h \
+ ../base/stringUtils.h ../base/global.h
+DAE_solvers.o: DAE_solvers.cpp ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h DAE_Solver.h ResidEval.h \
+ ../base/ctexceptions.h ../base/global.h ../base/ct_defs.h
+funcs.o: funcs.cpp ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../base/ctexceptions.h ../base/stringUtils.h \
+ ../base/ct_defs.h funcs.h polyfit.h
+sort.o: sort.cpp sort.h ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h
+SquareMatrix.o: SquareMatrix.cpp ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../base/stringUtils.h ../base/ct_defs.h \
+ ctlapack.h SquareMatrix.h DenseMatrix.h ../base/Array.h \
+ ../base/ctexceptions.h ../base/utilities.h
+ResidJacEval.o: ResidJacEval.cpp ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ctlapack.h ResidJacEval.h ResidEval.h \
+ ../base/ctexceptions.h SquareMatrix.h DenseMatrix.h ../base/Array.h \
+ ../base/ct_defs.h ../base/ctexceptions.h ../base/utilities.h
+NonlinearSolver.o: NonlinearSolver.cpp SquareMatrix.h DenseMatrix.h \
+ ../base/ct_defs.h ../base/config.h ../base/../../../config.h \
+ ../base/Array.h ../base/ct_defs.h ../base/ctexceptions.h \
+ ../base/utilities.h NonlinearSolver.h ResidJacEval.h ResidEval.h \
+ ../base/ctexceptions.h ../base/clockWC.h ../base/vec_functions.h \
+ ../base/mdp_allo.h
+CVodesIntegrator.o: CVodesIntegrator.cpp ../base/config.h \
+ ../base/../../../config.h CVodesIntegrator.h Integrator.h FuncEval.h \
+ ../base/ct_defs.h ../base/config.h ../base/global.h ../base/ct_defs.h \
+ ../base/ctexceptions.h ../base/stringUtils.h

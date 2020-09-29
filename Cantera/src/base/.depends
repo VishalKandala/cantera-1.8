@@ -1,0 +1,19 @@
+ct2ctml.o: ct2ctml.cpp ct_defs.h config.h ../../../config.h \
+ ctexceptions.h ctml.h xml.h global.h Array.h utilities.h stringUtils.h
+ctml.o: ctml.cpp ctml.h ct_defs.h config.h ../../../config.h xml.h \
+ ctexceptions.h global.h Array.h utilities.h stringUtils.h
+misc.o: misc.cpp global.h ct_defs.h config.h ../../../config.h \
+ ctexceptions.h stringUtils.h units.h xml.h ctml.h Array.h utilities.h \
+ FactoryBase.h logger.h
+plots.o: plots.cpp plots.h Array.h ct_defs.h config.h ../../../config.h \
+ ctexceptions.h utilities.h
+stringUtils.o: stringUtils.cpp ct_defs.h config.h ../../../config.h \
+ stringUtils.h ctexceptions.h global.h ctml.h xml.h Array.h utilities.h
+xml.o: xml.cpp config.h ../../../config.h xml.h ctexceptions.h ct_defs.h \
+ global.h stringUtils.h
+clockWC.o: clockWC.cpp clockWC.h
+PrintCtrl.o: PrintCtrl.cpp PrintCtrl.h
+LogPrintCtrl.o: LogPrintCtrl.cpp LogPrintCtrl.h PrintCtrl.h global.h \
+ ct_defs.h config.h ../../../config.h
+mdp_allo.o: mdp_allo.cpp mdp_allo.h
+checkFinite.o: checkFinite.cpp ct_defs.h config.h ../../../config.h

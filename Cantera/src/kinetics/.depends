@@ -1,0 +1,129 @@
+importKinetics.o: importKinetics.cpp importKinetics.h \
+ ../thermo/ThermoPhase.h ../thermo/Phase.h ../thermo/State.h \
+ ../base/ct_defs.h ../base/config.h ../base/../../../config.h \
+ ../base/utilities.h ../base/ct_defs.h ../thermo/Constituents.h \
+ ../thermo/SpeciesThermo.h ../base/ctexceptions.h ../base/stringUtils.h \
+ ../base/xml.h ../base/ctexceptions.h ../base/global.h \
+ ../thermo/Elements.h ../base/vec_functions.h ../base/utilities.h \
+ ../base/ctml.h ../base/xml.h ../base/Array.h Kinetics.h \
+ ../thermo/mix_defs.h ../thermo/speciesThermoTypes.h ../base/global.h \
+ ../thermo/SurfPhase.h ../thermo/mix_defs.h ../thermo/ThermoPhase.h \
+ ../thermo/EdgePhase.h ../thermo/SurfPhase.h ../thermo/ThermoFactory.h \
+ ../base/FactoryBase.h ../thermo/SpeciesThermoFactory.h KineticsFactory.h \
+ reaction_defs.h ReactionData.h
+GRI_30_Kinetics.o: GRI_30_Kinetics.cpp GRI_30_Kinetics.h GasKinetics.h \
+ ../thermo/mix_defs.h Kinetics.h ../base/ctexceptions.h \
+ ../thermo/ThermoPhase.h ../thermo/Phase.h ../thermo/State.h \
+ ../base/ct_defs.h ../base/config.h ../base/../../../config.h \
+ ../base/utilities.h ../base/ct_defs.h ../thermo/Constituents.h \
+ ../thermo/SpeciesThermo.h ../base/stringUtils.h ../base/xml.h \
+ ../base/ctexceptions.h ../base/global.h ../thermo/Elements.h \
+ ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h ReactionStoichMgr.h ThirdBodyMgr.h Enhanced3BConc.h \
+ FalloffMgr.h reaction_defs.h FalloffFactory.h ../base/FactoryBase.h \
+ RateCoeffMgr.h RxnRates.h ReactionData.h ../thermo/IdealGasPhase.h \
+ ../thermo/mix_defs.h ../thermo/ThermoPhase.h
+KineticsFactory.o: KineticsFactory.cpp KineticsFactory.h Kinetics.h \
+ ../base/ctexceptions.h ../thermo/ThermoPhase.h ../thermo/Phase.h \
+ ../thermo/State.h ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../base/utilities.h ../base/ct_defs.h \
+ ../thermo/Constituents.h ../thermo/SpeciesThermo.h ../base/stringUtils.h \
+ ../base/xml.h ../base/ctexceptions.h ../base/global.h \
+ ../thermo/Elements.h ../base/vec_functions.h ../base/utilities.h \
+ ../base/ctml.h ../base/xml.h ../base/Array.h ../thermo/mix_defs.h \
+ ../base/FactoryBase.h GasKinetics.h ReactionStoichMgr.h ThirdBodyMgr.h \
+ Enhanced3BConc.h FalloffMgr.h reaction_defs.h FalloffFactory.h \
+ RateCoeffMgr.h RxnRates.h GRI_30_Kinetics.h InterfaceKinetics.h \
+ EdgeKinetics.h importKinetics.h AqueousKinetics.h
+GasKinetics.o: GasKinetics.cpp GasKinetics.h ../thermo/mix_defs.h \
+ Kinetics.h ../base/ctexceptions.h ../thermo/ThermoPhase.h \
+ ../thermo/Phase.h ../thermo/State.h ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../base/utilities.h ../base/ct_defs.h \
+ ../thermo/Constituents.h ../thermo/SpeciesThermo.h ../base/stringUtils.h \
+ ../base/xml.h ../base/ctexceptions.h ../base/global.h \
+ ../thermo/Elements.h ../base/vec_functions.h ../base/utilities.h \
+ ../base/ctml.h ../base/xml.h ../base/Array.h ReactionStoichMgr.h \
+ ThirdBodyMgr.h Enhanced3BConc.h FalloffMgr.h reaction_defs.h \
+ FalloffFactory.h ../base/FactoryBase.h RateCoeffMgr.h RxnRates.h \
+ ReactionData.h
+AqueousKinetics.o: AqueousKinetics.cpp AqueousKinetics.h \
+ ../thermo/mix_defs.h Kinetics.h ../base/ctexceptions.h \
+ ../thermo/ThermoPhase.h ../thermo/Phase.h ../thermo/State.h \
+ ../base/ct_defs.h ../base/config.h ../base/../../../config.h \
+ ../base/utilities.h ../base/ct_defs.h ../thermo/Constituents.h \
+ ../thermo/SpeciesThermo.h ../base/stringUtils.h ../base/xml.h \
+ ../base/ctexceptions.h ../base/global.h ../thermo/Elements.h \
+ ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h ReactionStoichMgr.h ThirdBodyMgr.h Enhanced3BConc.h \
+ FalloffMgr.h reaction_defs.h FalloffFactory.h ../base/FactoryBase.h \
+ RateCoeffMgr.h RxnRates.h ReactionData.h
+FalloffFactory.o: FalloffFactory.cpp FalloffFactory.h ../base/ct_defs.h \
+ ../base/config.h ../base/../../../config.h reaction_defs.h \
+ ../base/FactoryBase.h ../base/ctexceptions.h
+ReactionStoichMgr.o: ReactionStoichMgr.cpp ReactionStoichMgr.h \
+ ../base/ct_defs.h ../base/config.h ../base/../../../config.h \
+ StoichManager.h ../base/stringUtils.h ../base/ct_defs.h \
+ ../base/ctexceptions.h ReactionData.h reaction_defs.h
+Kinetics.o: Kinetics.cpp InterfaceKinetics.h ../thermo/mix_defs.h \
+ Kinetics.h ../base/ctexceptions.h ../thermo/ThermoPhase.h \
+ ../thermo/Phase.h ../thermo/State.h ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../base/utilities.h ../base/ct_defs.h \
+ ../thermo/Constituents.h ../thermo/SpeciesThermo.h ../base/stringUtils.h \
+ ../base/xml.h ../base/ctexceptions.h ../base/global.h \
+ ../thermo/Elements.h ../base/vec_functions.h ../base/utilities.h \
+ ../base/ctml.h ../base/xml.h ../base/Array.h RateCoeffMgr.h RxnRates.h \
+ reaction_defs.h ReactionStoichMgr.h ../thermo/SurfPhase.h \
+ ../thermo/mix_defs.h ../thermo/ThermoPhase.h StoichManager.h \
+ ImplicitSurfChem.h ../numerics/FuncEval.h ../numerics/Integrator.h \
+ ../numerics/FuncEval.h ../base/global.h solveSP.h ../base/Array.h
+solveSP.o: solveSP.cpp solveSP.h ImplicitSurfChem.h \
+ ../numerics/FuncEval.h ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../numerics/Integrator.h \
+ ../numerics/FuncEval.h ../base/global.h ../base/ct_defs.h \
+ InterfaceKinetics.h ../thermo/mix_defs.h Kinetics.h \
+ ../base/ctexceptions.h ../thermo/ThermoPhase.h ../thermo/Phase.h \
+ ../thermo/State.h ../base/utilities.h ../thermo/Constituents.h \
+ ../thermo/SpeciesThermo.h ../base/stringUtils.h ../base/xml.h \
+ ../base/ctexceptions.h ../base/global.h ../thermo/Elements.h \
+ ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h RateCoeffMgr.h RxnRates.h reaction_defs.h \
+ ReactionStoichMgr.h ../thermo/SurfPhase.h ../thermo/mix_defs.h \
+ ../thermo/ThermoPhase.h ../base/Array.h ../base/clockWC.h \
+ ../numerics/ctlapack.h
+InterfaceKinetics.o: InterfaceKinetics.cpp InterfaceKinetics.h \
+ ../thermo/mix_defs.h Kinetics.h ../base/ctexceptions.h \
+ ../thermo/ThermoPhase.h ../thermo/Phase.h ../thermo/State.h \
+ ../base/ct_defs.h ../base/config.h ../base/../../../config.h \
+ ../base/utilities.h ../base/ct_defs.h ../thermo/Constituents.h \
+ ../thermo/SpeciesThermo.h ../base/stringUtils.h ../base/xml.h \
+ ../base/ctexceptions.h ../base/global.h ../thermo/Elements.h \
+ ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h RateCoeffMgr.h RxnRates.h reaction_defs.h \
+ ReactionStoichMgr.h EdgeKinetics.h ../thermo/SurfPhase.h \
+ ../thermo/mix_defs.h ../thermo/ThermoPhase.h ReactionData.h \
+ ImplicitSurfChem.h ../numerics/FuncEval.h ../numerics/Integrator.h \
+ ../numerics/FuncEval.h ../base/global.h solveSP.h ../base/Array.h
+ImplicitSurfChem.o: ImplicitSurfChem.cpp ImplicitSurfChem.h \
+ ../numerics/FuncEval.h ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../numerics/Integrator.h \
+ ../numerics/FuncEval.h ../base/global.h ../base/ct_defs.h \
+ InterfaceKinetics.h ../thermo/mix_defs.h Kinetics.h \
+ ../base/ctexceptions.h ../thermo/ThermoPhase.h ../thermo/Phase.h \
+ ../thermo/State.h ../base/utilities.h ../thermo/Constituents.h \
+ ../thermo/SpeciesThermo.h ../base/stringUtils.h ../base/xml.h \
+ ../base/ctexceptions.h ../base/global.h ../thermo/Elements.h \
+ ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h RateCoeffMgr.h RxnRates.h reaction_defs.h \
+ ReactionStoichMgr.h ../thermo/SurfPhase.h ../thermo/mix_defs.h \
+ ../thermo/ThermoPhase.h solveSP.h ../base/Array.h
+Group.o: Group.cpp Group.h ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h
+ReactionPath.o: ReactionPath.cpp ReactionPath.h ../base/ct_defs.h \
+ ../base/config.h ../base/../../../config.h ../numerics/DenseMatrix.h \
+ ../base/Array.h ../base/ct_defs.h ../base/ctexceptions.h \
+ ../base/utilities.h Group.h Kinetics.h ../base/ctexceptions.h \
+ ../thermo/ThermoPhase.h ../thermo/Phase.h ../thermo/State.h \
+ ../base/utilities.h ../thermo/Constituents.h ../thermo/SpeciesThermo.h \
+ ../base/stringUtils.h ../base/xml.h ../base/global.h \
+ ../thermo/Elements.h ../base/vec_functions.h ../base/ctml.h \
+ ../base/xml.h ../base/Array.h ../thermo/mix_defs.h reaction_defs.h

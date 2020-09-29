@@ -1,0 +1,239 @@
+CKReader version 1.0
+http://www.cantera.org
+
+Mon Sep 28 16:07:58 2020
+
+        input file:                     ./soot.inp
+  species database:               ./therm_soot.dat
+
+***************  Warning  ***************
+     mechanism validation disabled
+*****************************************
+debugging disabled.
+
+
+reading elements...
+
+1.  H   1.00797
+2.  O   15.9994
+3.  C   12.0112
+
+read 3 elements.
+
+reading species...
+
+1.  H
+2.  H2
+3.  C6H5
+4.  A1C2HJ2
+5.  C10H7J1
+6.  C10H7J2
+7.  A2CH2-1
+8.  A2CH2-2
+9.  BIN5
+10.  BIN6
+
+read 10 species.
+
+looking up species definitions...
+
+reading default temperature ranges from ./therm_soot.dat
+
+ default Tlow, Tmid, Thigh: 300.00  1000.00  5000.00
+no THERMO section in input file.
+searching external database ./therm_soot.dat for species definitions...
+
+ default Tlow, Tmid, Thigh: 300.00  1000.00  5000.00
+
+found species H at line 6 of ./therm_soot.dat
+   id/date: 120186
+   phase: G
+   composition: (1 H)
+   Tlow, Tmid, Thigh: (300.00, 1000.00, 5000.00)
+
+   coefficients (low, high):
+   a1  	+2.50000000E+00  	+2.50000000E+00
+   a2  	+0.00000000E+00  	+0.00000000E+00
+   a3  	+0.00000000E+00  	+0.00000000E+00
+   a4  	+0.00000000E+00  	+0.00000000E+00
+   a5  	+0.00000000E+00  	+0.00000000E+00
+   a6  	+2.54716200E+04  	+2.54716200E+04
+   a7  	-4.60117600E-01  	-4.60117600E-01
+
+
+found species H2 at line 10 of ./therm_soot.dat
+   id/date: 121286
+   phase: G
+   composition: (2 H)
+   Tlow, Tmid, Thigh: (300.00, 1000.00, 5000.00)
+
+   coefficients (low, high):
+   a1  	+3.29812400E+00  	+2.99142300E+00
+   a2  	+8.24944100E-04  	+7.00064400E-04
+   a3  	-8.14301500E-07  	-5.63382800E-08
+   a4  	-9.47543400E-11  	-9.23157800E-12
+   a5  	+4.13487200E-13  	+1.58275190E-15
+   a6  	-1.01252090E+03  	-8.35034000E+02
+   a7  	-3.29409400E+00  	-1.35511010E+00
+
+
+found species C6H5 at line 14 of ./therm_soot.dat
+   id/date: HR 4/99 BLYP00
+   phase: G
+   composition: (6 C, 5 H)
+   Tlow, Tmid, Thigh: (300.00, 1401.00, 5000.00)
+
+   coefficients (low, high):
+   a1  	-4.79363838E+00  	+1.39113231E+01
+   a2  	+6.41256261E-02  	+1.44510477E-02
+   a3  	-5.63088346E-05  	-4.97643143E-06
+   a4  	+2.50628417E-08  	+7.76350200E-10
+   a5  	-4.43680766E-12  	-4.52009699E-14
+   a6  	+3.97940632E+04  	+3.39370888E+04
+   a7  	+4.47040879E+01  	-5.35639096E+01
+
+
+found species A1C2HJ2 at line 18 of ./therm_soot.dat
+   id/date: HR 6/99 BLYP00
+   phase: G
+   composition: (8 C, 5 H)
+   Tlow, Tmid, Thigh: (300.00, 1403.00, 5000.00)
+
+   coefficients (low, high):
+   a1  	-1.49929738E+00  	+1.88370382E+01
+   a2  	+7.01891496E-02  	+1.52445522E-02
+   a3  	-6.29429910E-05  	-5.22469596E-06
+   a4  	+2.85073827E-08  	+8.12518874E-10
+   a5  	-5.11137313E-12  	-4.72045178E-14
+   a6  	+6.59494823E+04  	+5.96821996E+04
+   a7  	+3.15838359E+01  	-7.49107592E+01
+
+
+found species C10H7J1 at line 22 of ./therm_soot.dat
+   id/date: TB 1/99 BLYP00
+   phase: G
+   composition: (10 C, 7 H)
+   Tlow, Tmid, Thigh: (300.00, 1401.00, 5000.00)
+
+   coefficients (low, high):
+   a1  	-7.74269427E+00  	+2.32134837E+01
+   a2  	+1.04220941E-01  	+2.19245132E-02
+   a3  	-9.25076899E-05  	-7.57801031E-06
+   a4  	+4.12403544E-08  	+1.18526564E-09
+   a5  	-7.28199643E-12  	-6.91369406E-14
+   a6  	+4.72057155E+04  	+3.75456274E+04
+   a7  	+5.86484815E+01  	-1.03911378E+02
+
+
+found species C10H7J2 at line 26 of ./therm_soot.dat
+   id/date: TB 1/99 BLYP00
+   phase: G
+   composition: (10 C, 7 H)
+   Tlow, Tmid, Thigh: (300.00, 1401.00, 5000.00)
+
+   coefficients (low, high):
+   a1  	-7.71898395E+00  	+2.32356550E+01
+   a2  	+1.04275854E-01  	+2.19168575E-02
+   a3  	-9.26741654E-05  	-7.57777612E-06
+   a4  	+4.13767346E-08  	+1.18547456E-09
+   a5  	-7.31737931E-12  	-6.91588767E-14
+   a6  	+4.73225871E+04  	+3.76662306E+04
+   a7  	+5.84596982E+01  	-1.04074200E+02
+
+
+found species A2CH2-1 at line 30 of ./therm_soot.dat
+   id/date: HR 6/99 BLYP  
+   phase: G
+   composition: (11 C, 9 H)
+   Tlow, Tmid, Thigh: (300.00, 1393.00, 5000.00)
+
+   coefficients (low, high):
+   a1  	-9.42561321E+00  	+2.67591143E+01
+   a2  	+1.26956297E-01  	+2.66944366E-02
+   a3  	-1.19253218E-04  	-9.34672512E-06
+   a4  	+5.69889164E-08  	+1.47411301E-09
+   a5  	-1.07817848E-11  	-8.64694573E-14
+   a6  	+2.90341851E+04  	+1.79163708E+04
+   a7  	+6.56750520E+01  	-1.23291372E+02
+
+
+found species A2CH2-2 at line 34 of ./therm_soot.dat
+   id/date: HR 6/99 BLYP  
+   phase: G
+   composition: (11 C, 9 H)
+   Tlow, Tmid, Thigh: (300.00, 1393.00, 5000.00)
+
+   coefficients (low, high):
+   a1  	-9.37163916E+00  	+2.67837993E+01
+   a2  	+1.27337620E-01  	+2.67091735E-02
+   a3  	-1.20319319E-04  	-9.35972813E-06
+   a4  	+5.78670534E-08  	+1.47696837E-09
+   a5  	-1.10107665E-11  	-8.66691339E-14
+   a6  	+2.91224235E+04  	+1.80361580E+04
+   a7  	+6.53001580E+01  	-1.23392042E+02
+
+
+found species BIN5 at line 38 of ./therm_soot.dat
+   id/date: PYRENE
+   phase: G
+   composition: (388 C, 144 H)
+   Tlow, Tmid, Thigh: (300.00, 1401.00, 5000.00)
+
+   coefficients (low, high):
+   a1  	-1.29758980E+01  	+3.65839677E+01
+   a2  	+1.63790064E-01  	+3.36764102E-02
+   a3  	-1.43851166E-04  	-1.16783938E-05
+   a4  	+6.31057915E-08  	+1.83077466E-09
+   a5  	-1.09568047E-11  	-1.06963777E-13
+   a6  	+2.48866399E+04  	+9.29809483E+03
+   a7  	+7.94950474E+01  	-1.81272070E+02
+
+
+found species BIN6 at line 46 of ./therm_soot.dat
+   id/date: PYRENE
+   phase: G
+   composition: (778 C, 264 H)
+   Tlow, Tmid, Thigh: (300.00, 1401.00, 5000.00)
+
+   coefficients (low, high):
+   a1  	-1.29758980E+01  	+3.65839677E+01
+   a2  	+1.63790064E-01  	+3.36764102E-02
+   a3  	-1.43851166E-04  	-1.16783938E-05
+   a4  	+6.31057915E-08  	+1.83077466E-09
+   a5  	-1.09568047E-11  	-1.06963777E-13
+   a6  	+2.48866399E+04  	+9.29809483E+03
+   a7  	+7.94950474E+01  	-1.81272070E+02
+
+
+reading reactions...
+
+
+read 6 reactions.
+
+reaction 1
+   C6H5 + BIN5 => 0.984615 BIN5 + 0.0153846 BIN6 + 1.0769 H2 + H
+   rate coeff:  A, n, E = (5.62E+12, 0.5, 0)
+
+reaction 2
+   A1C2HJ2 + BIN5 => 0.979487 BIN5 + 0.0205128 BIN6 + 0.7692 H2 + H
+   rate coeff:  A, n, E = (5.1E+12, 0.5, 0)
+
+reaction 3
+   C10H7J1 + BIN5 => 0.974359 BIN5 + 0.025641 BIN6 + 1.4615 H2 + H
+   rate coeff:  A, n, E = (4.72E+12, 0.5, 0)
+
+reaction 4
+   C10H7J2 + BIN5 => 0.974359 BIN5 + 0.025641 BIN6 + 1.4615 H2 + H
+   rate coeff:  A, n, E = (4.72E+12, 0.5, 0)
+
+reaction 5
+   A2CH2-1 + BIN5 => 0.971795 BIN5 + 0.0282051 BIN6 + 2.3077 H2 + H
+   rate coeff:  A, n, E = (4.56E+12, 0.5, 0)
+
+reaction 6
+   A2CH2-2 + BIN5 => 0.971795 BIN5 + 0.0282051 BIN6 + 2.3077 H2 + H
+   rate coeff:  A, n, E = (4.56E+12, 0.5, 0)
+
+
+Success... elapsed CPU time = 0.00144 s
+*** no validation performed ***

@@ -1,0 +1,1 @@
+atomicWeightDB.o: atomicWeightDB.cpp

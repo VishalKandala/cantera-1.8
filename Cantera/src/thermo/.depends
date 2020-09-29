@@ -1,0 +1,425 @@
+State.o: State.cpp ../base/utilities.h ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../base/ctexceptions.h ../base/stringUtils.h \
+ State.h ../base/ct_defs.h
+Elements.o: Elements.cpp Elements.h ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../base/xml.h ../base/ctexceptions.h \
+ ../base/ct_defs.h ../base/global.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h ../base/utilities.h ../base/ctexceptions.h \
+ ../base/stringUtils.h
+Constituents.o: Constituents.cpp Constituents.h ../base/ct_defs.h \
+ ../base/config.h ../base/../../../config.h SpeciesThermo.h \
+ ../base/ctexceptions.h ../base/stringUtils.h ../base/ct_defs.h \
+ ../base/xml.h ../base/ctexceptions.h ../base/global.h Elements.h
+Phase.o: Phase.cpp ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h Phase.h State.h ../base/utilities.h \
+ ../base/ct_defs.h Constituents.h SpeciesThermo.h ../base/ctexceptions.h \
+ ../base/stringUtils.h ../base/xml.h ../base/ctexceptions.h \
+ ../base/global.h Elements.h ../base/vec_functions.h ../base/utilities.h \
+ ../base/ctml.h ../base/xml.h ../base/Array.h
+ThermoPhase.o: ThermoPhase.cpp ThermoPhase.h Phase.h State.h \
+ ../base/ct_defs.h ../base/config.h ../base/../../../config.h \
+ ../base/utilities.h ../base/ct_defs.h Constituents.h SpeciesThermo.h \
+ ../base/ctexceptions.h ../base/stringUtils.h ../base/xml.h \
+ ../base/ctexceptions.h ../base/global.h Elements.h \
+ ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h
+IdealGasPhase.o: IdealGasPhase.cpp ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h mix_defs.h IdealGasPhase.h ThermoPhase.h \
+ Phase.h State.h ../base/utilities.h ../base/ct_defs.h Constituents.h \
+ SpeciesThermo.h ../base/ctexceptions.h ../base/stringUtils.h \
+ ../base/xml.h ../base/ctexceptions.h ../base/global.h Elements.h \
+ ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h
+ConstDensityThermo.o: ConstDensityThermo.cpp ../base/ct_defs.h \
+ ../base/config.h ../base/../../../config.h mix_defs.h \
+ ConstDensityThermo.h ThermoPhase.h Phase.h State.h ../base/utilities.h \
+ ../base/ct_defs.h Constituents.h SpeciesThermo.h ../base/ctexceptions.h \
+ ../base/stringUtils.h ../base/xml.h ../base/ctexceptions.h \
+ ../base/global.h Elements.h ../base/vec_functions.h ../base/utilities.h \
+ ../base/ctml.h ../base/xml.h ../base/Array.h
+SpeciesThermoFactory.o: SpeciesThermoFactory.cpp SpeciesThermoFactory.h \
+ SpeciesThermo.h ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../base/ctexceptions.h ../base/FactoryBase.h \
+ NasaThermo.h SpeciesThermoMgr.h ../base/stringUtils.h ../base/ct_defs.h \
+ NasaPoly1.h ../base/global.h SpeciesThermoInterpType.h \
+ speciesThermoTypes.h ShomateThermo.h ShomatePoly.h SimpleThermo.h \
+ GeneralSpeciesThermo.h Nasa9Poly1.h Mu0Poly.h Nasa9PolyMultiTempRegion.h \
+ VPSSMgr.h mix_defs.h VPStandardStateTP.h ThermoPhase.h Phase.h State.h \
+ ../base/utilities.h Constituents.h ../base/xml.h ../base/ctexceptions.h \
+ ../base/global.h Elements.h ../base/vec_functions.h ../base/utilities.h \
+ ../base/ctml.h ../base/xml.h ../base/Array.h
+ConstCpPoly.o: ConstCpPoly.cpp ConstCpPoly.h SpeciesThermoInterpType.h \
+ speciesThermoTypes.h ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../base/stringUtils.h ../base/ct_defs.h \
+ ../base/global.h
+Nasa9Poly1.o: Nasa9Poly1.cpp Nasa9Poly1.h ../base/global.h \
+ ../base/ct_defs.h ../base/config.h ../base/../../../config.h \
+ SpeciesThermoInterpType.h speciesThermoTypes.h ../base/ct_defs.h \
+ ../base/stringUtils.h
+Nasa9PolyMultiTempRegion.o: Nasa9PolyMultiTempRegion.cpp ../base/global.h \
+ ../base/ct_defs.h ../base/config.h ../base/../../../config.h \
+ ../base/ctexceptions.h Nasa9PolyMultiTempRegion.h Nasa9Poly1.h \
+ SpeciesThermoInterpType.h speciesThermoTypes.h ../base/ct_defs.h \
+ ../base/stringUtils.h
+Mu0Poly.o: Mu0Poly.cpp Mu0Poly.h SpeciesThermoInterpType.h \
+ speciesThermoTypes.h ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../base/stringUtils.h ../base/ct_defs.h \
+ ../base/global.h ../base/ctexceptions.h SpeciesThermo.h ../base/xml.h \
+ ../base/ctexceptions.h ../base/global.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h ../base/utilities.h
+GeneralSpeciesThermo.o: GeneralSpeciesThermo.cpp GeneralSpeciesThermo.h \
+ ../base/ct_defs.h ../base/config.h ../base/../../../config.h \
+ SpeciesThermoMgr.h ../base/ctexceptions.h ../base/stringUtils.h \
+ ../base/ct_defs.h SpeciesThermo.h NasaPoly1.h ../base/global.h \
+ SpeciesThermoInterpType.h speciesThermoTypes.h Nasa9Poly1.h NasaPoly2.h \
+ ShomatePoly.h ConstCpPoly.h Mu0Poly.h SpeciesThermoFactory.h \
+ ../base/FactoryBase.h
+SurfPhase.o: SurfPhase.cpp SurfPhase.h mix_defs.h ThermoPhase.h Phase.h \
+ State.h ../base/ct_defs.h ../base/config.h ../base/../../../config.h \
+ ../base/utilities.h ../base/ct_defs.h Constituents.h SpeciesThermo.h \
+ ../base/ctexceptions.h ../base/stringUtils.h ../base/xml.h \
+ ../base/ctexceptions.h ../base/global.h Elements.h \
+ ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h EdgePhase.h ThermoFactory.h ../base/FactoryBase.h
+ThermoFactory.o: ThermoFactory.cpp ThermoFactory.h ThermoPhase.h Phase.h \
+ State.h ../base/ct_defs.h ../base/config.h ../base/../../../config.h \
+ ../base/utilities.h ../base/ct_defs.h Constituents.h SpeciesThermo.h \
+ ../base/ctexceptions.h ../base/stringUtils.h ../base/xml.h \
+ ../base/ctexceptions.h ../base/global.h Elements.h \
+ ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h ../base/FactoryBase.h speciesThermoTypes.h \
+ ../base/global.h SpeciesThermoFactory.h IdealGasPhase.h mix_defs.h \
+ VPSSMgr.h VPSSMgrFactory.h IdealSolidSolnPhase.h MargulesVPSSTP.h \
+ PseudoBinaryVPSSTP.h GibbsExcessVPSSTP.h VPStandardStateTP.h \
+ IonsFromNeutralVPSSTP.h PureFluidPhase.h ConstDensityThermo.h \
+ SurfPhase.h EdgePhase.h MetalPhase.h StoichSubstance.h MineralEQ3.h \
+ SingleSpeciesTP.h StoichSubstanceSSTP.h MetalSHEelectrons.h \
+ LatticeSolidPhase.h ../base/config.h LatticePhase.h HMWSoln.h \
+ MolalityVPSSTP.h electrolytes.h DebyeHuckel.h ../base/Array.h \
+ IdealMolalSoln.h IdealSolnGasVPSS.h
+phasereport.o: phasereport.cpp ThermoPhase.h Phase.h State.h \
+ ../base/ct_defs.h ../base/config.h ../base/../../../config.h \
+ ../base/utilities.h ../base/ct_defs.h Constituents.h SpeciesThermo.h \
+ ../base/ctexceptions.h ../base/stringUtils.h ../base/xml.h \
+ ../base/ctexceptions.h ../base/global.h Elements.h \
+ ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h PureFluidPhase.h mix_defs.h
+SpeciesThermoInterpType.o: SpeciesThermoInterpType.cpp \
+ SpeciesThermoInterpType.h speciesThermoTypes.h ../base/ct_defs.h \
+ ../base/config.h ../base/../../../config.h ../base/stringUtils.h \
+ ../base/ct_defs.h ../base/global.h VPSSMgr.h mix_defs.h PDSS.h \
+ ../base/ctexceptions.h
+VPSSMgr.o: VPSSMgr.cpp VPSSMgr.h ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h mix_defs.h VPStandardStateTP.h ThermoPhase.h \
+ Phase.h State.h ../base/utilities.h ../base/ct_defs.h Constituents.h \
+ SpeciesThermo.h ../base/ctexceptions.h ../base/stringUtils.h \
+ ../base/xml.h ../base/ctexceptions.h ../base/global.h Elements.h \
+ ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h SpeciesThermoFactory.h ../base/FactoryBase.h PDSS.h \
+ GeneralSpeciesThermo.h SpeciesThermoMgr.h NasaPoly1.h ../base/global.h \
+ SpeciesThermoInterpType.h speciesThermoTypes.h Nasa9Poly1.h
+VPSSMgrFactory.o: VPSSMgrFactory.cpp SpeciesThermo.h ../base/ct_defs.h \
+ ../base/config.h ../base/../../../config.h VPSSMgr.h mix_defs.h \
+ VPSSMgrFactory.h ../base/ctexceptions.h ../base/FactoryBase.h \
+ VPStandardStateTP.h ThermoPhase.h Phase.h State.h ../base/utilities.h \
+ ../base/ct_defs.h Constituents.h ../base/stringUtils.h ../base/xml.h \
+ ../base/ctexceptions.h ../base/global.h Elements.h \
+ ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h VPSSMgr_IdealGas.h PDSS.h VPSSMgr_ConstVol.h \
+ VPSSMgr_Water_ConstVol.h VPSSMgr_Water_HKFT.h VPSSMgr_General.h \
+ VPSSMgr_types.h SpeciesThermoMgr.h speciesThermoTypes.h ../base/global.h \
+ SpeciesThermoFactory.h GeneralSpeciesThermo.h NasaPoly1.h \
+ SpeciesThermoInterpType.h Nasa9Poly1.h
+VPSSMgr_General.o: VPSSMgr_General.cpp VPSSMgr_General.h \
+ ../base/ct_defs.h ../base/config.h ../base/../../../config.h VPSSMgr.h \
+ mix_defs.h PDSS.h ../base/xml.h ../base/ctexceptions.h ../base/ct_defs.h \
+ ../base/global.h ../base/ctml.h ../base/xml.h ../base/Array.h \
+ ../base/utilities.h PDSS_IdealGas.h PDSS_Water.h VPStandardStateTP.h \
+ ThermoPhase.h Phase.h State.h ../base/utilities.h Constituents.h \
+ SpeciesThermo.h ../base/ctexceptions.h ../base/stringUtils.h Elements.h \
+ ../base/vec_functions.h PDSS_ConstVol.h PDSS_SSVol.h PDSS_HKFT.h \
+ PDSS_IonsFromNeutral.h GeneralSpeciesThermo.h SpeciesThermoMgr.h \
+ NasaPoly1.h ../base/global.h SpeciesThermoInterpType.h \
+ speciesThermoTypes.h Nasa9Poly1.h
+IdealSolnGasVPSS.o: IdealSolnGasVPSS.cpp IdealSolnGasVPSS.h \
+ VPStandardStateTP.h ThermoPhase.h Phase.h State.h ../base/ct_defs.h \
+ ../base/config.h ../base/../../../config.h ../base/utilities.h \
+ ../base/ct_defs.h Constituents.h SpeciesThermo.h ../base/ctexceptions.h \
+ ../base/stringUtils.h ../base/xml.h ../base/ctexceptions.h \
+ ../base/global.h Elements.h ../base/vec_functions.h ../base/utilities.h \
+ ../base/ctml.h ../base/xml.h ../base/Array.h VPSSMgr.h mix_defs.h PDSS.h \
+ ThermoFactory.h ../base/FactoryBase.h
+VPSSMgr_IdealGas.o: VPSSMgr_IdealGas.cpp VPSSMgr_IdealGas.h \
+ ../base/ct_defs.h ../base/config.h ../base/../../../config.h PDSS.h \
+ mix_defs.h VPSSMgr.h ../base/utilities.h ../base/ct_defs.h ../base/xml.h \
+ ../base/ctexceptions.h ../base/global.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h ../base/utilities.h SpeciesThermoFactory.h \
+ SpeciesThermo.h ../base/ctexceptions.h ../base/FactoryBase.h \
+ PDSS_IdealGas.h
+VPSSMgr_ConstVol.o: VPSSMgr_ConstVol.cpp VPSSMgr_ConstVol.h \
+ ../base/ct_defs.h ../base/config.h ../base/../../../config.h VPSSMgr.h \
+ mix_defs.h ../base/xml.h ../base/ctexceptions.h ../base/ct_defs.h \
+ ../base/global.h VPStandardStateTP.h ThermoPhase.h Phase.h State.h \
+ ../base/utilities.h Constituents.h SpeciesThermo.h \
+ ../base/ctexceptions.h ../base/stringUtils.h Elements.h \
+ ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h SpeciesThermoFactory.h ../base/FactoryBase.h \
+ PDSS_ConstVol.h PDSS.h
+PDSS_ConstVol.o: PDSS_ConstVol.cpp ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../base/xml.h ../base/ctexceptions.h \
+ ../base/ct_defs.h ../base/global.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h ../base/utilities.h PDSS_ConstVol.h PDSS.h mix_defs.h \
+ ThermoFactory.h ThermoPhase.h Phase.h State.h ../base/utilities.h \
+ Constituents.h SpeciesThermo.h ../base/ctexceptions.h \
+ ../base/stringUtils.h Elements.h ../base/vec_functions.h \
+ ../base/FactoryBase.h VPStandardStateTP.h VPSSMgr.h
+PDSS_IdealGas.o: PDSS_IdealGas.cpp ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../base/xml.h ../base/ctexceptions.h \
+ ../base/ct_defs.h ../base/global.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h ../base/utilities.h PDSS_IdealGas.h PDSS.h mix_defs.h \
+ ThermoFactory.h ThermoPhase.h Phase.h State.h ../base/utilities.h \
+ Constituents.h SpeciesThermo.h ../base/ctexceptions.h \
+ ../base/stringUtils.h Elements.h ../base/vec_functions.h \
+ ../base/FactoryBase.h VPStandardStateTP.h VPSSMgr.h
+PDSS_SSVol.o: PDSS_SSVol.cpp ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../base/xml.h ../base/ctexceptions.h \
+ ../base/ct_defs.h ../base/global.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h ../base/utilities.h PDSS_SSVol.h PDSS.h mix_defs.h \
+ ThermoFactory.h ThermoPhase.h Phase.h State.h ../base/utilities.h \
+ Constituents.h SpeciesThermo.h ../base/ctexceptions.h \
+ ../base/stringUtils.h Elements.h ../base/vec_functions.h \
+ ../base/FactoryBase.h VPStandardStateTP.h VPSSMgr.h
+SemiconductorPhase.o: SemiconductorPhase.cpp SemiconductorPhase.h \
+ mix_defs.h ThermoPhase.h Phase.h State.h ../base/ct_defs.h \
+ ../base/config.h ../base/../../../config.h ../base/utilities.h \
+ ../base/ct_defs.h Constituents.h SpeciesThermo.h ../base/ctexceptions.h \
+ ../base/stringUtils.h ../base/xml.h ../base/ctexceptions.h \
+ ../base/global.h Elements.h ../base/vec_functions.h ../base/utilities.h \
+ ../base/ctml.h ../base/xml.h ../base/Array.h
+StoichSubstance.o: StoichSubstance.cpp ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h mix_defs.h StoichSubstance.h ThermoPhase.h \
+ Phase.h State.h ../base/utilities.h ../base/ct_defs.h Constituents.h \
+ SpeciesThermo.h ../base/ctexceptions.h ../base/stringUtils.h \
+ ../base/xml.h ../base/ctexceptions.h ../base/global.h Elements.h \
+ ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h
+PureFluidPhase.o: PureFluidPhase.cpp ../base/xml.h ../base/ctexceptions.h \
+ ../base/ct_defs.h ../base/config.h ../base/../../../config.h \
+ ../base/global.h PureFluidPhase.h ThermoPhase.h Phase.h State.h \
+ ../base/ct_defs.h ../base/utilities.h Constituents.h SpeciesThermo.h \
+ ../base/ctexceptions.h ../base/stringUtils.h Elements.h \
+ ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h mix_defs.h ../../../ext/tpx/Sub.h \
+ ../../../ext/tpx/utils.h
+LatticeSolidPhase.o: LatticeSolidPhase.cpp ../base/config.h \
+ ../base/../../../config.h ../base/ct_defs.h ../base/config.h mix_defs.h \
+ LatticeSolidPhase.h ThermoPhase.h Phase.h State.h ../base/utilities.h \
+ ../base/ct_defs.h Constituents.h SpeciesThermo.h ../base/ctexceptions.h \
+ ../base/stringUtils.h ../base/xml.h ../base/ctexceptions.h \
+ ../base/global.h Elements.h ../base/vec_functions.h ../base/utilities.h \
+ ../base/ctml.h ../base/xml.h ../base/Array.h LatticePhase.h \
+ ThermoFactory.h ../base/FactoryBase.h
+LatticePhase.o: LatticePhase.cpp ../base/config.h \
+ ../base/../../../config.h ../base/ct_defs.h ../base/config.h mix_defs.h \
+ LatticePhase.h ThermoPhase.h Phase.h State.h ../base/utilities.h \
+ ../base/ct_defs.h Constituents.h SpeciesThermo.h ../base/ctexceptions.h \
+ ../base/stringUtils.h ../base/xml.h ../base/ctexceptions.h \
+ ../base/global.h Elements.h ../base/vec_functions.h ../base/utilities.h \
+ ../base/ctml.h ../base/xml.h ../base/Array.h
+MolalityVPSSTP.o: MolalityVPSSTP.cpp MolalityVPSSTP.h VPStandardStateTP.h \
+ ThermoPhase.h Phase.h State.h ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../base/utilities.h ../base/ct_defs.h \
+ Constituents.h SpeciesThermo.h ../base/ctexceptions.h \
+ ../base/stringUtils.h ../base/xml.h ../base/ctexceptions.h \
+ ../base/global.h Elements.h ../base/vec_functions.h ../base/utilities.h \
+ ../base/ctml.h ../base/xml.h ../base/Array.h VPSSMgr.h mix_defs.h
+VPStandardStateTP.o: VPStandardStateTP.cpp VPStandardStateTP.h \
+ ThermoPhase.h Phase.h State.h ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../base/utilities.h ../base/ct_defs.h \
+ Constituents.h SpeciesThermo.h ../base/ctexceptions.h \
+ ../base/stringUtils.h ../base/xml.h ../base/ctexceptions.h \
+ ../base/global.h Elements.h ../base/vec_functions.h ../base/utilities.h \
+ ../base/ctml.h ../base/xml.h ../base/Array.h VPSSMgr.h mix_defs.h PDSS.h
+IdealMolalSoln.o: IdealMolalSoln.cpp IdealMolalSoln.h MolalityVPSSTP.h \
+ VPStandardStateTP.h ThermoPhase.h Phase.h State.h ../base/ct_defs.h \
+ ../base/config.h ../base/../../../config.h ../base/utilities.h \
+ ../base/ct_defs.h Constituents.h SpeciesThermo.h ../base/ctexceptions.h \
+ ../base/stringUtils.h ../base/xml.h ../base/ctexceptions.h \
+ ../base/global.h Elements.h ../base/vec_functions.h ../base/utilities.h \
+ ../base/ctml.h ../base/xml.h ../base/Array.h VPSSMgr.h mix_defs.h \
+ ThermoFactory.h ../base/FactoryBase.h
+WaterPropsIAPWSphi.o: WaterPropsIAPWSphi.cpp WaterPropsIAPWSphi.h \
+ ../base/config.h ../base/../../../config.h
+WaterPropsIAPWS.o: WaterPropsIAPWS.cpp WaterPropsIAPWS.h \
+ WaterPropsIAPWSphi.h ../base/config.h ../base/../../../config.h \
+ ../base/ctexceptions.h ../base/stringUtils.h ../base/ct_defs.h \
+ ../base/config.h
+WaterProps.o: WaterProps.cpp WaterProps.h ../base/ct_defs.h \
+ ../base/config.h ../base/../../../config.h ../base/ctml.h \
+ ../base/ct_defs.h ../base/xml.h ../base/ctexceptions.h ../base/global.h \
+ ../base/Array.h ../base/utilities.h PDSS_Water.h PDSS.h mix_defs.h \
+ VPStandardStateTP.h ThermoPhase.h Phase.h State.h ../base/utilities.h \
+ Constituents.h SpeciesThermo.h ../base/ctexceptions.h \
+ ../base/stringUtils.h ../base/xml.h Elements.h ../base/vec_functions.h \
+ VPSSMgr.h WaterPropsIAPWS.h WaterPropsIAPWSphi.h ../base/config.h
+PDSS.o: PDSS.cpp ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../base/xml.h ../base/ctexceptions.h \
+ ../base/ct_defs.h ../base/global.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h ../base/utilities.h PDSS.h mix_defs.h ThermoFactory.h \
+ ThermoPhase.h Phase.h State.h ../base/utilities.h Constituents.h \
+ SpeciesThermo.h ../base/ctexceptions.h ../base/stringUtils.h Elements.h \
+ ../base/vec_functions.h ../base/FactoryBase.h VPStandardStateTP.h \
+ VPSSMgr.h
+PDSS_Water.o: PDSS_Water.cpp ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../base/xml.h ../base/ctexceptions.h \
+ ../base/ct_defs.h ../base/global.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h ../base/utilities.h PDSS_Water.h PDSS.h mix_defs.h \
+ VPStandardStateTP.h ThermoPhase.h Phase.h State.h ../base/utilities.h \
+ Constituents.h SpeciesThermo.h ../base/ctexceptions.h \
+ ../base/stringUtils.h Elements.h ../base/vec_functions.h VPSSMgr.h \
+ WaterPropsIAPWS.h WaterPropsIAPWSphi.h ../base/config.h ThermoFactory.h \
+ ../base/FactoryBase.h WaterProps.h
+PDSS_HKFT.o: PDSS_HKFT.cpp ../base/ctml.h ../base/ct_defs.h \
+ ../base/config.h ../base/../../../config.h ../base/xml.h \
+ ../base/ctexceptions.h ../base/global.h ../base/Array.h \
+ ../base/utilities.h PDSS_HKFT.h PDSS.h ../base/ct_defs.h mix_defs.h \
+ WaterProps.h PDSS_Water.h VPStandardStateTP.h ThermoPhase.h Phase.h \
+ State.h ../base/utilities.h Constituents.h SpeciesThermo.h \
+ ../base/ctexceptions.h ../base/stringUtils.h ../base/xml.h Elements.h \
+ ../base/vec_functions.h VPSSMgr.h
+HMWSoln.o: HMWSoln.cpp HMWSoln.h MolalityVPSSTP.h VPStandardStateTP.h \
+ ThermoPhase.h Phase.h State.h ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../base/utilities.h ../base/ct_defs.h \
+ Constituents.h SpeciesThermo.h ../base/ctexceptions.h \
+ ../base/stringUtils.h ../base/xml.h ../base/ctexceptions.h \
+ ../base/global.h Elements.h ../base/vec_functions.h ../base/utilities.h \
+ ../base/ctml.h ../base/xml.h ../base/Array.h VPSSMgr.h mix_defs.h \
+ electrolytes.h ThermoFactory.h ../base/FactoryBase.h WaterProps.h \
+ PDSS_Water.h PDSS.h
+HMWSoln_input.o: HMWSoln_input.cpp HMWSoln.h MolalityVPSSTP.h \
+ VPStandardStateTP.h ThermoPhase.h Phase.h State.h ../base/ct_defs.h \
+ ../base/config.h ../base/../../../config.h ../base/utilities.h \
+ ../base/ct_defs.h Constituents.h SpeciesThermo.h ../base/ctexceptions.h \
+ ../base/stringUtils.h ../base/xml.h ../base/ctexceptions.h \
+ ../base/global.h Elements.h ../base/vec_functions.h ../base/utilities.h \
+ ../base/ctml.h ../base/xml.h ../base/Array.h VPSSMgr.h mix_defs.h \
+ electrolytes.h ThermoFactory.h ../base/FactoryBase.h WaterProps.h \
+ PDSS_Water.h PDSS.h
+DebyeHuckel.o: DebyeHuckel.cpp DebyeHuckel.h MolalityVPSSTP.h \
+ VPStandardStateTP.h ThermoPhase.h Phase.h State.h ../base/ct_defs.h \
+ ../base/config.h ../base/../../../config.h ../base/utilities.h \
+ ../base/ct_defs.h Constituents.h SpeciesThermo.h ../base/ctexceptions.h \
+ ../base/stringUtils.h ../base/xml.h ../base/ctexceptions.h \
+ ../base/global.h Elements.h ../base/vec_functions.h ../base/utilities.h \
+ ../base/ctml.h ../base/xml.h ../base/Array.h VPSSMgr.h mix_defs.h \
+ electrolytes.h ../base/Array.h ThermoFactory.h ../base/FactoryBase.h \
+ WaterProps.h PDSS_Water.h PDSS.h
+WaterSSTP.o: WaterSSTP.cpp ../base/xml.h ../base/ctexceptions.h \
+ ../base/ct_defs.h ../base/config.h ../base/../../../config.h \
+ ../base/global.h WaterSSTP.h SingleSpeciesTP.h ThermoPhase.h Phase.h \
+ State.h ../base/ct_defs.h ../base/utilities.h Constituents.h \
+ SpeciesThermo.h ../base/ctexceptions.h ../base/stringUtils.h Elements.h \
+ ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h WaterPropsIAPWS.h WaterPropsIAPWSphi.h ../base/config.h \
+ WaterProps.h ThermoFactory.h ../base/FactoryBase.h
+MetalSHEelectrons.o: MetalSHEelectrons.cpp ../base/ct_defs.h \
+ ../base/config.h ../base/../../../config.h MetalSHEelectrons.h \
+ mix_defs.h SingleSpeciesTP.h ThermoPhase.h Phase.h State.h \
+ ../base/utilities.h ../base/ct_defs.h Constituents.h SpeciesThermo.h \
+ ../base/ctexceptions.h ../base/stringUtils.h ../base/xml.h \
+ ../base/ctexceptions.h ../base/global.h Elements.h \
+ ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h ThermoFactory.h ../base/FactoryBase.h
+VPSSMgr_Water_ConstVol.o: VPSSMgr_Water_ConstVol.cpp \
+ VPSSMgr_Water_ConstVol.h VPSSMgr.h ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h mix_defs.h PDSS_Water.h PDSS.h \
+ VPStandardStateTP.h ThermoPhase.h Phase.h State.h ../base/utilities.h \
+ ../base/ct_defs.h Constituents.h SpeciesThermo.h ../base/ctexceptions.h \
+ ../base/stringUtils.h ../base/xml.h ../base/ctexceptions.h \
+ ../base/global.h Elements.h ../base/vec_functions.h ../base/utilities.h \
+ ../base/ctml.h ../base/xml.h ../base/Array.h PDSS_ConstVol.h \
+ GeneralSpeciesThermo.h SpeciesThermoMgr.h NasaPoly1.h ../base/global.h \
+ SpeciesThermoInterpType.h speciesThermoTypes.h Nasa9Poly1.h
+VPSSMgr_Water_HKFT.o: VPSSMgr_Water_HKFT.cpp VPSSMgr_Water_HKFT.h \
+ VPSSMgr.h ../base/ct_defs.h ../base/config.h ../base/../../../config.h \
+ mix_defs.h PDSS_Water.h PDSS.h VPStandardStateTP.h ThermoPhase.h Phase.h \
+ State.h ../base/utilities.h ../base/ct_defs.h Constituents.h \
+ SpeciesThermo.h ../base/ctexceptions.h ../base/stringUtils.h \
+ ../base/xml.h ../base/ctexceptions.h ../base/global.h Elements.h \
+ ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h PDSS_HKFT.h GeneralSpeciesThermo.h SpeciesThermoMgr.h \
+ NasaPoly1.h ../base/global.h SpeciesThermoInterpType.h \
+ speciesThermoTypes.h Nasa9Poly1.h
+IdealSolidSolnPhase.o: IdealSolidSolnPhase.cpp IdealSolidSolnPhase.h \
+ mix_defs.h ThermoPhase.h Phase.h State.h ../base/ct_defs.h \
+ ../base/config.h ../base/../../../config.h ../base/utilities.h \
+ ../base/ct_defs.h Constituents.h SpeciesThermo.h ../base/ctexceptions.h \
+ ../base/stringUtils.h ../base/xml.h ../base/ctexceptions.h \
+ ../base/global.h Elements.h ../base/vec_functions.h ../base/utilities.h \
+ ../base/ctml.h ../base/xml.h ../base/Array.h ThermoFactory.h \
+ ../base/FactoryBase.h
+StoichSubstanceSSTP.o: StoichSubstanceSSTP.cpp ../base/ct_defs.h \
+ ../base/config.h ../base/../../../config.h mix_defs.h \
+ StoichSubstanceSSTP.h SingleSpeciesTP.h ThermoPhase.h Phase.h State.h \
+ ../base/utilities.h ../base/ct_defs.h Constituents.h SpeciesThermo.h \
+ ../base/ctexceptions.h ../base/stringUtils.h ../base/xml.h \
+ ../base/ctexceptions.h ../base/global.h Elements.h \
+ ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h ThermoFactory.h ../base/FactoryBase.h
+SingleSpeciesTP.o: SingleSpeciesTP.cpp SingleSpeciesTP.h ThermoPhase.h \
+ Phase.h State.h ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../base/utilities.h ../base/ct_defs.h \
+ Constituents.h SpeciesThermo.h ../base/ctexceptions.h \
+ ../base/stringUtils.h ../base/xml.h ../base/ctexceptions.h \
+ ../base/global.h Elements.h ../base/vec_functions.h ../base/utilities.h \
+ ../base/ctml.h ../base/xml.h ../base/Array.h
+MineralEQ3.o: MineralEQ3.cpp ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h mix_defs.h MineralEQ3.h SingleSpeciesTP.h \
+ ThermoPhase.h Phase.h State.h ../base/utilities.h ../base/ct_defs.h \
+ Constituents.h SpeciesThermo.h ../base/ctexceptions.h \
+ ../base/stringUtils.h ../base/xml.h ../base/ctexceptions.h \
+ ../base/global.h Elements.h ../base/vec_functions.h ../base/utilities.h \
+ ../base/ctml.h ../base/xml.h ../base/Array.h StoichSubstanceSSTP.h \
+ ThermoFactory.h ../base/FactoryBase.h
+GibbsExcessVPSSTP.o: GibbsExcessVPSSTP.cpp GibbsExcessVPSSTP.h \
+ VPStandardStateTP.h ThermoPhase.h Phase.h State.h ../base/ct_defs.h \
+ ../base/config.h ../base/../../../config.h ../base/utilities.h \
+ ../base/ct_defs.h Constituents.h SpeciesThermo.h ../base/ctexceptions.h \
+ ../base/stringUtils.h ../base/xml.h ../base/ctexceptions.h \
+ ../base/global.h Elements.h ../base/vec_functions.h ../base/utilities.h \
+ ../base/ctml.h ../base/xml.h ../base/Array.h VPSSMgr.h mix_defs.h
+PseudoBinaryVPSSTP.o: PseudoBinaryVPSSTP.cpp PseudoBinaryVPSSTP.h \
+ GibbsExcessVPSSTP.h VPStandardStateTP.h ThermoPhase.h Phase.h State.h \
+ ../base/ct_defs.h ../base/config.h ../base/../../../config.h \
+ ../base/utilities.h ../base/ct_defs.h Constituents.h SpeciesThermo.h \
+ ../base/ctexceptions.h ../base/stringUtils.h ../base/xml.h \
+ ../base/ctexceptions.h ../base/global.h Elements.h \
+ ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h VPSSMgr.h mix_defs.h
+MargulesVPSSTP.o: MargulesVPSSTP.cpp MargulesVPSSTP.h \
+ PseudoBinaryVPSSTP.h GibbsExcessVPSSTP.h VPStandardStateTP.h \
+ ThermoPhase.h Phase.h State.h ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../base/utilities.h ../base/ct_defs.h \
+ Constituents.h SpeciesThermo.h ../base/ctexceptions.h \
+ ../base/stringUtils.h ../base/xml.h ../base/ctexceptions.h \
+ ../base/global.h Elements.h ../base/vec_functions.h ../base/utilities.h \
+ ../base/ctml.h ../base/xml.h ../base/Array.h VPSSMgr.h mix_defs.h \
+ ThermoFactory.h ../base/FactoryBase.h
+IonsFromNeutralVPSSTP.o: IonsFromNeutralVPSSTP.cpp \
+ IonsFromNeutralVPSSTP.h GibbsExcessVPSSTP.h VPStandardStateTP.h \
+ ThermoPhase.h Phase.h State.h ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../base/utilities.h ../base/ct_defs.h \
+ Constituents.h SpeciesThermo.h ../base/ctexceptions.h \
+ ../base/stringUtils.h ../base/xml.h ../base/ctexceptions.h \
+ ../base/global.h Elements.h ../base/vec_functions.h ../base/utilities.h \
+ ../base/ctml.h ../base/xml.h ../base/Array.h VPSSMgr.h mix_defs.h \
+ ThermoFactory.h ../base/FactoryBase.h PDSS_IonsFromNeutral.h PDSS.h
+PDSS_IonsFromNeutral.o: PDSS_IonsFromNeutral.cpp ../base/ct_defs.h \
+ ../base/config.h ../base/../../../config.h ../base/xml.h \
+ ../base/ctexceptions.h ../base/ct_defs.h ../base/global.h ../base/ctml.h \
+ ../base/xml.h ../base/Array.h ../base/utilities.h PDSS_IonsFromNeutral.h \
+ PDSS.h mix_defs.h ThermoFactory.h ThermoPhase.h Phase.h State.h \
+ ../base/utilities.h Constituents.h SpeciesThermo.h \
+ ../base/ctexceptions.h ../base/stringUtils.h Elements.h \
+ ../base/vec_functions.h ../base/FactoryBase.h IonsFromNeutralVPSSTP.h \
+ GibbsExcessVPSSTP.h VPStandardStateTP.h VPSSMgr.h

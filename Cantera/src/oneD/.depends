@@ -1,0 +1,61 @@
+Domain1D.o: Domain1D.cpp Domain1D.h ../base/xml.h ../base/ctexceptions.h \
+ ../base/ct_defs.h ../base/config.h ../base/../../../config.h \
+ ../base/global.h ../base/stringUtils.h ../base/ctexceptions.h refine.h
+MultiJac.o: MultiJac.cpp MultiJac.h ../numerics/BandMatrix.h \
+ ../base/ct_defs.h ../base/config.h ../base/../../../config.h \
+ ../numerics/ctlapack.h ../base/utilities.h ../base/ct_defs.h \
+ ../base/ctexceptions.h OneDim.h Domain1D.h ../base/xml.h \
+ ../base/ctexceptions.h ../base/global.h ../base/stringUtils.h refine.h
+MultiNewton.o: MultiNewton.cpp MultiNewton.h MultiJac.h \
+ ../numerics/BandMatrix.h ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../numerics/ctlapack.h ../base/utilities.h \
+ ../base/ct_defs.h ../base/ctexceptions.h OneDim.h Domain1D.h \
+ ../base/xml.h ../base/ctexceptions.h ../base/global.h \
+ ../base/stringUtils.h refine.h ../base/vec_functions.h \
+ ../base/utilities.h
+OneDim.o: OneDim.cpp MultiJac.h ../numerics/BandMatrix.h \
+ ../base/ct_defs.h ../base/config.h ../base/../../../config.h \
+ ../numerics/ctlapack.h ../base/utilities.h ../base/ct_defs.h \
+ ../base/ctexceptions.h OneDim.h Domain1D.h ../base/xml.h \
+ ../base/ctexceptions.h ../base/global.h ../base/stringUtils.h refine.h \
+ MultiNewton.h ../base/ctml.h ../base/xml.h ../base/Array.h \
+ ../base/utilities.h
+Sim1D.o: Sim1D.cpp Sim1D.h OneDim.h Domain1D.h ../base/xml.h \
+ ../base/ctexceptions.h ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../base/global.h ../base/stringUtils.h \
+ ../base/ctexceptions.h refine.h ../numerics/funcs.h ../base/ct_defs.h \
+ MultiJac.h ../numerics/BandMatrix.h ../numerics/ctlapack.h \
+ ../base/utilities.h
+StFlow.o: StFlow.cpp StFlow.h ../transport/TransportBase.h \
+ ../thermo/ThermoPhase.h ../thermo/Phase.h ../thermo/State.h \
+ ../base/ct_defs.h ../base/config.h ../base/../../../config.h \
+ ../base/utilities.h ../base/ct_defs.h ../thermo/Constituents.h \
+ ../thermo/SpeciesThermo.h ../base/ctexceptions.h ../base/stringUtils.h \
+ ../base/xml.h ../base/ctexceptions.h ../base/global.h \
+ ../thermo/Elements.h ../base/vec_functions.h ../base/utilities.h \
+ ../base/ctml.h ../base/xml.h ../base/Array.h Domain1D.h refine.h \
+ ../base/Array.h ../thermo/IdealGasPhase.h ../thermo/mix_defs.h \
+ ../thermo/ThermoPhase.h ../kinetics/Kinetics.h ../thermo/mix_defs.h \
+ ../numerics/funcs.h ../numerics/ArrayViewer.h MultiJac.h \
+ ../numerics/BandMatrix.h ../numerics/ctlapack.h OneDim.h
+boundaries1D.o: boundaries1D.cpp Inlet1D.h Domain1D.h ../base/xml.h \
+ ../base/ctexceptions.h ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../base/global.h ../base/stringUtils.h \
+ ../base/ctexceptions.h refine.h ../thermo/SurfPhase.h \
+ ../thermo/mix_defs.h ../thermo/ThermoPhase.h ../thermo/Phase.h \
+ ../thermo/State.h ../base/ct_defs.h ../base/utilities.h \
+ ../thermo/Constituents.h ../thermo/SpeciesThermo.h ../thermo/Elements.h \
+ ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h ../kinetics/InterfaceKinetics.h ../thermo/mix_defs.h \
+ ../kinetics/Kinetics.h ../thermo/ThermoPhase.h \
+ ../kinetics/RateCoeffMgr.h ../kinetics/RxnRates.h \
+ ../kinetics/reaction_defs.h ../kinetics/ReactionStoichMgr.h StFlow.h \
+ ../transport/TransportBase.h ../base/Array.h ../thermo/IdealGasPhase.h \
+ ../kinetics/Kinetics.h ../numerics/funcs.h OneDim.h
+newton_utils.o: newton_utils.cpp ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h Domain1D.h ../base/xml.h \
+ ../base/ctexceptions.h ../base/ct_defs.h ../base/global.h \
+ ../base/stringUtils.h ../base/ctexceptions.h refine.h
+refine.o: refine.cpp Domain1D.h ../base/xml.h ../base/ctexceptions.h \
+ ../base/ct_defs.h ../base/config.h ../base/../../../config.h \
+ ../base/global.h ../base/stringUtils.h ../base/ctexceptions.h refine.h

@@ -1,0 +1,116 @@
+#/bin/sh
+###############################################################
+# 
+#  $Date: 2010-01-03 18:46:26 -0600 (Sun, 03 Jan 2010) $
+#  $Revision: 368 $
+#
+#  Copyright 2002 California Institute of Technology
+#
+###############################################################
+
+.SUFFIXES :
+.SUFFIXES : .cpp .d .o .h
+
+INCDIR = ../../../build/include/cantera/kernel
+INSTALL_TSC = ../../../bin/install_tsc
+do_ranlib = 1
+
+do_electro = 1
+do_issp    = 1
+
+
+PURIFY=
+
+PIC_FLAG=-fPIC
+
+debug_mode = 1
+ifeq ($(debug_mode), 1)
+   DEBUG_FLAG=-DDEBUG_MODE
+else
+   DEBUG_FLAG=
+endif
+
+
+CXX_FLAGS = -O3 -Wall   $(CXX_OPT) $(PIC_FLAG) $(DEBUG_FLAG)
+
+# Base Transport Object Files
+TRAN_OBJ    = TransportFactory.o MultiTransport.o MixTransport.o MMCollisionInt.o \
+              SolidTransport.o DustyGasTransport.o TransportBase.o WaterTransport.o \
+              SimpleTransport.o
+
+TRAN_H  =  TransportFactory.h MultiTransport.h MixTransport.h \
+           MMCollisionInt.h  SolidTransport.h DustyGasTransport.h \
+           TransportBase.h L_matrix.h TransportParams.h WaterTransport.h \
+           SimpleTransport.h LiquidTransportData.h
+
+ifeq ($(do_electro),1)
+do_issp = 1
+ELECTRO_OBJ = AqueousTransport.o 
+ELECTRO_H  =  AqueousTransport.h
+endif
+
+ifeq ($(do_issp),1)
+ISSP_OBJ = LiquidTransport.o 
+ISSP_H   = LiquidTransport.h LiquidTransportParams.h
+endif
+
+
+CATRAN_OBJ = $(TRAN_OBJ) $(ELECTRO_OBJ) $(ISSP_OBJ)
+
+CATRAN_H   = $(TRAN_H) $(ELECTRO_H) $(ISSP_H)
+
+CXX_INCLUDES = -I../base -I../thermo -I../numerics 
+LIB = /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libtransport.a
+
+DEPENDS = $(CATRAN_OBJ:.o=.d)
+
+all:  $(LIB) .depends  
+	@(/usr/bin/install -c -d $(INCDIR))
+	@(for lh in $(CATRAN_H) ; do \
+	  $(INSTALL_TSC) "$${lh}" $(INCDIR) ; \
+	done)
+%.d: Makefile %.o
+	g++ -MM $(CXX_FLAGS) $(CXX_INCLUDES) $*.cpp > $*.d
+
+.cpp.o:
+	$(PURIFY) g++ -c $< $(CXX_FLAGS) $(CXX_INCLUDES)
+
+$(LIB): $(CATRAN_OBJ) $(CATRAN_H)
+	ar ruv $(LIB) $(CATRAN_OBJ) > /dev/null
+ifeq ($(do_ranlib),1)
+	ranlib $(LIB)
+endif
+
+clean:
+	@(for lh in $(CATRAN_H) ; do \
+            th=$(INCDIR)/"$${lh}" ; \
+	    if test -f "$${th}" ; then \
+	      $(RM) "$${th}"  ; \
+              echo "$(RM) $${th}" ; \
+            fi \
+	  done)
+	@(if test -f $(LIB) ; then \
+	    $(RM) $(LIB) ; \
+            echo "$(RM) $(LIB)" ; \
+          fi)
+	$(RM) *.o *.d *~  .depends
+	(if test -d SunWS_cache ; then \
+           $(RM) -rf SunWS_cache ; \
+         fi )
+
+depends: 
+	make .depends
+
+.depends: $(DEPENDS)
+	cat *.d > .depends
+
+$(CATRAN_OBJ): Makefile
+
+
+TAGS: 
+	etags *.h *.cpp
+
+ifeq ($(wildcard .depends), .depends)
+include .depends
+endif
+

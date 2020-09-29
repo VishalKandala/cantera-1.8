@@ -1,0 +1,118 @@
+AqueousTransport.o: AqueousTransport.cpp ../thermo/ThermoPhase.h \
+ ../thermo/Phase.h ../thermo/State.h ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../base/utilities.h ../base/ct_defs.h \
+ ../thermo/Constituents.h ../thermo/SpeciesThermo.h \
+ ../base/ctexceptions.h ../base/stringUtils.h ../base/xml.h \
+ ../base/ctexceptions.h ../base/global.h ../thermo/Elements.h \
+ ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h AqueousTransport.h TransportBase.h \
+ ../numerics/DenseMatrix.h ../base/Array.h TransportParams.h \
+ ../base/XML_Writer.h LiquidTransportParams.h LiquidTransportData.h \
+ ../base/FactoryBase.h TransportFactory.h ../numerics/ctlapack.h
+DustyGasTransport.o: DustyGasTransport.cpp ../thermo/ThermoPhase.h \
+ ../thermo/Phase.h ../thermo/State.h ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../base/utilities.h ../base/ct_defs.h \
+ ../thermo/Constituents.h ../thermo/SpeciesThermo.h \
+ ../base/ctexceptions.h ../base/stringUtils.h ../base/xml.h \
+ ../base/ctexceptions.h ../base/global.h ../thermo/Elements.h \
+ ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h DustyGasTransport.h TransportBase.h \
+ ../numerics/DenseMatrix.h ../base/Array.h
+LiquidTransport.o: LiquidTransport.cpp ../thermo/ThermoPhase.h \
+ ../thermo/Phase.h ../thermo/State.h ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../base/utilities.h ../base/ct_defs.h \
+ ../thermo/Constituents.h ../thermo/SpeciesThermo.h \
+ ../base/ctexceptions.h ../base/stringUtils.h ../base/xml.h \
+ ../base/ctexceptions.h ../base/global.h ../thermo/Elements.h \
+ ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h LiquidTransport.h TransportBase.h \
+ ../numerics/DenseMatrix.h ../base/Array.h TransportParams.h \
+ ../base/XML_Writer.h LiquidTransportParams.h LiquidTransportData.h \
+ ../base/FactoryBase.h TransportFactory.h ../numerics/ctlapack.h
+MMCollisionInt.o: MMCollisionInt.cpp MMCollisionInt.h ../base/ct_defs.h \
+ ../base/config.h ../base/../../../config.h ../base/utilities.h \
+ ../base/ct_defs.h ../numerics/polyfit.h ../base/xml.h \
+ ../base/ctexceptions.h ../base/global.h ../base/XML_Writer.h
+MixTransport.o: MixTransport.cpp ../thermo/ThermoPhase.h \
+ ../thermo/Phase.h ../thermo/State.h ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../base/utilities.h ../base/ct_defs.h \
+ ../thermo/Constituents.h ../thermo/SpeciesThermo.h \
+ ../base/ctexceptions.h ../base/stringUtils.h ../base/xml.h \
+ ../base/ctexceptions.h ../base/global.h ../thermo/Elements.h \
+ ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h MixTransport.h TransportBase.h ../numerics/DenseMatrix.h \
+ ../base/Array.h TransportParams.h ../base/XML_Writer.h \
+ TransportFactory.h ../base/FactoryBase.h LiquidTransportData.h
+MultiTransport.o: MultiTransport.cpp ../thermo/ThermoPhase.h \
+ ../thermo/Phase.h ../thermo/State.h ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../base/utilities.h ../base/ct_defs.h \
+ ../thermo/Constituents.h ../thermo/SpeciesThermo.h \
+ ../base/ctexceptions.h ../base/stringUtils.h ../base/xml.h \
+ ../base/ctexceptions.h ../base/global.h ../thermo/Elements.h \
+ ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h MultiTransport.h TransportBase.h \
+ ../numerics/DenseMatrix.h ../base/Array.h ../numerics/ctlapack.h \
+ L_matrix.h TransportParams.h ../base/XML_Writer.h \
+ ../thermo/IdealGasPhase.h ../thermo/mix_defs.h ../thermo/ThermoPhase.h \
+ TransportFactory.h ../base/FactoryBase.h LiquidTransportData.h
+SimpleTransport.o: SimpleTransport.cpp ../thermo/ThermoPhase.h \
+ ../thermo/Phase.h ../thermo/State.h ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../base/utilities.h ../base/ct_defs.h \
+ ../thermo/Constituents.h ../thermo/SpeciesThermo.h \
+ ../base/ctexceptions.h ../base/stringUtils.h ../base/xml.h \
+ ../base/ctexceptions.h ../base/global.h ../thermo/Elements.h \
+ ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h SimpleTransport.h TransportBase.h \
+ ../numerics/DenseMatrix.h ../base/Array.h TransportParams.h \
+ ../base/XML_Writer.h LiquidTransportParams.h LiquidTransportData.h \
+ ../base/FactoryBase.h TransportFactory.h ../numerics/ctlapack.h
+SolidTransport.o: SolidTransport.cpp ../thermo/ThermoPhase.h \
+ ../thermo/Phase.h ../thermo/State.h ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../base/utilities.h ../base/ct_defs.h \
+ ../thermo/Constituents.h ../thermo/SpeciesThermo.h \
+ ../base/ctexceptions.h ../base/stringUtils.h ../base/xml.h \
+ ../base/ctexceptions.h ../base/global.h ../thermo/Elements.h \
+ ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h SolidTransport.h TransportBase.h \
+ ../numerics/DenseMatrix.h ../base/Array.h
+TransportBase.o: TransportBase.cpp ../thermo/ThermoPhase.h \
+ ../thermo/Phase.h ../thermo/State.h ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../base/utilities.h ../base/ct_defs.h \
+ ../thermo/Constituents.h ../thermo/SpeciesThermo.h \
+ ../base/ctexceptions.h ../base/stringUtils.h ../base/xml.h \
+ ../base/ctexceptions.h ../base/global.h ../thermo/Elements.h \
+ ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h LiquidTransport.h TransportBase.h \
+ ../numerics/DenseMatrix.h ../base/Array.h TransportParams.h \
+ ../base/XML_Writer.h LiquidTransportParams.h LiquidTransportData.h \
+ ../base/FactoryBase.h TransportFactory.h ../numerics/ctlapack.h
+TransportFactory.o: TransportFactory.cpp ../thermo/ThermoPhase.h \
+ ../thermo/Phase.h ../thermo/State.h ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../base/utilities.h ../base/ct_defs.h \
+ ../thermo/Constituents.h ../thermo/SpeciesThermo.h \
+ ../base/ctexceptions.h ../base/stringUtils.h ../base/xml.h \
+ ../base/ctexceptions.h ../base/global.h ../thermo/Elements.h \
+ ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
+ ../base/Array.h MultiTransport.h TransportBase.h \
+ ../numerics/DenseMatrix.h ../base/Array.h MixTransport.h \
+ SolidTransport.h DustyGasTransport.h SimpleTransport.h TransportParams.h \
+ ../base/XML_Writer.h LiquidTransportParams.h LiquidTransportData.h \
+ ../base/FactoryBase.h LiquidTransport.h AqueousTransport.h \
+ TransportFactory.h ../numerics/polyfit.h MMCollisionInt.h \
+ ../base/global.h ../thermo/IdealGasPhase.h ../thermo/mix_defs.h \
+ ../thermo/ThermoPhase.h
+WaterTransport.o: WaterTransport.cpp ../base/ct_defs.h ../base/config.h \
+ ../base/../../../config.h ../thermo/WaterPropsIAPWS.h \
+ ../thermo/WaterPropsIAPWSphi.h ../base/config.h TransportBase.h \
+ ../thermo/ThermoPhase.h ../thermo/Phase.h ../thermo/State.h \
+ ../base/utilities.h ../base/ct_defs.h ../thermo/Constituents.h \
+ ../thermo/SpeciesThermo.h ../base/ctexceptions.h ../base/stringUtils.h \
+ ../base/xml.h ../base/ctexceptions.h ../base/global.h \
+ ../thermo/Elements.h ../base/vec_functions.h ../base/utilities.h \
+ ../base/ctml.h ../base/xml.h ../base/Array.h ../numerics/DenseMatrix.h \
+ ../base/Array.h LiquidTransportParams.h TransportParams.h \
+ ../base/XML_Writer.h LiquidTransportData.h ../base/FactoryBase.h \
+ ../thermo/VPStandardStateTP.h ../thermo/ThermoPhase.h \
+ ../thermo/VPSSMgr.h ../thermo/mix_defs.h WaterTransport.h \
+ ../thermo/PDSS_Water.h ../thermo/PDSS.h ../thermo/VPStandardStateTP.h \
+ ../thermo/WaterSSTP.h ../thermo/SingleSpeciesTP.h ../thermo/WaterProps.h
