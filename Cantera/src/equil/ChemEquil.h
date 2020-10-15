@@ -4,8 +4,8 @@
  *  Chemical equilibrium.
  *
  *  $Author: hkmoffa $
- *  $Date: 2010-01-03 18:46:26 -0600 (Sun, 03 Jan 2010) $
- *  $Revision: 368 $
+ *  $Date: 2008/09/04 17:03:42 $
+ *  $Revision: 1.6 $
  *
  *  Copyright 2001 California Institute of Technology
  *

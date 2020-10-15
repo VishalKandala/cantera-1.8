@@ -13,7 +13,7 @@
  * U.S. Government retains certain rights in this software.
  */
 /*
- * $Id: HMWSoln_input.cpp 279 2009-12-05 19:08:43Z hkmoffa $
+ * $Id: HMWSoln_input.cpp,v 1.33 2009/01/29 02:07:05 hkmoffa Exp $
  */
 
 #include "HMWSoln.h"

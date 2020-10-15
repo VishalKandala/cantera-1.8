@@ -13,8 +13,8 @@
  */
 /*
  *  $Author: hkmoffa $
- *  $Date: 2009-12-05 13:08:43 -0600 (Sat, 05 Dec 2009) $
- *  $Revision: 279 $
+ *  $Date: 2009/05/28 23:08:06 $
+ *  $Revision: 1.4 $
  */
 
 // turn off warnings under Windows
@@ -84,44 +84,6 @@ namespace Cantera {
       m_sss_R[k]   = m_s0_R[k];
       m_gss_RT[k]  = m_hss_RT[k] - m_sss_R[k];
       // m_Vss[k] constant
-    }
-  }
-
-  /*
-   *  Returns the vector of nondimensional
-   *  Gibbs free energies of the reference state at the current temperature
-   *  of the solution and the reference pressure for the species.
-   *
-   * @param grt Output vector contains the nondimensional Gibbs free energies
-   *            of the reference state of the species
-   *            length = m_kk, units = dimensionless.
-   */
-  void VPSSMgr_ConstVol::getGibbs_RT_ref(doublereal *grt) const {
-    if (m_useTmpRefStateStorage) {
-      std::copy(m_g0_RT.begin(), m_g0_RT.end(), grt);
-      doublereal _rt = GasConstant * m_tlast;
-      scale(grt, grt + m_kk, grt, _rt);
-    } else {
-      throw CanteraError("VPSSMgr_ConstVol::getGibbs_RT_ref",
-			 "unimplemented without m_useTmpRefStateStorage");
-    }
-  }
-  
-
-  //  Get the molar volumes of the species reference states at the current
-  //  <I>T</I> and <I>P_ref</I> of the solution.
-  /*
-   * units = m^3 / kmol
-   *
-   * @param vol     Output vector containing the standard state volumes.
-   *                Length: m_kk.
-   */
-  void VPSSMgr_ConstVol::getStandardVolumes_ref(doublereal *vol) const {
-  if (m_useTmpStandardStateStorage) {
-      std::copy(m_Vss.begin(), m_Vss.end(), vol);
-    } else {
-      throw CanteraError("VPSSMgr_ConstVol::getStandardVolumes_ref",
-			 "unimplemented without m_useTmpRefStateStorage");
     }
   }
   

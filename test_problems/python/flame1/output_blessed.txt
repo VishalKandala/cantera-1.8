@@ -116,17 +116,7 @@ Problem solved on [13] point grid(s).
 
 ##############################################################################
 Refining grid in flame.
-    New points inserted after grid points 0 
-    to resolve H2O2 HO2 
-..............................................................................
-
-Attempt Newton solution of steady-state problem...    success.
-
-Problem solved on [14] point grid(s).
-
-##############################################################################
-Refining grid in flame.
-    New points inserted after grid points 0 
+    New points inserted after grid points 0 1 
     to resolve H2O2 HO2 
 ..............................................................................
 
@@ -137,12 +127,22 @@ Problem solved on [15] point grid(s).
 ##############################################################################
 Refining grid in flame.
     New points inserted after grid points 0 
-    to resolve HO2 
+    to resolve H2O2 HO2 
 ..............................................................................
 
 Attempt Newton solution of steady-state problem...    success.
 
 Problem solved on [16] point grid(s).
+
+##############################################################################
+Refining grid in flame.
+    New points inserted after grid points 0 
+    to resolve HO2 
+..............................................................................
+
+Attempt Newton solution of steady-state problem...    success.
+
+Problem solved on [17] point grid(s).
 
 no new points needed in flame
 ..............................................................................
@@ -150,99 +150,93 @@ no new points needed in flame
 Attempt Newton solution of steady-state problem...    failure. 
 
 ..............................................................................
-Take 1 timesteps       7.5e-06      5.055 
+Take 1 timesteps       7.5e-06      5.054 
 ..............................................................................
 
 Attempt Newton solution of steady-state problem...    failure. 
 
 ..............................................................................
-Take 2 timesteps     8.438e-06       5.05 
+Take 2 timesteps     8.438e-06      5.049 
 ..............................................................................
 
 Attempt Newton solution of steady-state problem...    failure. 
 
 ..............................................................................
-Take 5 timesteps     3.204e-05      5.045 
+Take 5 timesteps     3.204e-05      5.044 
 ..............................................................................
 
 Attempt Newton solution of steady-state problem...    failure. 
 
 ..............................................................................
-Take 10 timesteps     0.0002309      4.993 
+Take 10 timesteps     0.0002309      4.991 
 ..............................................................................
 
 Attempt Newton solution of steady-state problem...    failure. 
 
 ..............................................................................
-Take 10 timesteps     0.0008323       4.76 
+Take 10 timesteps     0.0008323      4.751 
 ..............................................................................
 
 Attempt Newton solution of steady-state problem...    failure. 
 
 ..............................................................................
-Take 10 timesteps     0.0007499      4.434 
+Take 10 timesteps        0.0015      4.747 
 ..............................................................................
 
 Attempt Newton solution of steady-state problem...    failure. 
 
 ..............................................................................
-Take 10 timesteps      0.002703      4.143 
-..............................................................................
-
-Attempt Newton solution of steady-state problem...    failure. 
-
-..............................................................................
-Take 10 timesteps      0.002435      3.937 
+Take 10 timesteps      0.001351      4.316 
 ..............................................................................
 
 Attempt Newton solution of steady-state problem...    success.
 
-Problem solved on [16] point grid(s).
+Problem solved on [17] point grid(s).
 
 ##############################################################################
 Refining grid in flame.
-    New points inserted after grid points 0 1 2 3 4 5 6 7 8 9 10 11 12 
+    New points inserted after grid points 0 1 2 3 4 5 6 7 8 9 10 11 12 13 
     to resolve H H2 H2O H2O2 HO2 O O2 OH T u 
 ..............................................................................
 
 Attempt Newton solution of steady-state problem...    success.
 
-Problem solved on [29] point grid(s).
+Problem solved on [31] point grid(s).
 
 ##############################################################################
 Refining grid in flame.
-    New points inserted after grid points 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 20 21 24 25 
+    New points inserted after grid points 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 22 23 26 27 
     to resolve H H2 H2O H2O2 HO2 O O2 OH T u 
 ..............................................................................
 
 Attempt Newton solution of steady-state problem...    success.
 
-Problem solved on [50] point grid(s).
+Problem solved on [54] point grid(s).
 
 ##############################################################################
 Refining grid in flame.
-    New points inserted after grid points 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 43 
+    New points inserted after grid points 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 47 
     to resolve H H2 H2O H2O2 HO2 O O2 OH T u 
 ..............................................................................
 
 Attempt Newton solution of steady-state problem...    success.
 
-Problem solved on [71] point grid(s).
+Problem solved on [74] point grid(s).
 
 ##############################################################################
 Refining grid in flame.
-    New points inserted after grid points 0 1 2 3 5 6 7 8 9 10 11 12 13 14 16 17 24 25 26 27 28 29 30 31 32 33 34 
-    to resolve H H2 H2O H2O2 HO2 O O2 OH 
+    New points inserted after grid points 0 1 2 3 5 6 7 8 9 10 11 12 13 14 16 17 24 25 26 27 28 29 30 31 32 33 
+    to resolve H H2 H2O H2O2 HO2 O O2 
 ..............................................................................
 
 Attempt Newton solution of steady-state problem...    success.
 
-Problem solved on [98] point grid(s).
+Problem solved on [100] point grid(s).
 
 ##############################################################################
 Refining grid in flame.
-    New points inserted after grid points 0 1 2 56 57 
-    to resolve H2O2 HO2 O 
+    New points inserted after grid points 0 1 2 
+    to resolve H2O2 HO2 
 ..............................................................................
 
 Attempt Newton solution of steady-state problem...    success.

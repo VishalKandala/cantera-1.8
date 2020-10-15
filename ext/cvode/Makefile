@@ -21,7 +21,7 @@
 #
 do_ranlib = 1
 
-all: /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libcvode.a
+all: /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libcvode.a
 
 PURIFY=
 
@@ -36,11 +36,11 @@ OBJS = source/cvode.o source/cvdense.o source/dense.o source/cvband.o \
        source/iterativ.o source/cvbandpre.o source/nvector.o source/llnlmath.o
 
 
-/pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libcvode.a: $(OBJS)
-	$(RM) /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libcvode.a
-	(ar rcv /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libcvode.a $(OBJS))
+/Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libcvode.a: $(OBJS)
+	$(RM) /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libcvode.a
+	(ar rcv /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libcvode.a $(OBJS))
 ifeq ($(do_ranlib),1)
-	ranlib /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libcvode.a
+	ranlib /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libcvode.a
 endif
 
 source/cvode.o: source/cvode.c include/cvode.h include/llnltyps.h \
@@ -97,7 +97,7 @@ source/llnlmath.o: source/llnlmath.c include/llnlmath.h include/llnltyps.h
 $(OBJS): Makefile
 
 clean:
-	$(RM)  /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libcvode.a
+	$(RM)  /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libcvode.a
 	$(RM)  $(OBJS)
 
 depends:

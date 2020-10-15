@@ -17,13 +17,12 @@
  * U.S. Government retains certain rights in this software.
  */
 /*
- *  $Date: 2010-05-08 22:18:33 -0500 (Sat, 08 May 2010) $
- *  $Revision: 470 $
+ *  $Date: 2009/03/03 21:08:31 $
+ *  $Revision: 1.3 $
  */
 
 
 #include "GibbsExcessVPSSTP.h"
-#include <iomanip>
 using namespace std;
 
 namespace Cantera {
@@ -46,7 +45,7 @@ namespace Cantera {
   GibbsExcessVPSSTP::GibbsExcessVPSSTP(const GibbsExcessVPSSTP &b) :
     VPStandardStateTP()
   {
-    GibbsExcessVPSSTP::operator=(b);
+    *this = operator=(b);
   }
 
   /*
@@ -57,23 +56,18 @@ namespace Cantera {
    */
   GibbsExcessVPSSTP& GibbsExcessVPSSTP::
   operator=(const GibbsExcessVPSSTP &b) {
-    if (&b == this) {
-      return *this;
+    if (&b != this) {
+      VPStandardStateTP::operator=(b);
     }
-
-    VPStandardStateTP::operator=(b);
 
     moleFractions_       = b.moleFractions_;
     lnActCoeff_Scaled_   = b.lnActCoeff_Scaled_;
-    dlnActCoeffdT_Scaled_   = b.dlnActCoeffdT_Scaled_;
-    dlnActCoeffdlnX_Scaled_ = b.dlnActCoeffdlnX_Scaled_;
-    dlnActCoeffdlnN_Scaled_ = b.dlnActCoeffdlnN_Scaled_;
     m_pp                 = b.m_pp;
 
     return *this;
   }
 
-  /*
+  /**
    *
    * ~GibbsExcessVPSSTP():   (virtual)
    *
@@ -98,21 +92,33 @@ namespace Cantera {
    */
 
   void GibbsExcessVPSSTP::setMassFractions(const doublereal* const y) {
+#if DEBUG_MODE
+    checkMFSum(y);
+#endif
     State::setMassFractions(y);
     getMoleFractions(DATA_PTR(moleFractions_));
   }
 
   void GibbsExcessVPSSTP::setMassFractions_NoNorm(const doublereal* const y) {
+#if DEBUG_MODE
+    checkMFSum(y);
+#endif
     State::setMassFractions_NoNorm(y);
     getMoleFractions(DATA_PTR(moleFractions_));
   }
 
  void GibbsExcessVPSSTP::setMoleFractions(const doublereal* const x) {
+#if DEBUG_MODE
+    checkMFSum(x);
+#endif
     State::setMoleFractions(x);
     getMoleFractions(DATA_PTR(moleFractions_));
   }
 
   void GibbsExcessVPSSTP::setMoleFractions_NoNorm(const doublereal* const x) {
+#if DEBUG_MODE
+    checkMFSum(x);
+#endif
     State::setMoleFractions_NoNorm(x);
     getMoleFractions(DATA_PTR(moleFractions_));
   }
@@ -154,26 +160,9 @@ namespace Cantera {
    * The mass density is not a function of pressure.
    */
   void GibbsExcessVPSSTP::setPressure(doublereal p) {
-    setState_TP(temperature(), p);
-  }
-
-  void GibbsExcessVPSSTP::calcDensity() {
-    doublereal* vbar = NULL;
-    vbar = new doublereal[m_kk];
-    //    double *vbar = &m_pp[0];
-    getPartialMolarVolumes(vbar);
-   
-    doublereal vtotal = 0.0;
-    for (int i = 0; i < m_kk; i++) {
-      vtotal += vbar[i] * moleFractions_[i];
-    }
-    doublereal dd = meanMolecularWeight() / vtotal;
-    State::setDensity(dd);
-    delete [] vbar;
-  }
-
-  void GibbsExcessVPSSTP::setState_TP(doublereal t, doublereal p) {
-    State::setTemperature(t);
+#ifdef DEBUG_MODE
+    //printf("setPressure: %g\n", p);
+#endif
     /*
      * Store the current pressure
      */
@@ -185,10 +174,24 @@ namespace Cantera {
     updateStandardStateThermo();
   
     /*
-     * Calculate the partial molar volumes, and then the density of the fluid
+     * Calculate all of the other standard volumes
+     * -> note these are constant for now
      */
     calcDensity();
   }
+
+  void GibbsExcessVPSSTP::calcDensity() {
+    double *vbar = &m_pp[0];
+    getPartialMolarVolumes(vbar);
+   
+    doublereal vtotal = 0.0;
+    for (int i = 0; i < m_kk; i++) {
+      vtotal += vbar[i] * moleFractions_[i];
+    }
+    doublereal dd = meanMolecularWeight() / vtotal;
+    State::setDensity(dd);
+  }
+
  
 
 
@@ -253,13 +256,21 @@ namespace Cantera {
     return 0;
   }
 
- 
+    //@}
+    /// @name  Properties of the Standard State of the Species in the Solution
+    //@{
+
+     
+
+    //@}
+    /// @name Thermodynamic Values for the Species Reference States
+    //@{
 
   double GibbsExcessVPSSTP::checkMFSum(const doublereal * const x) const {
     doublereal norm = accumulate(x, x + m_kk, 0.0);
     if (fabs(norm - 1.0) > 1.0E-9) {
-      throw CanteraError("GibbsExcessVPSSTP::checkMFSum",
-			 "(MF sum - 1) exceeded tolerance of 1.0E-9:" + fp2str(norm));
+      throw CanteraError("GibbsExcessVPSSTP::checkMFSun",
+			 "MF sum exceeded tolerance of 1.0E-9:" + fp2str(norm));
     }
     return norm;
   }
@@ -314,6 +325,7 @@ namespace Cantera {
   void GibbsExcessVPSSTP::initThermo() {
     initLengths();
     VPStandardStateTP::initThermo();
+
   }
 
 
@@ -323,12 +335,109 @@ namespace Cantera {
     m_kk = nSpecies();
     moleFractions_.resize(m_kk);
     lnActCoeff_Scaled_.resize(m_kk);
-    dlnActCoeffdT_Scaled_.resize(m_kk);
-    dlnActCoeffdlnX_Scaled_.resize(m_kk);
-    dlnActCoeffdlnN_Scaled_.resize(m_kk);
     m_pp.resize(m_kk);
   }
+
+  /*
+   * initThermoXML()                (virtual from ThermoPhase)
+   *   Import and initialize a ThermoPhase object
+   *
+   * @param phaseNode This object must be the phase node of a
+   *             complete XML tree
+   *             description of the phase, including all of the
+   *             species data. In other words while "phase" must
+   *             point to an XML phase object, it must have
+   *             sibling nodes "speciesData" that describe
+   *             the species in the phase.
+   * @param id   ID of the phase. If nonnull, a check is done
+   *             to see if phaseNode is pointing to the phase
+   *             with the correct id. 
+   */
+  void GibbsExcessVPSSTP::initThermoXML(XML_Node& phaseNode, std::string id) {
+
+
+    VPStandardStateTP::initThermoXML(phaseNode, id);
+  }
   
+ /**
+   * Format a summary of the mixture state for output.
+   */           
+  std::string GibbsExcessVPSSTP::report(bool show_thermo) const {
+
+
+    char p[800];
+    string s = "";
+    try {
+      if (name() != "") {
+	sprintf(p, " \n  %s:\n", name().c_str());
+	s += p;
+      }
+      sprintf(p, " \n       temperature    %12.6g  K\n", temperature());
+      s += p;
+      sprintf(p, "          pressure    %12.6g  Pa\n", pressure());
+      s += p;
+      sprintf(p, "           density    %12.6g  kg/m^3\n", density());
+      s += p;
+      sprintf(p, "  mean mol. weight    %12.6g  amu\n", meanMolecularWeight());
+      s += p;
+
+      doublereal phi = electricPotential();
+      sprintf(p, "         potential    %12.6g  V\n", phi);
+      s += p;
+
+      int kk = nSpecies();
+      array_fp x(kk);
+      array_fp molal(kk);
+      array_fp mu(kk);
+      array_fp muss(kk);
+      array_fp acMolal(kk);
+      array_fp actMolal(kk);
+      getMoleFractions(&x[0]);
+   
+      getChemPotentials(&mu[0]);
+      getStandardChemPotentials(&muss[0]);
+      getActivities(&actMolal[0]);
+ 
+
+      if (show_thermo) {
+        sprintf(p, " \n");
+        s += p;
+        sprintf(p, "                          1 kg            1 kmol\n");
+        s += p;
+        sprintf(p, "                       -----------      ------------\n");
+        s += p;
+        sprintf(p, "          enthalpy    %12.6g     %12.4g     J\n", 
+		enthalpy_mass(), enthalpy_mole());
+        s += p;
+        sprintf(p, "   internal energy    %12.6g     %12.4g     J\n", 
+		intEnergy_mass(), intEnergy_mole());
+        s += p;
+        sprintf(p, "           entropy    %12.6g     %12.4g     J/K\n", 
+		entropy_mass(), entropy_mole());
+        s += p;
+        sprintf(p, "    Gibbs function    %12.6g     %12.4g     J\n", 
+		gibbs_mass(), gibbs_mole());
+        s += p;
+        sprintf(p, " heat capacity c_p    %12.6g     %12.4g     J/K\n", 
+		cp_mass(), cp_mole());
+        s += p;
+        try {
+	  sprintf(p, " heat capacity c_v    %12.6g     %12.4g     J/K\n", 
+		  cv_mass(), cv_mole());
+	  s += p;
+        }
+        catch(CanteraError) {
+	  sprintf(p, " heat capacity c_v    <not implemented>       \n");
+	  s += p;
+        }
+      }
+  
+    } catch (CanteraError) {
+      ;
+    }
+    return s;
+  }
+
  
 }
 

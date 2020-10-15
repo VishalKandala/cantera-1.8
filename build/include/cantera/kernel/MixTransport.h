@@ -4,8 +4,8 @@
  */
 
 /* $Author: hkmoffa $
- * $Revision: 368 $
- * $Date: 2010-01-03 18:46:26 -0600 (Sun, 03 Jan 2010) $
+ * $Revision: 1.11 $
+ * $Date: 2009/03/27 18:24:39 $
  */
 
 // Copyright 2001  California Institute of Technology
@@ -37,7 +37,7 @@ using namespace std;
 namespace Cantera {
 
 
-  class GasTransportParams;
+  class TransportParams;
 
   /**
    * Class MixTransport implements mixture-averaged transport
@@ -51,7 +51,7 @@ namespace Cantera {
 
     virtual ~MixTransport() {}
 
-    virtual int model() const { return cMixtureAveraged; }
+    virtual int model() { return cMixtureAveraged; }
 
     //! Viscosity of the mixture
     /*!
@@ -120,7 +120,7 @@ namespace Cantera {
      * @param tr  Transport parameters for all of the species
      *            in the phase.
      */
-    virtual bool initGas( GasTransportParams& tr );
+    virtual bool init(TransportParams& tr);
 
     friend class TransportFactory;
 

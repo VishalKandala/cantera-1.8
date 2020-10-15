@@ -1,8 +1,8 @@
 #/bin/sh
 ###############################################################
 #  $Author: hkmoffa $
-#  $Date: 2010-01-03 18:46:26 -0600 (Sun, 03 Jan 2010) $
-#  $Revision: 368 $
+#  $Date: 2009/07/17 15:32:51 $
+#  $Revision: 1.13 $
 #
 #  Copyright 2002 California Institute of Technology
 #
@@ -56,7 +56,7 @@ TOTAL_OBJ = $(NUMERICS_OBJ) $(ODEPACKAGE_OBJ)
 TTOTAL_H  = $(NUMERICS_H) CVode.h CVodesIntegrator.h
 
 CXX_INCLUDES = -I../base  $(SUNDIALS_INC)
-LIB = /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libctnumerics.a
+LIB = /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libctnumerics.a
 
 DEPENDS = $(TOTAL_OBJ:.o=.d)
 

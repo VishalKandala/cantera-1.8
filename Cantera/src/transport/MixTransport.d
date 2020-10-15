@@ -7,4 +7,4 @@ MixTransport.o: MixTransport.cpp ../thermo/ThermoPhase.h \
  ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
  ../base/Array.h MixTransport.h TransportBase.h ../numerics/DenseMatrix.h \
  ../base/Array.h TransportParams.h ../base/XML_Writer.h \
- TransportFactory.h ../base/FactoryBase.h LiquidTransportData.h
+ TransportFactory.h ../base/FactoryBase.h

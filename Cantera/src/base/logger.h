@@ -4,7 +4,7 @@
  * (see \ref textlogs and class \link Cantera::Logger Logger\endlink).
  */
 /*
- * $Id: logger.h 368 2010-01-04 00:46:26Z hkmoffa $
+ * $Id: logger.h,v 1.3 2008/12/17 17:13:35 hkmoffa Exp $
  */
 
 #ifndef CT_LOGGER_H

@@ -1,8 +1,8 @@
 #/bin/sh
 ###############################################################
 #  $Author: hkmoffa $
-#  $Date: 2010-01-03 18:46:26 -0600 (Sun, 03 Jan 2010) $
-#  $Revision: 368 $
+#  $Date: 2009/04/04 03:08:28 $
+#  $Revision: 1.7 $
 #
 #  Copyright 2007 California Institute of Technology
 #
@@ -35,7 +35,7 @@ SPECTRA_OBJ = rotor.o LineBroadener.o
 SPECTRA_H   = rotor.h LineBroadener.h  Nuclei.h spectralUtilities.h
 
 CXX_INCLUDES = -I.  -I../base
-LIB = /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libctspectra.a
+LIB = /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libctspectra.a
 
 DEPENDS = $(SPECTRA_OBJ:.o=.d)
 

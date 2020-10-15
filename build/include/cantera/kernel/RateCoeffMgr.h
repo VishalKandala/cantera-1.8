@@ -3,9 +3,9 @@
  */
 
 /*
- * $Author: hkmoffa $
- * $Revision: 309 $
- * $Date: 2009-12-10 17:20:44 -0600 (Thu, 10 Dec 2009) $
+ * $Author: dggoodwin $
+ * $Revision: 1.1 $
+ * $Date: 2007/05/04 14:27:23 $
  */
 
 // Copyright 2001  California Institute of Technology

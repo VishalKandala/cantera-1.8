@@ -4,8 +4,8 @@
  * @ingroup chemkinetics
  *
  * $Author: hkmoffa $
- * $Revision: 309 $
- * $Date: 2009-12-10 17:20:44 -0600 (Thu, 10 Dec 2009) $
+ * $Revision: 1.8 $
+ * $Date: 2008/12/29 21:34:08 $
  */
 
 // Copyright 2001  California Institute of Technology

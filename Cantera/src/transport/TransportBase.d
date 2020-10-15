@@ -6,6 +6,6 @@ TransportBase.o: TransportBase.cpp ../thermo/ThermoPhase.h \
  ../base/ctexceptions.h ../base/global.h ../thermo/Elements.h \
  ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
  ../base/Array.h LiquidTransport.h TransportBase.h \
- ../numerics/DenseMatrix.h ../base/Array.h TransportParams.h \
- ../base/XML_Writer.h LiquidTransportParams.h LiquidTransportData.h \
- ../base/FactoryBase.h TransportFactory.h ../numerics/ctlapack.h
+ ../numerics/DenseMatrix.h ../base/Array.h LiquidTransportParams.h \
+ ../base/XML_Writer.h TransportFactory.h ../base/FactoryBase.h \
+ ../numerics/ctlapack.h

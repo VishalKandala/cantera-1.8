@@ -4,9 +4,9 @@
  */
 
 /*
- *  $Author: hkmoffa $
- *  $Date: 2010-01-03 18:46:26 -0600 (Sun, 03 Jan 2010) $
- *  $Revision: 368 $
+ *  $Author: dggoodwin $
+ *  $Date: 2007/05/04 14:41:27 $
+ *  $Revision: 1.3 $
  *
  *  Copyright 2002 California Institute of Technology
  *
@@ -79,13 +79,7 @@ namespace Cantera {
 
     protected:
 
-        //!  Residual evaluator for this jacobian
-        /*!
-         *  This is a pointer to the residual evaluator. This
-         *  object isn't owned by this jacobian object.
-         */ 
         OneDim* m_resid;
-
         vector_fp    m_r1;
         doublereal m_rtol, m_atol;
         doublereal m_elapsed;

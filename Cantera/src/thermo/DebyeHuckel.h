@@ -15,7 +15,7 @@
  */
 
 /*
- * $Id: DebyeHuckel.h 279 2009-12-05 19:08:43Z hkmoffa $
+ * $Id: DebyeHuckel.h,v 1.31 2009/03/27 00:38:57 hkmoffa Exp $
  */
 
 #ifndef CT_DEBYEHUCKEL_H
@@ -766,10 +766,10 @@ namespace Cantera {
      */
     virtual void setPressure(doublereal p);
 
-  protected:
-    //! Calculate the density of the mixture using the partial 
-    //! molar volumes and mole fractions as input
-    /*!
+    /**
+     * Calculate the density of the mixture using the partial 
+     * molar volumes and mole fractions as input
+     *
      * The formula for this is
      *
      * \f[ 
@@ -785,10 +785,12 @@ namespace Cantera {
      * species molar volumes. We have additionally specified
      * in this class that the pure species molar volumes are
      * independent of temperature and pressure.
+     *
+     * NOTE: This is a non-virtual function, which is not a 
+     *       member of the ThermoPhase base class. 
      */
-    virtual void calcDensity();
+    void calcDensity();
 
-  public:
     //! Set the internally storred density (gm/m^3) of the phase.
     /*!
      * Overwritten setDensity() function is necessary because the
@@ -843,15 +845,6 @@ namespace Cantera {
      * @param temp Temperature in kelvin
      */
     virtual void setTemperature(const doublereal temp);
-
-    //! Set the temperature (K) and pressure (Pa)
-    /*!
-     *  Set the temperature and pressure.
-     *
-     * @param t    Temperature (K)
-     * @param p    Pressure (Pa)
-     */
-    virtual void setState_TP(doublereal t, doublereal p);
 
     /**
      * The isothermal compressibility. Units: 1/Pa.

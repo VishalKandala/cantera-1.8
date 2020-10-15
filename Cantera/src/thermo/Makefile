@@ -1,8 +1,8 @@
 #/bin/sh
 ###############################################################
 #  $Author: hkmoffa $
-#  $Date: 2009-12-10 19:32:26 -0600 (Thu, 10 Dec 2009) $
-#  $Revision: 311 $
+#  $Date: 2009/03/03 21:08:31 $
+#  $Revision: 1.30 $
 #
 #  Copyright 2002 California Institute of Technology
 #
@@ -40,7 +40,7 @@ THERMO_OBJ = State.o Elements.o Constituents.o Phase.o \
              ThermoFactory.o phasereport.o SpeciesThermoInterpType.o \
              VPSSMgr.o  VPSSMgrFactory.o  VPSSMgr_General.o IdealSolnGasVPSS.o \
              VPSSMgr_IdealGas.o VPSSMgr_ConstVol.o PDSS_ConstVol.o PDSS_IdealGas.o \
-             PDSS_SSVol.o  SemiconductorPhase.o StoichSubstance.o PureFluidPhase.o LatticeSolidPhase.o LatticePhase.o
+              SemiconductorPhase.o StoichSubstance.o PureFluidPhase.o LatticeSolidPhase.o LatticePhase.o
 
 THERMO_H   = State.h Elements.h Constituents.h Phase.h mix_defs.h \
              ThermoPhase.h IdealGasPhase.h ConstDensityThermo.h \
@@ -54,7 +54,7 @@ THERMO_H   = State.h Elements.h Constituents.h Phase.h mix_defs.h \
              EdgePhase.h  \
              VPSSMgr.h  VPSSMgrFactory.h  VPSSMgr_General.h IdealSolnGasVPSS.h \
              VPSSMgr_IdealGas.h VPSSMgr_ConstVol.h PDSS_ConstVol.h PDSS_IdealGas.h \
-             PDSS_SSVol.h  MetalPhase.h SemiconductorPhase.h AdsorbateThermo.h StoichSubstance.h PureFluidPhase.h LatticeSolidPhase.h LatticePhase.h
+              MetalPhase.h SemiconductorPhase.h AdsorbateThermo.h StoichSubstance.h PureFluidPhase.h LatticeSolidPhase.h LatticePhase.h
 
 
 # Extended Cantera Thermodynamics Object Files
@@ -66,24 +66,22 @@ ELECTRO_OBJ = MolalityVPSSTP.o  VPStandardStateTP.o \
               WaterPropsIAPWSphi.o WaterPropsIAPWS.o WaterProps.o \
               PDSS.o PDSS_Water.o PDSS_HKFT.o  \
 	      HMWSoln.o HMWSoln_input.o DebyeHuckel.o \
-              WaterSSTP.o MetalSHEelectrons.o \
+              WaterSSTP.o \
               VPSSMgr_Water_ConstVol.o VPSSMgr_Water_HKFT.o
 
 ELECTRO_H   = MolalityVPSSTP.h  VPStandardStateTP.h \
               IdealMolalSoln.h \
               WaterPropsIAPWSphi.h WaterPropsIAPWS.h WaterProps.h \
               PDSS.h PDSS_Water.h PDSS_HKFT.h \
-              HMWSoln.h electrolytes.h   \
-	      DebyeHuckel.h WaterSSTP.h MetalSHEelectrons.h VPSSMgr_Water_HKFT.h \
+              HMWSoln.h electrolytes.h  \
+	      DebyeHuckel.h WaterSSTP.h VPSSMgr_Water_HKFT.h \
               VPSSMgr_Water_ConstVol.h
 endif
 ifeq ($(do_issp),1)
 ISSP_OBJ = IdealSolidSolnPhase.o  StoichSubstanceSSTP.o SingleSpeciesTP.o MineralEQ3.o \
-           GibbsExcessVPSSTP.o PseudoBinaryVPSSTP.o MargulesVPSSTP.o \
-           IonsFromNeutralVPSSTP.o PDSS_IonsFromNeutral.o 
+           GibbsExcessVPSSTP.o PseudoBinaryVPSSTP.o MargulesVPSSTP.o
 ISSP_H   = IdealSolidSolnPhase.h  StoichSubstanceSSTP.h SingleSpeciesTP.h MineralEQ3.h \
-           GibbsExcessVPSSTP.h PseudoBinaryVPSSTP.h MargulesVPSSTP.h \
-           IonsFromNeutralVPSSTP.h  PDSS_IonsFromNeutral.h
+           GibbsExcessVPSSTP.h PseudoBinaryVPSSTP.h MargulesVPSSTP.h
 endif
 
 CATHERMO_OBJ = $(THERMO_OBJ) $(ELECTRO_OBJ) $(ISSP_OBJ) 
@@ -92,7 +90,7 @@ CATHERMO_H   = $(THERMO_H) $(ELECTRO_H) $(ISSP_H)
 
 
 CXX_INCLUDES = -I../base 
-LIB = /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libthermo.a
+LIB = /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libthermo.a
 
 DEPENDS = $(CATHERMO_OBJ:.o=.d)
 

@@ -7,12 +7,12 @@
  *
  * $Author: hkmoffa $
  *
- * $Date: 2010-04-02 14:29:07 -0500 (Fri, 02 Apr 2010) $
+ * $Date: 2009/03/28 03:07:23 $
  *
- * $Revision: 432 $
+ * $Revision: 1.2 $
  * Symbolic $Name:  $
  *
- * $Id: tok_input_util.cpp 432 2010-04-02 19:29:07Z hkmoffa $
+ * $Id: tok_input_util.cpp,v 1.2 2009/03/28 03:07:23 hkmoffa Exp $
  * $Source: /cvsroot/cantera/cantera/tools/testtools/tok_input_util.cpp,v $
  *
  *====================================================================*/

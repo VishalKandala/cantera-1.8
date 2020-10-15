@@ -22,7 +22,7 @@ install:
 	/usr/bin/install -c -c -m ug+rw,o+r flame_fixed_T_blessed_0.csv $(INST_DIR)
 
 clean:
-	rm -f *.log 
+	rm -f *.log *.csv *.xml
 	./cleanup
 
 # end of file

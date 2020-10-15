@@ -7,8 +7,8 @@
 
 /*
  * $Author: hkmoffa $
- * $Revision: 304 $
- * $Date: 2009-12-08 11:36:40 -0600 (Tue, 08 Dec 2009) $
+ * $Revision: 1.10 $
+ * $Date: 2009/02/11 20:03:08 $
  */
 
 // Copyright 2001  California Institute of Technology
@@ -142,16 +142,6 @@ namespace Cantera {
         }
         return f->newThermoPhase(model);
     }
-
-    //! Translate the eosType id into a string
-    /*!
-     *  Returns a string representation of the eosType id for a phase.
-     *  @param ieos  eosType id of the phase. This is unique for the phase
-     *  @param length maximum length of the return string. Defaults to 100
-     * 
-     *  @return returns a string representation.
-     */
-    std::string eosTypeString(int ieos, int length = 100);
 
 
   /*!

@@ -2,9 +2,9 @@
  * @file ctlapack.h
  */
 
-/* $Author: hkmoffa $
- * $Revision: 368 $
- * $Date: 2010-01-03 18:46:26 -0600 (Sun, 03 Jan 2010) $
+/* $Author: dggoodwin $
+ * $Revision: 1.2 $
+ * $Date: 2008/02/05 23:36:12 $
  */
 
 // Copyright 2001 California Institute of Technology.  

@@ -5,9 +5,9 @@
  */
 
 /*
- *  $Author: hkmoffa $
- *  $Revision: 368 $
- *  $Date: 2010-01-03 18:46:26 -0600 (Sun, 03 Jan 2010) $
+ *  $Author: dggoodwin $
+ *  $Revision: 1.1 $
+ *  $Date: 2007/05/04 14:40:26 $
  */
 
 // Copyright 2001  California Institute of Technology
@@ -134,11 +134,11 @@ namespace Cantera {
         vector_fp::const_iterator begin() const { return data.begin(); }
         vector_fp::const_iterator end() const { return data.end(); }
 
-    protected:
         vector_fp data;
         vector_fp ludata;
         bool m_factored;
 
+    protected:
 
         int m_n, m_kl, m_ku;
         doublereal m_zero;

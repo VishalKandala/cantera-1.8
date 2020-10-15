@@ -1,9 +1,10 @@
         
-                             C A N T E R A
+                             C A N T E R A-Radcal
 
-                              release 1.8
+                              release 1.8R
 
-                               08/2009
+Original Release:                  08/2009
+Latest Update:			   10/2020
 
 ***************************************************************
 ***                                                         
@@ -19,12 +20,56 @@ for usage, and a DISCLAIMER OF ALL WARRANTIES.
 All trademarks referenced herein are property of their respective
 holders.
 
+******************************************************************
+This is a Docker VM Implementation of Cantera 1.8 with Radiation Correction.
+******************************************************************
+Architecture:
+VM:
+Docker 19.03.13
 
+OS:
+Ubuntu 16.04:x_86
+
+Python:
+Python 2.6.9
+
+pip:
+setuptools 2.0
+https://bootstrap.pypa.io/ez_setup.py
+
+pip 1.4.1
+https://bootstrap.pypa.io/2.6/get-pip.py
+*****************************************************************
+Dependencies:
+Numpy 1.7.0
+
+Cython 0.12
+
+Sundials 2.3.0
+https://computing.llnl.gov/projects/sundials/download/sundials-2.3.0.tar.gz
+========================================================
+Instructions
+
+1. Download and Install docker:
+   1.1 	Install Docker Engine and containerd.
+	$ sudo apt-get update
+ 	$ sudo apt-get install docker-ce docker-ce-cli containerd.io
+   1.2  Check whether docker is up and running.
+	$ docker run hello-world
+2. Build and run the Docker Container:
+   2.1 Build the Image:
+       $ docker build --force-rm --tag <Image Name> .
+   2.2 Build the Container:
+       $ docker run -itd --name <container name> <Image Name>
+
+This ensures that the VM is built with Cantera 1.8-radcal compiled and installed in it.
+To use the container, we must start and attach the container each time.
+
+3. $ docker start <container name>
+   $ docker attach <container name>
+========================================================
 Web sites
 ==========
-
-The current main Cantera web site is under construction. There exists three
-web sites for communication amongst Cantera users:
 
 1. The Cantera User's Group. 
     http://groups.google.com/group/cantera-users

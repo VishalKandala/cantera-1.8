@@ -89,14 +89,12 @@ ThermoFactory.o: ThermoFactory.cpp ThermoFactory.h ThermoPhase.h Phase.h \
  ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
  ../base/Array.h ../base/FactoryBase.h speciesThermoTypes.h \
  ../base/global.h SpeciesThermoFactory.h IdealGasPhase.h mix_defs.h \
- VPSSMgr.h VPSSMgrFactory.h IdealSolidSolnPhase.h MargulesVPSSTP.h \
- PseudoBinaryVPSSTP.h GibbsExcessVPSSTP.h VPStandardStateTP.h \
- IonsFromNeutralVPSSTP.h PureFluidPhase.h ConstDensityThermo.h \
- SurfPhase.h EdgePhase.h MetalPhase.h StoichSubstance.h MineralEQ3.h \
- SingleSpeciesTP.h StoichSubstanceSSTP.h MetalSHEelectrons.h \
+ VPSSMgr.h VPSSMgrFactory.h IdealSolidSolnPhase.h PureFluidPhase.h \
+ ConstDensityThermo.h SurfPhase.h EdgePhase.h MetalPhase.h \
+ StoichSubstance.h MineralEQ3.h SingleSpeciesTP.h StoichSubstanceSSTP.h \
  LatticeSolidPhase.h ../base/config.h LatticePhase.h HMWSoln.h \
- MolalityVPSSTP.h electrolytes.h DebyeHuckel.h ../base/Array.h \
- IdealMolalSoln.h IdealSolnGasVPSS.h
+ MolalityVPSSTP.h VPStandardStateTP.h electrolytes.h DebyeHuckel.h \
+ ../base/Array.h IdealMolalSoln.h IdealSolnGasVPSS.h
 phasereport.o: phasereport.cpp ThermoPhase.h Phase.h State.h \
  ../base/ct_defs.h ../base/config.h ../base/../../../config.h \
  ../base/utilities.h ../base/ct_defs.h Constituents.h SpeciesThermo.h \
@@ -137,10 +135,9 @@ VPSSMgr_General.o: VPSSMgr_General.cpp VPSSMgr_General.h \
  ../base/utilities.h PDSS_IdealGas.h PDSS_Water.h VPStandardStateTP.h \
  ThermoPhase.h Phase.h State.h ../base/utilities.h Constituents.h \
  SpeciesThermo.h ../base/ctexceptions.h ../base/stringUtils.h Elements.h \
- ../base/vec_functions.h PDSS_ConstVol.h PDSS_SSVol.h PDSS_HKFT.h \
- PDSS_IonsFromNeutral.h GeneralSpeciesThermo.h SpeciesThermoMgr.h \
- NasaPoly1.h ../base/global.h SpeciesThermoInterpType.h \
- speciesThermoTypes.h Nasa9Poly1.h
+ ../base/vec_functions.h PDSS_ConstVol.h PDSS_HKFT.h \
+ GeneralSpeciesThermo.h SpeciesThermoMgr.h NasaPoly1.h ../base/global.h \
+ SpeciesThermoInterpType.h speciesThermoTypes.h Nasa9Poly1.h
 IdealSolnGasVPSS.o: IdealSolnGasVPSS.cpp IdealSolnGasVPSS.h \
  VPStandardStateTP.h ThermoPhase.h Phase.h State.h ../base/ct_defs.h \
  ../base/config.h ../base/../../../config.h ../base/utilities.h \
@@ -177,14 +174,6 @@ PDSS_IdealGas.o: PDSS_IdealGas.cpp ../base/ct_defs.h ../base/config.h \
  ../base/../../../config.h ../base/xml.h ../base/ctexceptions.h \
  ../base/ct_defs.h ../base/global.h ../base/ctml.h ../base/xml.h \
  ../base/Array.h ../base/utilities.h PDSS_IdealGas.h PDSS.h mix_defs.h \
- ThermoFactory.h ThermoPhase.h Phase.h State.h ../base/utilities.h \
- Constituents.h SpeciesThermo.h ../base/ctexceptions.h \
- ../base/stringUtils.h Elements.h ../base/vec_functions.h \
- ../base/FactoryBase.h VPStandardStateTP.h VPSSMgr.h
-PDSS_SSVol.o: PDSS_SSVol.cpp ../base/ct_defs.h ../base/config.h \
- ../base/../../../config.h ../base/xml.h ../base/ctexceptions.h \
- ../base/ct_defs.h ../base/global.h ../base/ctml.h ../base/xml.h \
- ../base/Array.h ../base/utilities.h PDSS_SSVol.h PDSS.h mix_defs.h \
  ThermoFactory.h ThermoPhase.h Phase.h State.h ../base/utilities.h \
  Constituents.h SpeciesThermo.h ../base/ctexceptions.h \
  ../base/stringUtils.h Elements.h ../base/vec_functions.h \
@@ -278,7 +267,7 @@ PDSS_Water.o: PDSS_Water.cpp ../base/ct_defs.h ../base/config.h \
  Constituents.h SpeciesThermo.h ../base/ctexceptions.h \
  ../base/stringUtils.h Elements.h ../base/vec_functions.h VPSSMgr.h \
  WaterPropsIAPWS.h WaterPropsIAPWSphi.h ../base/config.h ThermoFactory.h \
- ../base/FactoryBase.h WaterProps.h
+ ../base/FactoryBase.h
 PDSS_HKFT.o: PDSS_HKFT.cpp ../base/ctml.h ../base/ct_defs.h \
  ../base/config.h ../base/../../../config.h ../base/xml.h \
  ../base/ctexceptions.h ../base/global.h ../base/Array.h \
@@ -321,15 +310,7 @@ WaterSSTP.o: WaterSSTP.cpp ../base/xml.h ../base/ctexceptions.h \
  SpeciesThermo.h ../base/ctexceptions.h ../base/stringUtils.h Elements.h \
  ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
  ../base/Array.h WaterPropsIAPWS.h WaterPropsIAPWSphi.h ../base/config.h \
- WaterProps.h ThermoFactory.h ../base/FactoryBase.h
-MetalSHEelectrons.o: MetalSHEelectrons.cpp ../base/ct_defs.h \
- ../base/config.h ../base/../../../config.h MetalSHEelectrons.h \
- mix_defs.h SingleSpeciesTP.h ThermoPhase.h Phase.h State.h \
- ../base/utilities.h ../base/ct_defs.h Constituents.h SpeciesThermo.h \
- ../base/ctexceptions.h ../base/stringUtils.h ../base/xml.h \
- ../base/ctexceptions.h ../base/global.h Elements.h \
- ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
- ../base/Array.h ThermoFactory.h ../base/FactoryBase.h
+ ThermoFactory.h ../base/FactoryBase.h
 VPSSMgr_Water_ConstVol.o: VPSSMgr_Water_ConstVol.cpp \
  VPSSMgr_Water_ConstVol.h VPSSMgr.h ../base/ct_defs.h ../base/config.h \
  ../base/../../../config.h mix_defs.h PDSS_Water.h PDSS.h \
@@ -405,21 +386,3 @@ MargulesVPSSTP.o: MargulesVPSSTP.cpp MargulesVPSSTP.h \
  ../base/global.h Elements.h ../base/vec_functions.h ../base/utilities.h \
  ../base/ctml.h ../base/xml.h ../base/Array.h VPSSMgr.h mix_defs.h \
  ThermoFactory.h ../base/FactoryBase.h
-IonsFromNeutralVPSSTP.o: IonsFromNeutralVPSSTP.cpp \
- IonsFromNeutralVPSSTP.h GibbsExcessVPSSTP.h VPStandardStateTP.h \
- ThermoPhase.h Phase.h State.h ../base/ct_defs.h ../base/config.h \
- ../base/../../../config.h ../base/utilities.h ../base/ct_defs.h \
- Constituents.h SpeciesThermo.h ../base/ctexceptions.h \
- ../base/stringUtils.h ../base/xml.h ../base/ctexceptions.h \
- ../base/global.h Elements.h ../base/vec_functions.h ../base/utilities.h \
- ../base/ctml.h ../base/xml.h ../base/Array.h VPSSMgr.h mix_defs.h \
- ThermoFactory.h ../base/FactoryBase.h PDSS_IonsFromNeutral.h PDSS.h
-PDSS_IonsFromNeutral.o: PDSS_IonsFromNeutral.cpp ../base/ct_defs.h \
- ../base/config.h ../base/../../../config.h ../base/xml.h \
- ../base/ctexceptions.h ../base/ct_defs.h ../base/global.h ../base/ctml.h \
- ../base/xml.h ../base/Array.h ../base/utilities.h PDSS_IonsFromNeutral.h \
- PDSS.h mix_defs.h ThermoFactory.h ThermoPhase.h Phase.h State.h \
- ../base/utilities.h Constituents.h SpeciesThermo.h \
- ../base/ctexceptions.h ../base/stringUtils.h Elements.h \
- ../base/vec_functions.h ../base/FactoryBase.h IonsFromNeutralVPSSTP.h \
- GibbsExcessVPSSTP.h VPStandardStateTP.h VPSSMgr.h

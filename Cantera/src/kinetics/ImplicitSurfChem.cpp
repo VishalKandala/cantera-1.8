@@ -7,8 +7,8 @@
 
 /*
  * $Author: hkmoffa $
- * $Revision: 377 $
- * $Date: 2010-01-13 16:12:27 -0600 (Wed, 13 Jan 2010) $
+ * $Revision: 1.4 $
+ * $Date: 2007/08/29 19:57:48 $
  */
 
 // Copyright 2001  California Institute of Technology
@@ -132,8 +132,8 @@ namespace Cantera {
 
   // overloaded method of FuncEval. Called by the integrator to
   // get the initial conditions.
-  void ImplicitSurfChem::getInitialConditions(doublereal t0, size_t lenc, 
-					      doublereal * c) 
+  void ImplicitSurfChem::getInitialConditions(double t0, size_t lenc, 
+					      double* c) 
   {
     int loc = 0;
     for (int n = 0; n < m_nsurf; n++) {
@@ -234,7 +234,7 @@ namespace Cantera {
     /*
      * time scale - time over which to integrate equations
      */
-    doublereal time_scale = timeScaleOverride;
+    double time_scale = timeScaleOverride;
     /*
      *
      */
@@ -263,8 +263,8 @@ namespace Cantera {
     getConcSpecies(DATA_PTR(m_concSpecies));
     InterfaceKinetics *ik = m_vecKinPtrs[0];
     ThermoPhase &tp = ik->thermo(0);
-    doublereal TKelvin = tp.temperature();
-    doublereal PGas  = tp.pressure();
+    double TKelvin = tp.temperature();
+    double PGas  = tp.pressure();
     /*
      * Make sure that there is a common temperature and 
      * pressure for all ThermoPhase objects belonging to the
@@ -275,8 +275,8 @@ namespace Cantera {
       setCommonState_TP(TKelvin, PGas);
     }
 
-    doublereal reltol = 1.0E-6;
-    doublereal atol = 1.0E-20;
+    double reltol = 1.0E-6;
+    double atol = 1.0E-20;
 
     /*
      * Install a filter for negative concentrations. One of the 
@@ -379,7 +379,7 @@ namespace Cantera {
    *        Pressure    = Pascal
    */
   void ImplicitSurfChem::
-  setCommonState_TP(doublereal TKelvin, doublereal PresPa) {
+  setCommonState_TP(double TKelvin, double PresPa) {
     int nphases = m_nsurf;
     for (int ip = 0; ip < nphases; ip++) {
       ThermoPhase *TP_ptr = m_surf[ip];

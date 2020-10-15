@@ -7,8 +7,8 @@
 
 /*
  *  
- *  $Date: 2010-05-08 22:18:33 -0500 (Sat, 08 May 2010) $
- *  $Revision: 470 $
+ *  $Date: 2009/03/03 19:53:34 $
+ *  $Revision: 1.8 $
  *
  *  Copyright 2003-2004 California Institute of Technology
  *  See file License.txt for licensing information
@@ -96,7 +96,6 @@ namespace Cantera {
       throw CanteraError("State:moleFraction",
 			 "illegal species index number");
     }
-    return 0.0;
   }
 
   void State::setMoleFractions(const doublereal* const x) {
@@ -127,16 +126,20 @@ namespace Cantera {
     if (k >= 0 && k < m_kk) {
       return m_y[k];
     }
-    throw CanteraError("State:massFraction", "illegal species index number");
-    return 0.0;
+    else {
+      throw CanteraError("State:massFraction",
+			 "illegal species index number");
+    }
   }
 
   doublereal State::concentration(const int k) const {
     if (k >= 0 && k < m_kk) {
       return m_y[k] * m_dens * m_rmolwts[k] ;
     }
-    throw CanteraError("State:massFraction", "illegal species index number");
-    return 0.0;
+    else {
+      throw CanteraError("State:massFraction",
+			 "illegal species index number");
+    }
   }
 
   void State::setMassFractions(const doublereal* const y) {
@@ -193,26 +196,22 @@ namespace Cantera {
     return density()/meanMolecularWeight(); 
   }
 
-  doublereal State::molarVolume() const { 
-    return 1.0/molarDensity(); 
-  }
-
-  void State::setConcentrations(const doublereal* const conc) {
+  void State::setConcentrations(const doublereal* const c) {
     int k;
     doublereal sum = 0.0, norm = 0.0;
     for (k = 0; k != m_kk; ++k) {
-      sum += conc[k]*m_molwts[k];
-      norm += conc[k];
+      sum += c[k]*m_molwts[k];
+      norm += c[k];
     }
     m_mmw = sum/norm;
     setDensity(sum);
     doublereal rsum = 1.0/sum;
     for (k = 0; k != m_kk; ++k) {
-      m_ym[k] = conc[k] * rsum;
+      m_ym[k] = c[k] * rsum;
       m_y[k] =  m_ym[k] * m_molwts[k];
     }
 
-    // Call a routine to determine whether state has changed.
+    //! Call a routine to determin whether state has changed.
     stateMFChangeCalc();
   }
 

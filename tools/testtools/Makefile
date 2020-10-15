@@ -1,17 +1,17 @@
 #/bin/sh
 
-LIBDIR = /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu
-INCDIR = /pkg/Cantera/build/include/cantera
-BINDIR = /pkg/Cantera/bin
-BBINDIR = /pkg/Cantera/build/bin/x86_64-unknown-linux-gnu
+LIBDIR = /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu
+INCDIR = /Cantera1.8-Radcal/build/include/cantera
+BINDIR = /Cantera1.8-Radcal/bin
+BBINDIR = /Cantera1.8-Radcal/build/bin/x86_64-unknown-linux-gnu
 build_ck = 1
 
 PURIFY=
 
-LCXX_FLAGS = -L$(LIBDIR)   -L/pkg/Cantera/build/lib/x86_64-unknown-linux-gnu -L/usr/local/bin//lib -O3 -Wall  
+LCXX_FLAGS = -L$(LIBDIR)   -L/Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu -L/usr/local/bin//lib -O3 -Wall  
 LOCAL_LIBS = -lcantera -lckreader -lcvode -lctmath @LAPACK_LIBRARY@ @BLAS_LIBRARY@ -lctcxx
 
-LCXX_END_LIBS = -lctf2c -lm -lm -lstdc++ 
+LCXX_END_LIBS = -lctf2c -lm
 
 OBJS = mdp_allo.o csvdiff.o tok_input_util.o
 DEPENDS = $(OBJS:.o=.d)

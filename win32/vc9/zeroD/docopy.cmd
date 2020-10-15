@@ -1,4 +1,4 @@
-REM echo on
+# echo on
 cd ..\..\..\
 
 if not exist build\include\cantera\kernel mkdir build\include\cantera\kernel
@@ -18,5 +18,5 @@ copy Reservoir.h ..\..\..\build\include\cantera\kernel
 copy Wall.h ..\..\..\build\include\cantera\kernel
 
 cd ..\..\..\win32\vc9\zeroD
-REM echo off
+# echo off
 echo 'ok' 

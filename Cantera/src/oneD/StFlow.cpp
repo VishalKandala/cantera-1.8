@@ -3,9 +3,9 @@
  */
 
 /*
- * $Author: hkmoffa $
- * $Revision: 368 $
- * $Date: 2010-01-03 18:46:26 -0600 (Sun, 03 Jan 2010) $
+ * $Author: dggoodwin $
+ * $Revision: 1.32 $
+ * $Date: 2007/05/04 14:41:27 $
  */
 
 // Copyright 2002  California Institute of Technology
@@ -210,6 +210,7 @@ namespace Cantera {
         m_enth.resize(m_points, 0.0);
         m_visc.resize(m_points, 0.0);
         m_tcon.resize(m_points, 0.0);
+		m_dthermal.resize(m_nsp,m_points);
 
         if (m_transport_option ==  c_Mixav_Transport) {
             m_diff.resize(m_nsp*m_points);
@@ -287,6 +288,7 @@ namespace Cantera {
         const doublereal* yy = x + m_nv*j + c_offset_Y;
         m_thermo->setMassFractions_NoNorm(yy);
         m_thermo->setPressure(m_press);
+      
     }
 
 
@@ -302,6 +304,9 @@ namespace Cantera {
             m_ybar[k] = 0.5*(yyj[k] + yyjp[k]);
         m_thermo->setMassFractions_NoNorm(DATA_PTR(m_ybar));
         m_thermo->setPressure(m_press);
+          // include line to set local variable pressure 
+        // modified by C.D.Kluzek on Dec 2008
+       // plocal = m_thermo->setPressure(m_press);
     }
 
 
@@ -371,7 +376,7 @@ namespace Cantera {
         int j1 = min(jmax+1,m_points-1);
 
 
-        int j, k;
+        int j, k;  // added i for extra loop by C.D.Kluzek
 
 
         //----------------------------------------------------- 
@@ -397,9 +402,8 @@ namespace Cantera {
         // evaluate the residual equations at all required
         // grid points
         //----------------------------------------------------
-
         doublereal sum, sum2, dtdzj;
-
+        
         for (j = jmin; j <= jmax; j++) {
 
 
@@ -542,7 +546,7 @@ namespace Cantera {
                     // heat release term
                     const vector_fp& h_RT = m_thermo->enthalpy_RT_ref();
                     const vector_fp& cp_R = m_thermo->cp_R_ref();
-
+                    
                     sum = 0.0;
                     sum2 = 0.0;
                     doublereal flxk;
@@ -554,11 +558,163 @@ namespace Cantera {
                     sum *= GasConstant * T(x,j);
                     dtdzj = dTdz(x,j);
                     sum2 *= GasConstant * dtdzj;
+                    
+					// modified by C.D.Kluzek February 2009
+					// for inclusion of Radiation model, similar to RADCAL
+					doublereal radiation; radiation = 0.0; 
+					// declare variable to be use here
+ 					doublereal b, c0, c1, c2, c3, c4, c5;
+ 					doublereal plocal, p_CO2, p_CH4, p_CO, p_H2O, a_CO2, a_CH4, a_CO, a_H2O;
+ 					doublereal rad_H2O, rad_CH4, rad_CO, rad_CO2, sumPlanck;
+ 					// initialize variables 
+					b=0; c0 = 0; c1 = 0; c2 = 0; c3 = 0; c4 = 0; c5 = 0;
+ 					plocal=1; // assume isobaric case p=1 atm
+ 					p_CO2 = 0; p_CH4 = 0; p_CO =0; p_H2O = 0;
+ 					a_CO2 = 0; a_CH4 = 0; a_CO =0; a_H2O = 0;
+ 					rad_H2O= 0.0;  rad_CH4 = 0.0;  rad_CO= 0.0;  rad_CO2= 0.0; 
+ 					sumPlanck =0.0; radiation =0.0;
+ 					
+ 					//// calculating Planck absorption Coef for species
+ 					k = 5;   // for H20
+ 					b=1000.0 /T(x,j);
+ 					c0= -0.23093; c1= -1.1239; c2= 9.4153; c3= -2.99880;
+ 					c4= 0.51382; c5= -1.8684e-5;
+					a_H2O = c0 + c1*b + c2*pow(b,2) + c3*pow(b,3)+ c4*pow(b,4)+ c5*pow(b,5);
+ 					p_H2O = plocal * X(x,k,j);
+ 					rad_H2O = a_H2O * p_H2O;
+ 					// for  CH4
+ 					k = 13; 
+ 					b = T(x,j);
+ 					c0= 6.6334; c1= -0.0035686; c2= 1.6682e-8; c3= 2.5611e-10;
+ 					c4= -2.6558e-14;
+ 					a_CH4 = c0 + c1*b + c2*pow(b,2) + c3*pow(b,3) + c4*pow(b,4);
+ 					p_CH4 = plocal * X(x,k,j);
+ 					rad_CH4 = a_CH4 * p_CH4;
+ 					// for  CO
+ 					k = 14; 
+ 					b=T(x,j);
+ 					if (b <=750){     // for temp less than 750 deg K
+ 						c0= 4.7869; c1= -0.06953; c2= 2.95775e-4;
+ 						c3= -4.25732e-7; c4= 2.02894e-10;
+ 						a_CO= c0 + c1*b + c2*pow(b,2) + c3*pow(b,3) + c4*pow(b,4);
+ 					}else { 
+ 						c0= 10.09; c1= -0.01183; c2= 4.7753e-6;
+ 						c3= -5.87209e-10; c4= -2.5334e-14;
+ 						a_CO= c0 + c1*b + c2*pow(b,2) + c3*pow(b,3) + c4*pow(b,4);
+ 					}
+ 					p_CO = plocal * X(x,k,j);
+ 					rad_CO = a_CO * p_CO;
+ 					// for CO2
+ 					k = 15;
+ 					b = 1000.0 / T(x,j);
+ 					c0= 18.741; c1= -121.31; c2= 273.5; c3= -194.05; 
+ 					c4= 56.310; c5= -5.8169;
+ 					a_CO2 = c0 + c1*b + c2*pow(b,2) + c3*pow(b,3) + c4*pow(b,4) + c5*pow(b,5);
+ 					p_CO2 = plocal * X(x,k,j);
+ 					rad_CO2 = a_CO2 * p_CO2;
+ 					// summation of the species coef
+ 					sumPlanck = rad_H2O + rad_CH4 + rad_CO + rad_CO2;
+ 					
+ 					//// modified by C.D.Kluzek for inclusion of Radiation model, similar to RADCAL
+ 					// Calculation of radiative flux:
+ 					// del.qr = 4 * StefanBoltz * sum( (a_i,p)(p_i) ) * (T^4 - T_background ^4)
+ 					// unit of Watts/m^3
+					radiation = 4.0 * StefanBoltz * sumPlanck * ( pow(T(x,j),4) - pow(m_inlet_T,4));
+ 			
+            			//// modified by C.D.Kluzek for inclusion of Dufour term in heat transfer Del.q
+  				// Calculation of Dufour term:
+   				// del.Dufour = del.( R^o T \sum_{k=1}^{N}\sum_{i=1}^{N}
+   				//              (\frac{X_i D_{T,i}}{MW_i D_{k,i}}) ( \bar{V_k}-\bar{V_i} ) 
+   				// j points, k species and i species
+   				doublereal Dufour;
+				int i;
+				//loop Dufour                     
+                		if (m_transport_option == c_Mixav_Transport) {
+                			Dufour = 0.0;
+                		}	
+
+                		else if (m_transport_option == c_Multi_Transport) {
+	  			try{
+					m_trans->getMultiDiffCoeffs(m_nsp,DATA_PTR(m_multidiff) + mindex(0,0,j));
+ 						
+					// declaring and initializing variables
+					doublereal Dufour = 0.0;
+					doublereal sum1, sumD1, sum22, sumD2, sum3, sumD3, sum4, sumD4;             
+					sum1 = 0.0; sumD1 = 0.0; sum22 = 0.0; sumD2 = 0.0;
+					sum3 = 0.0; sumD3 = 0.0; sum4 = 0.0; sumD4 = 0.0;                    
+					// declaring and initializing Molecular velocities of species i and k
+					doublereal Vk[m_nsp]; doublereal Vi[m_nsp];
+					for (i = 0; i < m_nsp; i++)  // the size of VK and Vi should be nsp????
+					{
+						Vk[i] = 0.0;
+						Vi[i] = 0.0;
+					}
+					 // Calculating molecular velocity and each term with double loop
+					for (k=0; k < m_nsp; k++) {	   //myone loop
+						// calculate the molecular velocity V_k
+						//Vk[j] = m_flux(k,j)/m_rho[j];
+						// model 2:   Vi = - D(i,N2) * gradient(ln (Yi) ) 
+						// from C.K.Law usefull approximations
+						Vk[j] = ( ( log(Y(x,k,j)) - log(Y(x,k,j-1)) ) / m_dz[j] );
+						Vk[j] *= - m_multidiff[mindex(k,47,j)] ; 
+						doublereal dVkdz; dVkdz = 0.0; 
+						dVkdz = (Vk[j] - Vk[j-1])/m_dz[j];
+
+						for (i=0; i < m_nsp; i++) {  // mytwo loop
+							
+							//Vi[j] = m_flux(i,j)/m_rho[j]; // in m/s
+							//model 2
+							Vi[j] = ( ( log(Y(x,i,j)) - log(Y(x,i,j-1)) ) / m_dz[j] );
+							Vi[j] *= - m_multidiff[mindex(i,47,j)] ; // diffuse into N2
+							doublereal dVidz; dVidz = 0.0;
+							dVidz = (Vi[j] - Vi[j-1])/m_dz[j];
+        	      				
+							sum1 =  X(x,i,j)  * m_dthermal(k,j) ; 
+							sum1 *= (1.0)/( m_wt[k] * m_multidiff[mindex(k,i,j)] );
+							sum1 *= Vk[j] - Vi[j];
+							sumD1 += sum1;
+
+ 							// second term which derivative is onto X
+ 					                sum22 = (  ( X(x,i,j) - X(x,i,j-1) ) /m_dz[j] ) * m_dthermal(k,j) ; 
+							sum22 *= 1.0/( m_wt[k] * m_multidiff[mindex(k,i,j)] );
+							sum22 *= Vk[j] - Vi[j];
+							sumD2 += sum22;	
+
+ 		  					// third term which derivative is onto V_k
+							sum3 =  X(x,i,j) * m_dthermal(k,j) ; 
+							sum3 *= 1.0/( m_wt[k] * m_multidiff[mindex(k,i,j)] );
+							sum3 *= dVkdz - dVidz;
+							sumD3 += sum3;	
+
+							// forth term which derivative is onto rho
+							sum4 =  X(x,i,j) * m_dthermal(k,j); 
+							sum4 *= 1.0/( m_wt[k] * m_multidiff[mindex(k,i,j)] );
+							sum4 *= Vk[j] - Vi[j];
+							sumD4 += sum4;
+ 						} // end mytwo loop
+					} //end myone loop
+ 						
+	      		            sumD1 *= GasConstant * dtdzj * m_rho[j];   
+	 	                    sumD2 *= GasConstant * T(x,j) * m_rho[j];
+ 		                    sumD3 *= GasConstant * T(x,j) * m_rho[j];
+ 		                    sumD4 *= GasConstant * T(x,j) * ((m_rho[j]-m_rho[j-1])/m_dz[j]);
+                		
+ 						Dufour = sumD1 + sumD2 + sumD3 + sumD4;  // unit of Watts/m^3
+ 					    if (j == 15) 
+						cout << "Dufour = " << Dufour << endl;
+		       		}
+				catch(doublereal Dufour)
+				{
+					throw CanteraError("Duffour effect","Dufour effect calculation not successfull");
+				}
+ 				} // end Dufour loop               	
 
                     rsd[index(c_offset_T, j)]   = 
                         - m_cp[j]*rho_u(x,j)*dtdzj 
-                        - divHeatFlux(x,j) - sum - sum2;
-                    rsd[index(c_offset_T, j)] /= (m_rho[j]*m_cp[j]);
+                        - divHeatFlux(x,j) - sum - sum2 - radiation - Dufour;   
+   					// End of section changed by C.D.Kluzek
+
+		    rsd[index(c_offset_T, j)] /= (m_rho[j]*m_cp[j]);
 
                     rsd[index(c_offset_T, j)] = 
                         rsd[index(c_offset_T, j)] + m_efctr*(T_fixed(j) - T(x,j));
@@ -852,6 +1008,8 @@ namespace Cantera {
                     sum = 0.0;
                     sum2 = 0.0;
                     doublereal flxk;
+                  
+                    
                     for (k = 0; k < m_nsp; k++) {
                         flxk = 0.5*(m_flux(k,j-1) + m_flux(k,j));
                         sum += wdot(k,j)*h_RT[k];
@@ -860,10 +1018,10 @@ namespace Cantera {
                     sum *= GasConstant * T(x,j);
                     dtdzj = dTdz(x,j);
                     sum2 *= GasConstant * dtdzj;
-
+                 
                     rsd[index(c_offset_T, j)]   = 
                         - m_cp[j]*rho_u(x,j)*dtdzj 
-                        - divHeatFlux(x,j) - sum - sum2;
+                        - divHeatFlux(x,j) - sum - sum2; 
                     rsd[index(c_offset_T, j)] /= (m_rho[j]*m_cp[j]);
 
                     rsd[index(c_offset_T, j)] = 
@@ -972,7 +1130,7 @@ namespace Cantera {
 
         if (m_do_soret) {
             for (m = j0; m < j1; m++) {
-                gradlogT = 2.0*(T(x,m+1) - T(x,m))/(T(x,m+1) + T(x,m));
+                gradlogT = 2.0*(T(x,m+1) - T(x,m))/(T(x,m+1) + T(x,m))/(z(m+1)-z(m));
                 for (k = 0; k < m_nsp; k++) {
                     m_flux(k,m) -= m_dthermal(k,m)*gradlogT;
                 }

@@ -6,9 +6,9 @@
  *  (see \ref spthermo and class \link Cantera::Mu0Poly Mu0Poly\endlink).
  */
 /*
- * $Author: hkmoffa $
- * $Revision: 385 $
- * $Date: 2010-01-17 11:05:46 -0600 (Sun, 17 Jan 2010) $
+ * $Author: dggoodwin $
+ * $Revision: 1.1 $
+ * $Date: 2007/05/04 14:02:42 $
  */
 
 
@@ -95,7 +95,7 @@ namespace Cantera {
     return *this;
   }
     
-  /*
+  /**
    * Destructor:
    */
   Mu0Poly::~Mu0Poly(){
@@ -111,7 +111,7 @@ namespace Cantera {
   doublereal  Mu0Poly::maxTemp() const { return m_highT;}
   doublereal Mu0Poly::refPressure() const { return m_Pref; }
     
-  /*
+  /**
    *  updateProperties is the main workhorse program. 
    *  Given a temperature (*tt), it calculates the thermodynamic
    *  functions H/RT, S_R, and cp_R, and returns the answer.

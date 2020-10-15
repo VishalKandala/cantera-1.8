@@ -1,7 +1,7 @@
 
 ----------------------------------------------------------
 csvdiff: CSVFile comparison utility program
-         Version $Revision: 432 $
+         Version $Revision: 1.17 $
          Harry K. Moffat Div. 9114 Sandia National Labs
          
          First  CSV File = table.csv

@@ -3,8 +3,8 @@
  *   Definitions for dynamic allocation of multidimensional pointer arrays
  */
 /*
- * $Revision: 456 $
- * $Date: 2010-05-07 09:44:46 -0500 (Fri, 07 May 2010) $
+ * $Revision: 1.3 $
+ * $Date: 2009/07/22 01:21:35 $
  */
 /*
  * Copywrite 2004 Sandia Corporation. Under the terms of Contract
@@ -1458,7 +1458,7 @@ namespace mdp {
      * 
      * mdp_copy_dbl_1:
      *
-     * Copies one contiguous double vector into another double vector
+     * Copies one Double vector into another double vector
      *
      * Input
      * -------------

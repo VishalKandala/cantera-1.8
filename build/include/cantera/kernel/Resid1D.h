@@ -1,9 +1,9 @@
 /**
  *  @file Resid1D.h
  *
- *  $Author: hkmoffa $
- *  $Date: 2010-01-03 18:46:26 -0600 (Sun, 03 Jan 2010) $
- *  $Revision: 368 $
+ *  $Author: dggoodwin $
+ *  $Date: 2006/11/27 21:43:34 $
+ *  $Revision: 1.4 $
  *
  *  Copyright 2002 California Institute of Technology
  *
@@ -12,9 +12,7 @@
 #ifndef CT_RESID1D_H
 #define CT_RESID1D_H
 
-/*
- *   NOTE: I don't think this file is used any longer. Thus, this is deprecated.
- */
+
 #include "../ctexceptions.h"
 #include "../xml.h"
 #include "refine.h"

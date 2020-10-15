@@ -1,6 +1,6 @@
 #
 # Generated from file ./soot.inp
-# by ck2cti on Mon Sep 28 16:07:58 2020
+# by ck2cti on Fri Oct  9 03:16:09 2020
 #
 units(length = "cm", time = "s", quantity = "mol", act_energy = "cal/mol")
 

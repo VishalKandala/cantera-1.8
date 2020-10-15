@@ -4,8 +4,8 @@
  */
 
 /* $Author: hkmoffa $
- * $Revision: 368 $
- * $Date: 2010-01-03 18:46:26 -0600 (Sun, 03 Jan 2010) $
+ * $Revision: 1.16 $
+ * $Date: 2009/03/27 18:24:39 $
  */
 
 // copyright 2001 California Institute of Technology
@@ -50,7 +50,7 @@ namespace Cantera {
 
   }
 
-  bool MixTransport::initGas( GasTransportParams& tr ) {
+  bool MixTransport::init(TransportParams& tr) {
 
     // constant substance attributes
     m_thermo = tr.thermo;
@@ -72,7 +72,7 @@ namespace Cantera {
     m_zrot       = tr.zrot;
     m_crot       = tr.crot;
     m_epsilon    = tr.epsilon;
-    m_mode       = tr.mode_;
+    m_mode       = tr.mode;
     m_diam       = tr.diam;
     m_eps        = tr.eps;
     m_alpha      = tr.alpha;

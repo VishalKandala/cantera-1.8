@@ -27,8 +27,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				Description="running a python script to create the matlab build environment"
-				CommandLine="cmd /c buildmlab_d.cmd"
+				CommandLine="cmd /c buildmlab.cmd"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"

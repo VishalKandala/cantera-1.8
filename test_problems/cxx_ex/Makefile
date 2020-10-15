@@ -11,6 +11,7 @@ test:
 
 clean:
 	(cd ../../examples/cxx ; make clean )
+	../../bin/rm_cvsignore
 
 depends:
 

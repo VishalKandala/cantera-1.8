@@ -12,8 +12,8 @@
 have_python_site_package_topdir=0
 python_site_package_topdir=/usr/local/cantera
 
-CANTERA_LIBDIR= /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu
-LIB_DEPS =  /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libuser.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/liboneD.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libzeroD.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libequil.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libkinetics.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libtransport.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libthermo.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libctnumerics.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libctmath.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libtpx.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libctspectra.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libconverters.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libctbase.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libctf2c.a
+CANTERA_LIBDIR= /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu
+LIB_DEPS =  /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libuser.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/liboneD.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libzeroD.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libequil.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libkinetics.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libtransport.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libthermo.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libctnumerics.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libctmath.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libtpx.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libctspectra.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libconverters.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libctbase.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libctf2c.a
 
 WIN_LIB_DEPS = $(CANTERA_LIBDIR)/cantera.lib $(CANTERA_LIBDIR)/zeroD.lib \
            $(CANTERA_LIBDIR)/oneD.lib \
@@ -91,7 +91,7 @@ endif
 clean:
 	/usr/bin/python2.6 setup.py clean
 	rm -f _build; rm -f _winbuild
-	(if test -d build ; then cd build; rm -fR * ; fi)
+	(cd build; rm -fR *)
 	cd src; rm -f *.o
 
 depends:

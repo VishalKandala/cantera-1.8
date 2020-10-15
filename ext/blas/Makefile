@@ -4,7 +4,7 @@
 # $Id: Makefile.in,v 1.8 2008/12/30 21:49:41 hkmoffa Exp $
 #
 do_ranlib = 1                                                                                                                     
-BLASLIB = /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libctblas.a
+BLASLIB = /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libctblas.a
 
 SUFFIXES=
 SUFFIXES= .f .o

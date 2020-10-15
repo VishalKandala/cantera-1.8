@@ -13,7 +13,7 @@
  * U.S. Government retains certain rights in this software.
  */
 /*
- * $Id: DebyeHuckel.cpp 279 2009-12-05 19:08:43Z hkmoffa $
+ * $Id: DebyeHuckel.cpp,v 1.33 2009/03/27 00:38:56 hkmoffa Exp $
  */
 //! Max function
 #ifndef MAX
@@ -312,13 +312,16 @@ namespace Cantera {
     return m_Pcurrent;
   }
 
+  /*
+   * Set the pressure at constant temperature. Units: Pa.
+   * This method sets a constant within the object.
+   * The mass density is not a function of pressure.
+   */
   void DebyeHuckel::setPressure(doublereal p) {
-    setState_TP(temperature(), p);
-  }
 
-  void DebyeHuckel::setState_TP(doublereal t, doublereal p) {
-
-    State::setTemperature(t);
+#ifdef DEBUG_MODE
+    //printf("setPressure: %g\n", p);
+#endif
     /*
      * Store the current pressure
      */
@@ -330,37 +333,8 @@ namespace Cantera {
      */
     _updateStandardStateThermo();
 
-    /*
-     * Calculate all of the other standard volumes
-     * -> note these are constant for now
-     */
-    calcDensity();
-  }
-
-  /*
-   * Calculate the density of the mixture using the partial
-   * molar volumes and mole fractions as input
-   *
-   * The formula for this is
-   *
-   * \f[
-   * \rho = \frac{\sum_k{X_k W_k}}{\sum_k{X_k V_k}}
-   * \f]
-   *
-   * where \f$X_k\f$ are the mole fractions, \f$W_k\f$ are
-   * the molecular weights, and \f$V_k\f$ are the pure species
-   * molar volumes.
-   *
-   * Note, the basis behind this formula is that in an ideal
-   * solution the partial molar volumes are equal to the pure
-   * species molar volumes. We have additionally specified
-   * in this class that the pure species molar volumes are
-   * independent of temperature and pressure.
-   *
-   */
-  void DebyeHuckel::calcDensity() {
     if (m_waterSS) {
-      
+   
       /*
        * Store the internal density of the water SS.
        * Note, we would have to do this for all other
@@ -368,18 +342,41 @@ namespace Cantera {
        */
       m_densWaterSS = m_waterSS->density();
     }
+    /*
+     * Calculate all of the other standard volumes
+     * -> note these are constant for now
+     */
+    /*
+     * Get the partial molar volumes of all of the
+     * species. -> note this is a lookup for 
+     * water, here since it was done above.
+     */
     double *vbar = &m_pp[0];
     getPartialMolarVolumes(vbar);
+
+    /*
+     * Get mole fractions of all species.
+     */
     double *x = &m_tmpV[0];
     getMoleFractions(x);
+	
+    /*
+     * Calculate the solution molar volume and the 
+     * solution density.
+     */
     doublereal vtotal = 0.0;
     for (int i = 0; i < m_kk; i++) {
       vtotal += vbar[i] * x[i];
     }
     doublereal dd = meanMolecularWeight() / vtotal;
-    State::setDensity(dd);
-  }
 
+    /*
+     * Now, update the State class with the results. This
+     * stores the density.
+     */
+    State::setDensity(dd);
+
+  }
 
   /*
    * The isothermal compressibility. Units: 1/Pa.
@@ -461,7 +458,8 @@ namespace Cantera {
    * the value propagates to underlying objects.
    */
   void DebyeHuckel::setTemperature(const doublereal temp) {
-    setState_TP(temp, m_Pcurrent);
+    _updateStandardStateThermo();
+    State::setTemperature(temp);
   }
 
 

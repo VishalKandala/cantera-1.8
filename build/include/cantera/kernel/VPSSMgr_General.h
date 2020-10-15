@@ -7,8 +7,8 @@
  * class \link Cantera::VPSSMgr_General VPSSMgr_General\endlink).
  */
 /*
- * $Revision: 279 $
- * $Date: 2009-12-05 13:08:43 -0600 (Sat, 05 Dec 2009) $
+ * $Revision: 1.4 $
+ * $Date: 2009/05/28 23:08:06 $
  */
 /*
  * Copywrite (2007) Sandia Corporation. Under the terms of 
@@ -266,18 +266,8 @@ namespace Cantera {
      */
     virtual VPSSMgr_enumType reportVPSSMgrType() const ;
 
-    //! Initialize the internal shallow pointers in this object
-    /*!
-     * There are a bunch of internal shallow pointers that point to the owning
-     * VPStandardStateTP and SpeciesThermo objects. This function reinitializes
-     * them. This function is called like an onion.
-     * 
-     *  @param vp_ptr   Pointer to the VPStandardStateTP standard state
-     *  @param sp_ptr   Poitner to the SpeciesThermo standard state
-     */
-    virtual void initAllPtrs(VPStandardStateTP *vp_ptr, SpeciesThermo *sp_ptr);
-  
-   private:
+    
+   protected:
 
     //! Shallow pointers containing the PDSS objects for the species
     //! in this phase.
@@ -286,6 +276,7 @@ namespace Cantera {
      */
     std::vector<PDSS *> m_PDSS_ptrs;
       
+  private:
 
     //! VPStandardStateTP has its own err routine
     /*!

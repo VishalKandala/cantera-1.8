@@ -4,9 +4,9 @@
  */
   
 /*
- *  $Author: hkmoffa $
- *  $Date: 2010-05-07 22:15:22 -0500 (Fri, 07 May 2010) $
- *  $Revision: 462 $
+ *  $Author: dggoodwin $
+ *  $Date: 2007/05/04 14:27:24 $
+ *  $Revision: 1.1 $
  *
  */
 
@@ -81,12 +81,11 @@ namespace Cantera {
      */
     //@{
     
-    const int  ARRHENIUS_REACTION_RATECOEFF_TYPE = 1;
-    const int  LANDAUTELLER_REACTION_RATECOEFF_TYPE = 2;
-    const int  TSTRATE_REACTION_RATECOEFF_TYPE = 3;
-    const int  SURF_ARRHENIUS_REACTION_RATECOEFF_TYPE = 4;
-    const int  ARRHENIUS_SUM_REACTION_RATECOEFF_TYPE = 5;
-    const int  EXCHANGE_CURRENT_REACTION_RATECOEFF_TYPE = 6;
+    const int  ARRHENIUS = 1;
+    const int  LANDAUTELLER = 2;
+    const int  TSTRATE = 3;
+    const int  SURF_ARRHENIUS = 4;
+    const int  ARRHENIUS_SUM = 5;
 
     //@}
 

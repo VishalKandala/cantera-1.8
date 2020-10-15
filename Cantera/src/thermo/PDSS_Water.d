@@ -6,4 +6,4 @@ PDSS_Water.o: PDSS_Water.cpp ../base/ct_defs.h ../base/config.h \
  Constituents.h SpeciesThermo.h ../base/ctexceptions.h \
  ../base/stringUtils.h Elements.h ../base/vec_functions.h VPSSMgr.h \
  WaterPropsIAPWS.h WaterPropsIAPWSphi.h ../base/config.h ThermoFactory.h \
- ../base/FactoryBase.h WaterProps.h
+ ../base/FactoryBase.h

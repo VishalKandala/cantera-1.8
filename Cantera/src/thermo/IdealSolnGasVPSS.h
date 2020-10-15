@@ -13,8 +13,8 @@
  */
 /*
  *  $Author: hkmoffa $
- *  $Date: 2009-12-05 13:08:43 -0600 (Sat, 05 Dec 2009) $
- *  $Revision: 279 $
+ *  $Date: 2008/08/23 00:53:54 $
+ *  $Revision: 1.1 $
  */
 
 #ifndef CT_IDEALSOLNGASVPSS_H
@@ -130,7 +130,7 @@ namespace Cantera {
      */
     virtual doublereal isothermalCompressibility() const;
 
-  protected:
+  private:
     /**
      * Calculate the density of the mixture using the partial
      * molar volumes and mole fractions as input
@@ -154,7 +154,7 @@ namespace Cantera {
      * NOTE: This is a non-virtual function, which is not a
      *       member of the ThermoPhase base class.
      */
-    virtual void calcDensity();
+    void calcDensity();
 
   public:
 

@@ -6,8 +6,8 @@
 
 /*
  *  $Author: hkmoffa $
- *  $Revision: 368 $
- *  $Date: 2010-01-03 18:46:26 -0600 (Sun, 03 Jan 2010) $
+ *  $Revision: 1.2 $
+ *  $Date: 2008/08/01 16:05:38 $
  */
 
 #ifndef VCS_DOUBLESTARSTAR_H

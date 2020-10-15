@@ -5,8 +5,8 @@
  */
 
 /* $Author: hkmoffa $
- * $Revision: 368 $
- * $Date: 2010-01-03 18:46:26 -0600 (Sun, 03 Jan 2010) $
+ * $Revision: 1.7 $
+ * $Date: 2009/03/27 18:24:39 $
  */
 
 // Copyright 2003  California Institute of Technology
@@ -46,7 +46,7 @@ namespace Cantera {
     public:
 virtual ~SolidTransport() {}
 
-        virtual int model() const { return cSolidTransport; }
+        virtual int model() { return cSolidTransport; }
 
         virtual doublereal thermalConductivity();
         virtual void getMixDiffCoeffs(doublereal* const d);

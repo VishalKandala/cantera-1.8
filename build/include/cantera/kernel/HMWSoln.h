@@ -14,7 +14,7 @@
  * U.S. Government retains certain rights in this software.
  */
 /*
- *  $Id: HMWSoln.h 386 2010-01-17 17:55:28Z hkmoffa $
+ *  $Id: HMWSoln.h,v 1.62 2009/03/27 00:38:57 hkmoffa Exp $
  */
 
 #ifndef CT_HMWSOLN_H
@@ -104,7 +104,7 @@ namespace Cantera {
    * water (IAPWS 1995 formulation) is used as its standard state.
    * All standard state properties for the solvent are based on
    * this real model for water, and involve function calls
-   * to the object that handles the real water model, #Cantera::WaterPropsIAPWS.
+   * to the object that handles the real water model, #WaterPropsIAPWS.
    *
    * The standard states for solutes are on the unit molality basis. 
    * Therefore, in the documentation below, the normal \f$ o \f$ 
@@ -507,7 +507,7 @@ namespace Cantera {
    *   \f]
    *
    *
-   *  <H3> Activity of the Water Solvent </H3> 
+   *  <H3> Activity of the Water Solvent </H3>
    *
    *  The activity for the solvent water,\f$ a_o \f$, is not independent and must be 
    *  determined either from the Gibbs-Duhem relation or from taking the appropriate derivative
@@ -549,6 +549,7 @@ namespace Cantera {
    *  \f]
    *
    *  It can be shown that the expression 
+   *
    *
    *
    *  \f[
@@ -672,7 +673,7 @@ namespace Cantera {
    * @code
       <binarySaltParameters cation="Na+" anion="OH-"> 
         <beta0> q0, q1, q2, q3, q4  </beta0>
-      </binarySaltParameters>
+      <\binarySaltParameters>
      @endcode
    *
    *  The parameters for \f$ \beta^{(0)}\f$ fit the following equation:
@@ -686,9 +687,9 @@ namespace Cantera {
    *
    *  This same COMPLEX1 </TT> temperature
    *  dependence given above is used for the following parameters:
-   *  \f$ \beta^{(0)}_{MX} \f$, \f$ \beta^{(1)}_{MX} \f$, 
-   *  \f$ \beta^{(2)}_{MX} \f$, \f$ \Theta_{cc'} \f$,  \f$\Theta_{aa'} \f$,
-   *  \f$ \Psi_{c{c'}a} \f$ and \f$ \Psi_{ca{a'}} \f$.
+   *  \f$\beta^{(0)}_{MX} \f$, \f$\beta^{(1)}_{MX} \f$, 
+   *  \f$\beta^{(2)}_{MX} \f$,  \f$ \Theta_{cc'} \f$,  \f$\Theta_{aa'} \f$,
+   *  \f$ \Psi_{c{c'}a}\f$ and \f$ \Psi_{ca{a'}} \f$.
    *
    *
    *  <H3> Like-Charged Binary Ion Parameters and the Mixing Parameters </H3>
@@ -813,7 +814,8 @@ namespace Cantera {
        <lambdaNeutral species1="CO2" species2="CH4">
              <lambda> 0.05 </lambda>
        </lambdaNeutral>
-     @endcode
+      @endcode
+
    *
    *  <H3> Example of the Specification of Parameters for the Activity
    *       Coefficients </H3>
@@ -823,7 +825,7 @@ namespace Cantera {
    * An example <TT> activityCoefficients </TT> XML block for this 
    * formulation is supplied below
    *
-   * @verbatim
+   * @code
     <activityCoefficients model="Pitzer" TempModel="complex1">
                 <!-- Pitzer Coefficients
                      These coefficients are from Pitzer's main
@@ -879,7 +881,7 @@ namespace Cantera {
                 </psiCommonAnion>
 
        </activityCoefficients>
-    @endverbatim
+   * @endcode
    *
    *
    * <H3> Specification of the Debye-Huckel Constant </H3>
@@ -1026,12 +1028,10 @@ namespace Cantera {
    * this phase equal to the default concentration of the solvent at the system temperature
    * and pressure multiplied by Mnaught (kg solvent / gmol solvent). The solvent
    * standard concentration is just equal to its standard state concentration.
-   *
-   * 
    * This means that the
-   * kinetics operator essentially works on an generalized concentration basis (kmol / m3),
+   * kinetics operator essentially works on an generalized concentration basis (kg / m3),
    * with units for the kinetic rate constant specified
-   * as if all reactants (solvent or solute) are on a concentration basis (kmol /m3).
+   * as if all reactants (solvent or solute) are on a concentration basis (kg /m3).
    * The concentration will be modified by the activity coefficients.
    *
    * For example, a bulk-phase binary reaction between liquid solute species 
@@ -1040,24 +1040,24 @@ namespace Cantera {
    * following equation for its rate of progress variable, \f$ R^1 \f$, which has
    * units of kmol m-3 s-1.
    *
+   *
    *   \f[
-   *    R^1 = k^1 C_j^a C_k^a =  k^1 (C^o_o \tilde{M}_o a_j) (C^o_o \tilde{M}_o a_k) 
+   *    R^1 = k^1 C_j^a C_k^a =  k^1 (C_o \tilde{M}_o a_j) (C_o \tilde{M}_o a_k) 
    *   \f]
-   *
    * where
-   *
    *   \f[
-   *      C_j^a = C^o_o \tilde{M}_o a_j \quad and \quad C_k^a = C^o_o \tilde{M}_o a_k
+   *      C_j^a = C_o \tilde{M}_o a_j \quad and \quad C_k^a = C_o \tilde{M}_o a_k
    *   \f]
    *   
    *  \f$ C_j^a \f$ is the activity concentration of species <I>j</I>, and 
-   *  \f$ C_k^a \f$ is the activity concentration of species <I>k</I>. \f$ C^o_o \f$
-   *  is the concentration of water at 298 K and 1 atm. \f$ \tilde{M}_o \f$ 
+   *  \f$ C_k^a \f$ is the activity concentration of species <I>k</I>. \f$ C_o \f$
+   *  is the concentration of water at 298 K and 1 atm. \f$ \tilde{M}_o \f$ is
    *  has units of kg solvent per gmol solvent and is equal to
    * 
    * \f[
    *     \tilde{M}_o = \frac{M_o}{1000} 
    * \f]
+   *
    *
    * \f$ a_j \f$ is
    *  the activity of species <I>j</I> at the current temperature and pressure
@@ -1065,25 +1065,14 @@ namespace Cantera {
    *  activity coefficient multiplied by the molality of the jth species.
    *
    * \f[
-   *      a_j  =  \gamma_j^\triangle m_j = \gamma_j^\triangle \frac{n_j}{\tilde{M}_o n_o}
+   *      a_j  =  \gamma_j^\triangle m_j 
    * \f]
    *
    * \f$k^1 \f$ has units of m<SUP>3</SUP>  kmol<SUP>-1</SUP> s<SUP>-1</SUP>.
    *
-   *  Therefore the generalized activity concentration of a solute species has the following form
-   *
-   *  \f[
-   *      C_j^a = C^o_o \frac{\gamma_j^\triangle n_j}{n_o}
-   *  \f]
-   *
-   *  The generalized activity concentration of the solvent has the same units, but its a simpler form
-   *   
-   *  \f[
-   *      C_o^a = C^o_o a_o
-   *  \f]
    *
    *  The reverse rate constant can then be obtained from the law of microscopic reversibility
-   *  and the equilibrium expression for the system.
+   * and the equilibrium expression for the system.
    *
    *   \f[
    *      \frac{a_j a_k}{ a_l} = K^{o,1} = \exp(\frac{\mu^o_l - \mu^o_j - \mu^o_k}{R T} )
@@ -1467,7 +1456,7 @@ namespace Cantera {
      */
     virtual void setPressure(doublereal p);
 
-  protected:
+  private:
     /**
      * Calculate the density of the mixture using the partial 
      * molar volumes and mole fractions as input
@@ -1544,16 +1533,6 @@ namespace Cantera {
      */
     virtual void setTemperature(const doublereal temp);
 
-    //! Set the temperature (K) and pressure (Pa)
-    /*!
-     *  Set the temperature and pressure.
-     *
-     * @param t    Temperature (K)
-     * @param p    Pressure (Pa)
-     */
-    virtual void setState_TP(doublereal t, doublereal p);
-
-
     /**
      * The isothermal compressibility. Units: 1/Pa.
      * The isothermal compressibility is defined as
@@ -1599,31 +1578,18 @@ namespace Cantera {
      * @{
      */
 
-    
-    //! This method returns an array of generalized activity concentrations
-    /*!
-     * The generalized activity concentrations, \f$ C_k^a\f$,  are defined such that 
-     * \f$ a_k = C^a_k / C^0_k, \f$ where \f$ C^0_k \f$ 
+    /**
+     * This method returns an array of generalized concentrations
+     * \f$ C_k\f$ that are defined such that 
+     * \f$ a_k = C_k / C^0_k, \f$ where \f$ C^0_k \f$ 
      * is a standard concentration
      * defined below.  These generalized concentrations are used
      * by kinetics manager classes to compute the forward and
      * reverse rates of elementary reactions. 
      *
-     *  The generalized activity concentration of a solute species has the following form
-     *
-     *  \f[
-     *      C_j^a = C^o_o \frac{\gamma_j^\triangle n_j}{n_o}
-     *  \f]
-     *
-     *  The generalized activity concentration of the solvent has the same units, but its a simpler form
-     *   
-     *  \f[
-     *      C_o^a = C^o_o a_o
-     *  \f]
-     *
-     *
      * @param c Array of generalized concentrations. The 
-     *          units are kmol m-3 for both the solvent and the solute species
+     *          units depend upon the implementation of the
+     *          reaction rate expressions within the phase.
      */
     virtual void getActivityConcentrations(doublereal* c) const;
 
@@ -1632,73 +1598,12 @@ namespace Cantera {
      * The standard concentration \f$ C^0_k \f$ used to normalize
      * the activity (i.e., generalized) concentration for use
      *
-     * We have set the standard concentration for all solute  species in
-     * this phase equal to the default concentration of the solvent at the system temperature
-     * and pressure multiplied by Mnaught (kg solvent / gmol solvent). The solvent
-     * standard concentration is just equal to its standard state concentration.
-     *
-     *   \f[
-     *      C_j^0 = C^o_o \tilde{M}_o \quad and  C_o^0 = C^o_o 
-     *   \f]
-     *
-     * The consequence of this is that the standard concentrations have unequal units
-     * between the solvent and the solute. However, both the solvent and the solute
-     * activity concentrations will have the same units of kmol kg<SUP>-3</SUP>.
-     *
-     * This means that the
-     * kinetics operator essentially works on an generalized concentration basis (kmol / m3),
-     * with units for the kinetic rate constant specified
-     * as if all reactants (solvent or solute) are on a concentration basis (kmol /m3).
-     * The concentration will be modified by the activity coefficients.
-     *
-     * For example, a bulk-phase binary reaction between liquid solute species 
-     * <I>j</I> and <I>k</I>, producing
-     * a new liquid solute species <I>l</I> would have the
-     * following equation for its rate of progress variable, \f$ R^1 \f$, which has
-     * units of kmol m-3 s-1.
-     *
-     *   \f[
-     *    R^1 = k^1 C_j^a C_k^a =  k^1 (C^o_o \tilde{M}_o a_j) (C^o_o \tilde{M}_o a_k) 
-     *   \f]
-     *
-     * where
-     *
-     *   \f[
-     *      C_j^a = C^o_o \tilde{M}_o a_j \quad and \quad C_k^a = C^o_o \tilde{M}_o a_k
-     *   \f]
-     *   
-     * \f$ C_j^a \f$ is the activity concentration of species <I>j</I>, and 
-     * \f$ C_k^a \f$ is the activity concentration of species <I>k</I>. \f$ C^o_o \f$
-     * is the concentration of water at 298 K and 1 atm. \f$ \tilde{M}_o \f$ 
-     * has units of kg solvent per gmol solvent and is equal to
-     * 
-     * \f[
-     *     \tilde{M}_o = \frac{M_o}{1000} 
-     * \f]
-     *
-     * \f$ a_j \f$ is
-     *  the activity of species <I>j</I> at the current temperature and pressure
-     *  and concentration of the liquid phase is given by the molality based
-     *  activity coefficient multiplied by the molality of the jth species.
-     *
-     * \f[
-     *      a_j  =  \gamma_j^\triangle m_j = \gamma_j^\triangle \frac{n_j}{\tilde{M}_o n_o}
-     * \f]
-     *
-     * \f$k^1 \f$ has units of m<SUP>3</SUP>  kmol<SUP>-1</SUP> s<SUP>-1</SUP>.
-     *
-     *  Therefore the generalized activity concentration of a solute species has the following form
-     *
-     *  \f[
-     *      C_j^a = C^o_o \frac{\gamma_j^\triangle n_j}{n_o}
-     *  \f]
-     *
-     *  The generalized activity concentration of the solvent has the same units, but its a simpler form
-     *   
-     *  \f[
-     *      C_o^a = C^o_o a_o
-     *  \f]
-     *
+     * For the time being, we will use the concentration of pure
+     * solvent at the temperature and pressure of the solution
+     * for the the standard concentration of all species.
+     * This has the effect of making mass-action reaction rates
+     * based on the molality of species proportional to the
+     * molality of the species.
      *
      * @param k Optional parameter indicating the species. The default
      *         is to assume this refers to species 0.
@@ -3286,7 +3191,6 @@ namespace Cantera {
 
     //! gamma_o value for the cutoff process at the zero solvent point
     doublereal MC_X_o_min_;
-
     //! Parameter in the Molality Exp cutoff treatment
     /*!
      *  This is the slope of the p function at the zero solvent point
@@ -3309,16 +3213,10 @@ namespace Cantera {
     //! Parameter in the Molality Exp cutoff treatment
     doublereal MC_cpCut_;
 
-    //! Parameter in the Molality Exp cutoff treatment
     doublereal CROP_ln_gamma_o_min;
-
-    //! Parameter in the Molality Exp cutoff treatment
     doublereal CROP_ln_gamma_o_max;
 
-    //! Parameter in the Molality Exp cutoff treatment
     doublereal CROP_ln_gamma_k_min;
-
-    //! Parameter in the Molality Exp cutoff treatment
     doublereal CROP_ln_gamma_k_max;
 
     //! This is a boolean-type vector indicating whether
@@ -3592,10 +3490,7 @@ namespace Cantera {
 
     //! Precalculate the IMS Cutoff parameters for typeCutoff = 2
     void  calcIMSCutoffParams_();
-
-    //! Calculate molality cut-off parameters
     void  calcMCCutoffParams_();
-
     //! Utility function to assign an integer value from a string
     //! for the ElectrolyteSpeciesType field.
     /*!

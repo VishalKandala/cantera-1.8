@@ -70,7 +70,9 @@ PYTHON_PACKAGE=${PYTHON_PACKAGE:="full"}
 # look for the Python Interpreter somewhere on your PATH, either as
 # 'python2' or as 'python'.  If it is not on the PATH, or has a
 # different name, set this to the full path to the Python interpreter.
+#PYTHON_CMD=${PYTHON_CMD:="default"}
 PYTHON_CMD=${PYTHON_CMD:="/usr/bin/python2.6"}
+
 
 
 # The Cantera Python interface can be built with either the numarray
@@ -82,11 +84,9 @@ USE_NUMERIC=${USE_NUMERIC:="n"}
 # to use numarray. set USE_NUMERIC to 'n' also if you want to use numarray.
 # Using numpy is preferred, and is the supported option going forwards.
 USE_NUMPY=${USE_NUMPY:="y"}
-
 if [ "$USE_NUMPY" = "y" ]; then
     export NUMPY_INC_DIR=`python2.6 -c 'import numpy; print numpy.get_include()'`
 fi
-
 # If numpy was installed using the --home option, set this to the
 # home directory for numpy. This will be needed for all numpy installations
 # that don't put the include files into python's native include directory.
@@ -132,7 +132,7 @@ PYTHON_SITE_PACKAGE_TOPDIR=${PYTHON_SITE_PACKAGE_TOPDIR:="/usr/local"}
 #
 # Note that you may need to run 'mex -setup' within MATLAB to
 # configure it for your C++ compiler before running this script.
-BUILD_MATLAB_TOOLBOX=${BUILD_MATLAB_TOOLBOX:="no"}
+BUILD_MATLAB_TOOLBOX=${BUILD_MATLAB_TOOLBOX:="n"}
 MATLAB_CMD=${MATLAB_CMD:="default"}
                              
 #----------- Fortran 90/95 --------------------------------------------------
@@ -261,7 +261,7 @@ WITH_HETERO_KINETICS='y'
 WITH_REACTION_PATHS='y'
 
 # Enable vcs equilibrium package for nonideal phases
-WITH_VCSNONIDEAL=${WITH_VCSNONIDEAL:="y"}
+WITH_VCSNONIDEAL=${WITH_VCSNONIDEAL:="n"}
 
 ######################################################################
 # transport properties
@@ -310,7 +310,7 @@ WITH_HTML_LOG_FILES='y'
 #
 # See: http://www.llnl.gov/CASC/sundials
 #
-USE_SUNDIALS=${USE_SUNDIALS:='y'}
+USE_SUNDIALS=${USE_SUNDIALS:='default'}
 
 # This is where you installed sundials if you used the --prefix option
 # when you configured sundials. If you didn't use the prefix option,
@@ -319,11 +319,11 @@ SUNDIALS_HOME=${SUNDIALS_HOME:="/usr/local/bin/"}
 
 
 # It is recommended that you install the newest release of sundials 
-# (currently 2.4.0) before building Cantera. But if you want to use an 
+# (currently 2.3.0) before building Cantera. But if you want to use an 
 # older version, set SUNDIALS_VERSION to the version you have.
-# Acceptable values are '2.2', '2.3', or '2.4' ; anything else will cause
-# Cantera to  
-SUNDIALS_VERSION=${SUNDIALS_VERSION:='2.4'}
+# Acceptable values are '2.2' and '2.3' only; anything else will cause
+# Cantera to not use sundials.
+SUNDIALS_VERSION=${SUNDIALS_VERSION:='2.3'}
 
 #----------------------------------------------------------------- 
 #         BLAS and LAPACK
@@ -492,22 +492,8 @@ CT_SHARED_LIB=${CT_SHARED_LIB:=clib}
 # lowercase 'helvetica'.
 RPFONT=${RPFONT:="Helvetica"}
 
-#
-# Version Control:
-#
-#  We define a new string for every branch created in svn.
-#
-#        Currently expected versions:
-#         "1.7"                           Old version of Cantera
-#         "1.8.0"                         Released version of 1.8
-#         "1.8.x"                         Development version of 1.8
-#         "1.8_liquidTransportDevelop"    branched version of 1.8 having to deal with liquid transport
-#
-#    This field gets written into config.h  and is also an autoconf variable.
-#
-# 
-CANTERA_VERSION=${CANTERA_VERSION:="1.8.x"}
-
+# Don't change this.
+CANTERA_VERSION=${CANTERA_VERSION:="1.8.0"} 
 
 #-----------------------------------------------------------------------
 #------------------- don't change anything below!! ---------------------

@@ -14,8 +14,8 @@
  * U.S. Government retains certain rights in this software.
  */
 /*
- *  $Date: 2010-05-08 22:18:33 -0500 (Sat, 08 May 2010) $
- *  $Revision: 470 $
+ *  $Date: 2009/03/27 00:38:57 $
+ *  $Revision: 1.20 $
  */
 
 #ifndef CT_VPSTANDARDSTATETP_H
@@ -45,7 +45,7 @@ namespace Cantera {
    *  for which VPStandardStateTP owns a pointer to.
    *
    *  To support the above functionality, pressure and temperature variables,
-   *  m_Plast_ss and m_Tlast_ss, are kept which store the last pressure and temperature
+   *  m_plast_ss and m_tlast_ss, are kept which store the last pressure and temperature
    *  used in the evaluation of standard state properties. 
    *
    *  This class is usually used for nearly incompressible phases. For those phases, it
@@ -120,53 +120,10 @@ namespace Cantera {
      */
     virtual int standardStateConvention() const;
 
-    //! Get the array of log concentration-like derivatives of the 
-    //! log activity coefficients
-    /*!
-     * This function is a virtual method.  For ideal mixtures 
-     * (unity activity coefficients), this can return zero.  
-     * Implementations should take the derivative of the 
-     * logarithm of the activity coefficient with respect to the 
-     * logarithm of the concentration-like variable (i.e. moles)
-     *  that represents the standard state.  
-     * This quantity is to be used in conjunction with derivatives of 
-     * that concentration-like variable when the derivative of the chemical 
-     * potential is taken.  
-     *
-     *  units = dimensionless
-     *
-     * @param dlnActCoeffdlnN    Output vector of derivatives of the 
-     *                         log Activity Coefficients. length = m_kk
-     */
-    virtual void getdlnActCoeffdlnN(doublereal *dlnActCoeffdlnN) const {
-      err("getdlnActCoeffdlnN");
-    }
-
-    //! Get the array of log concentration-like derivatives of the 
-    //! log activity coefficients
-    /*!
-     * This function is a virtual method.  For ideal mixtures 
-     * (unity activity coefficients), this can return zero.  
-     * Implementations should take the derivative of the 
-     * logarithm of the activity coefficient with respect to the 
-     * logarithm of the concentration-like variable (i.e. mole fraction)
-     * that represents the standard state.  
-     * This quantity is to be used in conjunction with derivatives of 
-     * that concentration-like variable when the derivative of the chemical 
-     * potential is taken.  
-     *
-     *  units = dimensionless
-     *
-     * @param dlnActCoeffdlnX    Output vector of derivatives of the 
-     *                         log Activity Coefficients. length = m_kk
-     */
-    virtual void getdlnActCoeffdlnX(doublereal *dlnActCoeffdlnX) const {
-      err("getdlnActCoeffdlnX");
-    }
+    //@}
  
 
-    //@}
-     /// @name  Partial Molar Properties of the Solution  (VPStandardStateTP)
+    /// @name  Partial Molar Properties of the Solution  (VPStandardStateTP)
     //@{
 
     
@@ -300,56 +257,18 @@ namespace Cantera {
  
     //! Set the temperature of the phase
     /*!
-     *    Currently this passes down to setState_TP(). It does not
-     *    make sense to calculate the standard state without first
-     *    setting T and P.
+     *    Currently this just passes down to State::setTemperature()
+     *    without doing anything.  Calculations are changing temperatures are triggered
+     *    later.
      *
-     * @param temp  Temperature (kelvin)
+     * @param T  Temperature (kelvin)
      */
-    virtual void setTemperature(const doublereal temp);
+    virtual void setTemperature(const doublereal T);
 
- 
-    //! Set the internally storred pressure (Pa) at constant
-    //! temperature and composition
-    /*!
-     *  Currently this passes down to setState_TP().  It does not
-     *    make sense to calculate the standard state without first
-     *    setting T and P.
-     *
-     *  @param p input Pressure (Pa)
-     */
-    virtual void setPressure(doublereal p);
 
-protected:
-    /**
-     * Calculate the density of the mixture using the partial 
-     * molar volumes and mole fractions as input
-     *
-     * The formula for this is
-     *
-     * \f[ 
-     * \rho = \frac{\sum_k{X_k W_k}}{\sum_k{X_k V_k}} 
-     * \f]
-     *
-     * where \f$X_k\f$ are the mole fractions, \f$W_k\f$ are
-     * the molecular weights, and \f$V_k\f$ are the pure species
-     * molar volumes.
-     *
-     * Note, the basis behind this formula is that in an ideal
-     * solution the partial molar volumes are equal to the pure
-     * species molar volumes. We have additionally specified
-     * in this class that the pure species molar volumes are
-     * independent of temperature and pressure.
-     *
-     * NOTE: This is a non-virtual function, which is not a 
-     *       member of the ThermoPhase base class. 
-     */
-    virtual void calcDensity();
-
- public:
     //! Set the temperature and pressure at the same time
     /*!
-     *  Note this function triggers a reevalulation of the standard
+     *  Note this function currently triggers a reevalulation of the standard
      *  state quantities.
      *
      *  @param T  temperature (kelvin)
@@ -443,23 +362,16 @@ protected:
     virtual void getEnthalpy_RT_ref(doublereal *hrt) const;
 
 #ifdef H298MODIFY_CAPABILITY
-    //!  Modify the value of the 298 K Heat of Formation of the standard state of
-    //!  one species in the phase (J kmol-1)
-    /*!
-     *   The 298K heat of formation is defined as the enthalpy change to create the standard state
-     *   of the species from its constituent elements in their standard states at 298 K and 1 bar.
-     *
-     *   @param  k           Index of the species
-     *   @param  Hf298New    Specify the new value of the Heat of Formation at 298K and 1 bar.
-     *                       units = J/kmol.
-     */
-    void modifyOneHf298SS(const int k, const doublereal Hf298New);
-#endif
     
-    //!  Returns the vector of nondimensional
-    //!  Gibbs free energies of the reference state at the current temperature
-    //!  of the solution and the reference pressure for the species.
+    void modifyOneHf298SS(const int k, const doublereal Hf298New) {
+      m_spthermo->modifyOneHf298(k, Hf298New);
+      m_Tlast_ss += 0.0001234;
+    }
+#endif
     /*!
+     *  Returns the vector of nondimensional
+     *  Gibbs free energies of the reference state at the current temperature
+     *  of the solution and the reference pressure for the species.
      *
      * @param grt Output vector contains the nondimensional Gibbs free energies
      *            of the reference state of the species

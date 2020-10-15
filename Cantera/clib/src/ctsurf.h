@@ -2,7 +2,7 @@
  * @file ctsurf.h
  */
 /*
- *      $Id: ctsurf.h 368 2010-01-04 00:46:26Z hkmoffa $
+ *      $Id: ctsurf.h,v 1.3 2009/07/11 17:16:09 hkmoffa Exp $
  */
 
 #ifndef CTC_SURF_H

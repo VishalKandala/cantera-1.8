@@ -6,8 +6,8 @@
  */
  /*
  * $Author: hkmoffa $
- * $Revision: 384 $
- * $Date: 2010-01-16 12:57:05 -0600 (Sat, 16 Jan 2010) $
+ * $Revision: 1.8 $
+ * $Date: 2008/12/13 01:59:49 $
  */
 
 // Copyright 2001  California Institute of Technology
@@ -266,26 +266,8 @@ namespace Cantera {
 
 #ifdef H298MODIFY_CAPABILITY
  
-    //! Report the 298 K Heat of Formation of the standard state of one species (J kmol-1)
-    /*!
-     *   The 298K Heat of Formation is defined as the enthalpy change to create the standard state
-     *   of the species from its constituent elements in their standard states at 298 K and 1 bar.
-     *
-     *   @param h298 If this is nonnull,  the current value of the Heat of Formation at 298K and 1 bar for
-     *               species m_speciesIndex is returned in h298[m_speciesIndex].
-     *   @return     Returns the current value of the Heat of Formation at 298K and 1 bar for 
-     *               species m_speciesIndex.
-     */
     virtual doublereal reportHf298(doublereal* const h298 = 0) const;
 
-    //! Modify the value of the 298 K Heat of Formation of one species in the phase (J kmol-1)
-    /*!
-     *   The 298K heat of formation is defined as the enthalpy change to create the standard state
-     *   of the species from its constituent elements in their standard states at 298 K and 1 bar.
-     *
-     *   @param  k           Species k
-     *   @param  Hf298New    Specify the new value of the Heat of Formation at 298K and 1 bar                      
-     */
     virtual void modifyOneHf298(const int k, const doublereal Hf298New);
 
 #endif

@@ -37,26 +37,26 @@ endif
 CXX = g++
 
 # C++ compile flags
-CXX_FLAGS = -O3 -Wall   
+CXX_FLAGS = -O3 -Wall  
 
 # Ending C++ linking libraries
-LCXX_END_LIBS = -lctf2c -lm -lm -lstdc++ 
+LCXX_END_LIBS = -lctf2c -lm
 
 # the directory where the Cantera libraries are located
-CANTERA_LIBDIR=/pkg/Cantera/build/lib/x86_64-unknown-linux-gnu
+CANTERA_LIBDIR=/Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu
 
 # required Cantera libraries
 CANTERA_LIBS =  -luser -loneD -lzeroD -lequil -lkinetics -ltransport -lthermo -lctnumerics -lctmath -ltpx -lctspectra -lconverters -lctbase -lsundials_cvodes -lsundials_nvecserial -lctlapack -lctblas -lctf2c -lctcxx
 
 # Dependencies for CANTERA_LIBS
-CANTERA_LIBS_DEP =  /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libuser.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/liboneD.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libzeroD.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libequil.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libkinetics.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libtransport.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libthermo.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libctnumerics.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libctmath.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libtpx.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libctspectra.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libconverters.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libctbase.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libctf2c.a $(CANTERA_LIBDIR)/libctcxx.a
+CANTERA_LIBS_DEP =  /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libuser.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/liboneD.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libzeroD.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libequil.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libkinetics.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libtransport.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libthermo.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libctnumerics.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libctmath.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libtpx.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libctspectra.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libconverters.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libctbase.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libctf2c.a $(CANTERA_LIBDIR)/libctcxx.a
 
 # the directory where Cantera include files may be found.
-CANTERA_INCDIR=/pkg/Cantera/build/include/cantera
+CANTERA_INCDIR=/Cantera1.8-Radcal/build/include/cantera
 INCLUDES=-I$(CANTERA_INCDIR) -I$(CANTERA_INCDIR)/kernel
 
 # flags passed to the C++ compiler/linker for the linking step
-LCXX_FLAGS = -L$(CANTERA_LIBDIR)  -L/pkg/Cantera/build/lib/x86_64-unknown-linux-gnu -L/usr/local/bin//lib -O3 -Wall  
+LCXX_FLAGS = -L$(CANTERA_LIBDIR)  -L/Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu -L/usr/local/bin//lib -O3 -Wall  
 
 # How to compile C++ source files to object files
 .cpp.o:

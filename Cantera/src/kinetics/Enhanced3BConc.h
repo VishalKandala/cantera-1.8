@@ -2,9 +2,9 @@
  *  @file Enhanced3BConc.h
  */
 
-/*  $Author: hkmoffa $
- *  $Date: 2009-12-10 17:20:44 -0600 (Thu, 10 Dec 2009) $
- *  $Revision: 309 $
+/*  $Author: dggoodwin $
+ *  $Date: 2007/05/04 14:27:23 $
+ *  $Revision: 1.1 $
  */
 
 // Copyright 2001  California Institute of Technology

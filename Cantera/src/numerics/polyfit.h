@@ -3,8 +3,8 @@
  */
 /*
  *  $Author: hkmoffa $
- *  $Date: 2010-01-03 18:46:26 -0600 (Sun, 03 Jan 2010) $
- *  $Revision: 368 $
+ *  $Date: 2008/07/30 16:48:25 $
+ *  $Revision: 1.2 $
  *
  *  Copyright 2001-2003 California Institute of Technology
  *  See file License.txt for licensing information

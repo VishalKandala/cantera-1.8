@@ -1,8 +1,8 @@
 #/bin/sh
 ###############################################################
 #  $Author: hkmoffa $
-#  $Date: 2009-12-10 17:20:44 -0600 (Thu, 10 Dec 2009) $
-#  $Revision: 309 $
+#  $Date: 2009/02/11 01:50:58 $
+#  $Revision: 1.10 $
 #
 #  Copyright 2002 California Institute of Technology
 #
@@ -69,7 +69,7 @@ ALLKINETICS_H   = $(KINETICS_H) $(HETEROKIN_H) $(RPATH_H)
 
 
 CXX_INCLUDES = -I../base -I../thermo -I../numerics 
-LIB = /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libkinetics.a
+LIB = /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libkinetics.a
 
 DEPENDS = $(ALLKINETICS_OBJ:.o=.d)
 

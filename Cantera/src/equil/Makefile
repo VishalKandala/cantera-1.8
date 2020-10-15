@@ -1,8 +1,8 @@
 #/bin/sh
 ###############################################################
 #  $Author: hkmoffa $
-#  $Date: 2010-01-03 18:46:26 -0600 (Sun, 03 Jan 2010) $
-#  $Revision: 368 $
+#  $Date: 2008/12/30 21:49:41 $
+#  $Revision: 1.16 $
 #
 #  Copyright 2002 California Institute of Technology
 #
@@ -83,10 +83,10 @@ VCSNONIDEAL_H =   vcs_internal.h vcs_VolPhase.h vcs_solve.h vcs_prob.h \
 endif
 
 CXX_INCLUDES = -I../base -I../thermo -I../numerics 
-LIB = /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libequil.a
+LIB = /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libequil.a
 
 ifeq ($(do_VCSnonideal), 1)
-  VLIB=/pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libVCSnonideal.a 
+  VLIB=/Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libVCSnonideal.a 
 endif
 
 DEPENDS = $(EQUIL_OBJ:.o=.d) $(VCSNONIDEAL_OBJ:.o=.d)

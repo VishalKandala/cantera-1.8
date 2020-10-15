@@ -3,9 +3,9 @@
  */
 
 /*
- * $Author: hkmoffa $
- * $Revision: 398 $
- * $Date: 2010-02-09 14:24:11 -0600 (Tue, 09 Feb 2010) $
+ * $Author: dggoodwin $
+ * $Revision: 1.3 $
+ * $Date: 2007/05/10 03:28:32 $
  */
 
 // Copyright 2006  California Institute of Technology
@@ -67,7 +67,6 @@ namespace CanteraZeroD {
             throw CanteraError("ReactorFactory::newReactor",
                 "unknown reactor type!");
         }
-        return 0;
     }
 
 }

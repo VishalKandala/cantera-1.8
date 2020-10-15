@@ -6,8 +6,8 @@
  */
 
 /*
- *  $Date: 2010-05-08 22:18:33 -0500 (Sat, 08 May 2010) $
- *  $Revision: 470 $
+ *  $Date: 2009/02/15 17:33:06 $
+ *  $Revision: 1.6 $
  *
  *  Copyright 2001-2003 California Institute of Technology
  *  See file License.txt for licensing information
@@ -123,18 +123,14 @@ namespace Cantera {
      */
     doublereal moleFraction(const int k) const;
 
-    
-    //! Set the mole fractions to the specified values, and then 
-    //! normalize them so that they sum to 1.0.
-    /*!
+    /**
+     * Set the mole fractions to the specified values, and then 
+     * normalize them so that they sum to 1.0.
      * @param x Array of unnormalized mole fraction values (input). 
-     *          Must have a length greater than or equal to the number of
-     *          species.
+     * Must have a length greater than or equal to the number of
+     * species.
      *
-     * @param x  Input vector of mole fractions. There is no restriction
-     *           on the sum of the mole fraction vector. Internally,
-     *           the State object will normalize this vector before
-     *           storring its contents.
+     * @param x  Input vector of mole fractions.
      *           Length is m_kk.
      */
     virtual void setMoleFractions(const doublereal* const x);
@@ -180,10 +176,7 @@ namespace Cantera {
      * Must have a length greater than or equal to the number of
      * species.
      *
-     * @param y  Input vector of mass fractions. There is no restriction
-     *           on the sum of the mass fraction vector. Internally,
-     *           the State object will normalize this vector before
-     *           storring its contents.
+     * @param y  Input vector of mass fractions.
      *           Length is m_kk.
      */
     virtual void setMassFractions(const doublereal* const y);
@@ -215,29 +208,23 @@ namespace Cantera {
      * @param  k Index of species
      */
     doublereal concentration(const int k) const;
-    
-    //! Set the concentrations to the specified values within the
-    //! phase. 
-    /*!
-     * We set the concentrations here and therefore we set the
-     * overall density of the phase. We hold the temperature constant
-     * during this operation. Therefore, we have possibly changed
-     * the pressure of the phase by calling this routine.
-     *
-     * @param conc The input vector to this routine is in dimensional
-     *          units. For volumetric phases c[k] is the
-     *          concentration of the kth species in kmol/m3.
-     *          For surface phases, c[k] is the concentration
-     *          in kmol/m2. The length of the vector is the number
-     *          of species in the phase.
-     */
-    virtual void setConcentrations(const doublereal* const conc);
 
-    //! Returns a read-only pointer to the start of the
-    //! massFraction array
-    /*!
-     *  The pointer returned is readonly
-     *  @return  returns a pointer to a vector of doubles of length m_kk.
+    /**
+     * Set the concentrations to the specified values within the
+     * phase. 
+     *
+     * @param c The input vector to this routine is in dimensional
+     *        units. For volumetric phases c[k] is the
+     *        concentration of the kth species in kmol/m3.
+     *        For surface phases, c[k] is the concentration
+     *        in kmol/m2. The length of the vector is the number
+     *        of species in the phase.
+     */
+    virtual void setConcentrations(const doublereal* const c);
+
+    /**
+     * Returns a read-only pointer to the start of the
+     * massFraction array
      */
     const doublereal* massFractions() const {
       return &m_y[0]; 
@@ -318,9 +305,6 @@ namespace Cantera {
     /// Molar density (kmol/m^3).
     doublereal molarDensity() const;
 
-    /// Molar density (kmol/m^3).
-    doublereal molarVolume() const;
-
     //! Set the internally storred density (kg/m^3) of the phase
     /*!
      * Note the density of a phase is an indepedent variable.
@@ -351,12 +335,7 @@ namespace Cantera {
     //! True if the number species has been set
     bool ready() const;
 
-    //! Every time the mole fractions have changed, this routine
-    //! will increment the stateMFNumber
-    /*!
-     *  @param forceChange If this is true then the stateMFNumber always
-     *                     changes. This defaults to false.
-     */
+
     void stateMFChangeCalc(bool forceChange = false);
 
     //! Return the state number
@@ -444,7 +423,7 @@ namespace Cantera {
 
   };
 
-  //! Return the State Mole Fraction Number
+
   inline int State::stateMFNumber() const {
     return m_stateNum;
   }

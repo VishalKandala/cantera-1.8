@@ -3,7 +3,7 @@
  *    Driver routine for the VCSnonideal equilibrium solver package
  */
 /*
- * $Id: vcs_MultiPhaseEquil.cpp 368 2010-01-04 00:46:26Z hkmoffa $
+ * $Id: vcs_MultiPhaseEquil.cpp,v 1.48 2009/03/28 03:07:23 hkmoffa Exp $
  */
 /*
  * Copywrite (2006) Sandia Corporation. Under the terms of

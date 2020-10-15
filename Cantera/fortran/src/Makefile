@@ -44,7 +44,7 @@ F90 = gfortran
 EXT_LIBS =  -luser -loneD -lzeroD -lequil -lkinetics -ltransport -lthermo -lctnumerics -lctmath -ltpx -lctspectra -lconverters -lctbase -lsundials_cvodes -lsundials_nvecserial -lctlapack -lctblas -lctf2c 
 
 # the directory where the Cantera libraries are located
-CANTERA_LIBDIR=/pkg/Cantera/build/lib/x86_64-unknown-linux-gnu
+CANTERA_LIBDIR=/Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu
 
 LIB_DEPS = $(CANTERA_LIBDIR)/libctbase.a \
            $(CANTERA_LIBDIR)/libequil.a \
@@ -55,7 +55,7 @@ LIB_DEPS = $(CANTERA_LIBDIR)/libctbase.a \
            $(CANTERA_LIBDIR)/liboneD.a 
 
 # the directory where module .mod files should be put
-MODULE_DIR = /pkg/Cantera/build/include/cantera
+MODULE_DIR = /Cantera1.8-Radcal/build/include/cantera
 
 CXX_INCLUDES = -I../../src/base -I../../src/thermo -I../../src/kinetics -I../../src/transport -I../../src/numerics -I../../src/oneD -I../../src/zeroD -I../../src/equil -I../../src/converters 
 
@@ -77,7 +77,7 @@ LCXX_FLAGS = -L$(CANTERA_LIBDIR) -O3 -Wall
 
 LIB_NAME=libfct.a
 
-FTLIB = /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/$(LIB_NAME)
+FTLIB = /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/$(LIB_NAME)
 
 all: $(FTLIB)
 

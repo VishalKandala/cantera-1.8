@@ -5,8 +5,8 @@
  *  ThermoPhase class.
  */
 /*
- *  $Date: 2009-12-05 13:08:43 -0600 (Sat, 05 Dec 2009) $
- *  $Revision: 279 $
+ *  $Date: 2009/01/04 21:28:02 $
+ *  $Revision: 1.8 $
  *
  *  Copyright 2001 California Institute of Technology
  *

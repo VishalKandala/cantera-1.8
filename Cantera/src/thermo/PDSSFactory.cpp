@@ -5,7 +5,7 @@
  *    (see \ref pdssthermo and class \link Cantera::SpeciesThermoFactory SpeciesThermoFactory\endlink);
  */
 /*
- * $Id: PDSSFactory.cpp 279 2009-12-05 19:08:43Z hkmoffa $
+ * $Id: PDSSFactory.cpp,v 1.2 2008/10/13 21:01:48 hkmoffa Exp $
  */
 // Copyright 2001  California Institute of Technology
 

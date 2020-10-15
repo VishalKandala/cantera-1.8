@@ -1,0 +1,1 @@
+./runtest: 22: ./runtest: ./nacl_equil: not found

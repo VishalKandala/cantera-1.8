@@ -8,7 +8,7 @@
  /*
  *
  *
- *  $Id: ChemEquil.cpp 398 2010-02-09 20:24:11Z hkmoffa $
+ *  $Id: ChemEquil.cpp,v 1.15 2009/03/14 03:28:04 hkmoffa Exp $
  *
  *  Copyright 2001 California Institute of Technology
  *
@@ -59,10 +59,7 @@ namespace Cantera {
     else if (flag == "SP") return SP;
     else if (flag == "SV") return SV;
     else if (flag == "UP") return UP;
-    else {
-      throw CanteraError("_equilflag","unknown property pair "+flag);
-    }
-    return -1;
+    else throw CanteraError("_equilflag","unknown property pair "+flag);
   }
 
 

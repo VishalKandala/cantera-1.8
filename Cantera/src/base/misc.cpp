@@ -10,7 +10,7 @@
  *      HTML_logs
  */
 /*
- *  $Id: misc.cpp 636 2010-11-12 18:02:21Z hkmoffa $
+ *  $Id: misc.cpp,v 1.16 2009/07/13 16:47:40 hkmoffa Exp $
  */
 
 #ifdef WIN32
@@ -176,66 +176,15 @@ namespace Cantera {
        * constructor for the Messages class which is a subclass
        * of the Application class.
        */
-      Messages() :
-        errorMessage(0),
-        errorRoutine(0),
-	logwriter(0)
-#ifdef WITH_HTML_LOGS
-		 ,xmllog(0),
-        current(0),
-	loglevel(0),
-	loglevels(0),
-	loggroups(0)
-#endif
-      {
+      Messages() {
 	// install a default logwriter that writes to standard
 	// output / standard error
 	logwriter = new Logger();
-      }
-
-      //! Copy Constructor for the Messages class
-      /*!
-       * Constructor for the Messages class which is a subclass
-       * of the Application class.
-       *  @param r   Message to be copied
-       */
-      Messages(const Messages &r) :
-	errorMessage(r.errorMessage),
-        errorRoutine(r.errorRoutine),
-	logwriter(0)
 #ifdef WITH_HTML_LOGS
-       , xmllog(r.xmllog),
-        current(r.current),
-	loglevel(r.loglevel),
-	loglevels(r.loglevels),
-	loggroups(r.loggroups)
+	xmllog = 0; 
+	current = 0;
+	loglevel = 0;
 #endif
-      {
-	// install a default logwriter that writes to standard
-	// output / standard error
-	logwriter = new Logger(*(r.logwriter));
-      }
-
-      //! Assignment operator
-      /*!
-       *  @param r   Message to be copied
-       */
-      Messages & operator=(const Messages &r) 
-      {
-	if (this == &r) {
-	  return *this;
-	}
-	errorMessage = r.errorMessage;
-	errorRoutine = r.errorRoutine;
-	logwriter = new Logger(*(r.logwriter));
-#ifdef WITH_HTML_LOGS
-	xmllog = r.xmllog;
-	current = r.current;
-	loglevel = r.loglevel;
-	loglevels = r.loglevels;
-	loggroups = r.loggroups;
-#endif
-	return *this;
       }
 
       //! Destructor for the Messages class
@@ -490,8 +439,6 @@ namespace Cantera {
       //! Typedef for map between a thread and the message
       typedef std::map< cthreadId_t, pMessages_t > threadMsgMap_t ;
 
-      //! Class that stores thread messages for each thread, and retrieves them
-      //! based on the thread id.
       class ThreadMessages
       {
       public:
@@ -537,14 +484,8 @@ namespace Cantera {
 
   protected:   //RFB Protected ctor access thru static member function Instance
     //! Constructor for class sets up the initial conditions
-    Application() : 
-      inputDirs(0),
-      stop_on_error(false),
-      options(),
-      tmp_dir("."),
-      xmlfiles(),
-      m_sleep("1"),              
-      pMessenger()
+    Application() : /*linelen(0),*/ stop_on_error(false),
+                                    tmp_dir("."), m_sleep("1")              
     {
 #if !defined( THREAD_SAFE_CANTERA )
      pMessenger = std::auto_ptr<Messages>(new Messages());
@@ -1480,34 +1421,28 @@ protected:
 
     doublereal toSI(std::string unit) {
         doublereal f = Unit::units()->toSI(unit);
-        if (f) {
-          return f;
-        } else {
-          throw CanteraError("toSI","unknown unit string: "+unit);
-        }
-        return 1.0;
+        if (f) return f;
+        else throw CanteraError("toSI","unknown unit string: "+unit);
+        //return 1.0;
     }
 
     doublereal actEnergyToSI(std::string unit) {
         doublereal f = Unit::units()->actEnergyToSI(unit);
-        if (f) {
-          return f;
-        }
-        return 1.0;
+        if (f) return f;
+        else return 1.0;
     }
 
     string canteraRoot() {
         char* ctroot = 0;
         ctroot = getenv("CANTERA_ROOT");
-        if (ctroot != 0) { 
-          return string(ctroot);
-        } 
+        if (ctroot != 0) { return string(ctroot); }
+        else {
 #ifdef CANTERA_ROOT
-        return string(CANTERA_ROOT);
+            return string(CANTERA_ROOT);
 #else
-        return "";
+            return "";
 #endif
-        
+        }
     }
 
     // exceptions
@@ -1584,6 +1519,10 @@ protected:
      app()->writelog(msg);
    }
 
+  void writelogAM(const std::string& msg) {
+     app()->writelog(msg);
+   }
+
   // Write a message to the screen
   void Application::Messages::writelog(const std::string& msg) {
     logwriter->write(msg);
@@ -1591,6 +1530,9 @@ protected:
 
   // Write a message to the screen.
   void writelog(const char* msg) {
+    app()->writelog(msg);
+  }
+  void writelogAM(const char* msg) {
     app()->writelog(msg);
   }
 

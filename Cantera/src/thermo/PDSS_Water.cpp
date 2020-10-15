@@ -8,20 +8,19 @@
  * U.S. Government retains certain rights in this software.
  */
 /*
- * $Id: PDSS_Water.cpp 385 2010-01-17 17:05:46Z hkmoffa $
+ * $Id: PDSS_Water.cpp,v 1.15 2008/12/22 22:40:44 hkmoffa Exp $
  */
 #include "ct_defs.h"
-
 #include "xml.h"
 #include "ctml.h"
 #include "PDSS_Water.h"
-
 #include "WaterPropsIAPWS.h"
 #include "ThermoFactory.h"
-#include "WaterProps.h"
-#include "VPStandardStateTP.h"
 
 #include <cmath>
+
+
+#include "VPStandardStateTP.h"
 
 namespace Cantera {
   /**
@@ -30,7 +29,6 @@ namespace Cantera {
   PDSS_Water::PDSS_Water() :
     PDSS(),
     m_sub(0),
-    m_waterProps(0),
     m_dens(1000.0),
     m_iState(WATER_LIQUID),
     EW_Offset(0.0),
@@ -39,8 +37,7 @@ namespace Cantera {
     m_allowGasPhase(false)
   {
     m_pdssType = cPDSS_WATER;
-    m_sub = new WaterPropsIAPWS();
-    m_waterProps =  new WaterProps(m_sub);
+    m_sub = new WaterPropsIAPWS();  
     m_spthermo = 0;
     constructSet();
     m_minTemp = 200.;
@@ -49,8 +46,7 @@ namespace Cantera {
 
   PDSS_Water::PDSS_Water(VPStandardStateTP *tp, int spindex) :
     PDSS(tp, spindex),
-    m_sub(0), 
-    m_waterProps(0),
+    m_sub(0),
     m_dens(1000.0),
     m_iState(WATER_LIQUID),
     EW_Offset(0.0),
@@ -60,7 +56,6 @@ namespace Cantera {
   {
     m_pdssType = cPDSS_WATER;
     m_sub = new WaterPropsIAPWS();
-    m_waterProps =  new WaterProps(m_sub);
     m_spthermo = 0;
     constructSet();
     m_minTemp = 200.;
@@ -69,10 +64,9 @@ namespace Cantera {
 
 
   PDSS_Water::PDSS_Water(VPStandardStateTP *tp, int spindex, 
-			 std::string inputFile, std::string id) :
+		       std::string inputFile, std::string id) :
     PDSS(tp, spindex),
     m_sub(0),
-    m_waterProps(0),
     m_dens(1000.0),
     m_iState(WATER_LIQUID),
     EW_Offset(0.0),
@@ -81,8 +75,7 @@ namespace Cantera {
     m_allowGasPhase(false)
   {
     m_pdssType = cPDSS_WATER;
-    m_sub = new WaterPropsIAPWS();
-    m_waterProps =  new WaterProps(m_sub); 
+    m_sub = new WaterPropsIAPWS();  
     constructPDSSFile(tp, spindex, inputFile, id);
     m_spthermo = 0;
     m_minTemp = 200.;
@@ -94,7 +87,6 @@ namespace Cantera {
 			 const XML_Node& phaseRoot, bool spInstalled) :
     PDSS(tp, spindex),
     m_sub(0),
-    m_waterProps(0),
     m_dens(1000.0),
     m_iState(WATER_LIQUID),
     EW_Offset(0.0),
@@ -104,7 +96,6 @@ namespace Cantera {
   {
     m_pdssType = cPDSS_WATER;
     m_sub = new WaterPropsIAPWS();
-    m_waterProps =  new WaterProps(m_sub);
     std::string id= "";
     constructPDSSXML(tp, spindex, phaseRoot, id) ;
     initThermo();
@@ -118,7 +109,6 @@ namespace Cantera {
   PDSS_Water::PDSS_Water(const PDSS_Water &b) :
     PDSS(),
     m_sub(0),
-    m_waterProps(0),
     m_dens(1000.0),
     m_iState(WATER_LIQUID),
     EW_Offset(b.EW_Offset),
@@ -126,7 +116,7 @@ namespace Cantera {
     m_verbose(b.m_verbose),
     m_allowGasPhase(b.m_allowGasPhase)
   {
-    m_sub = new WaterPropsIAPWS();
+    m_sub = new WaterPropsIAPWS();  
     /*
      * Use the assignment operator to do the brunt
      * of the work for the copy construtor.
@@ -144,16 +134,7 @@ namespace Cantera {
      */
     PDSS::operator=(b);
 
-    if (!m_sub) {
-      m_sub = new WaterPropsIAPWS();
-    }
     m_sub->operator=(*(b.m_sub));
-
-    if (!m_waterProps) {
-      m_waterProps = new WaterProps(m_sub);
-    }
-    m_waterProps->operator=(*(b.m_waterProps));
-
     m_dens          = b.m_dens;
     m_iState        = b.m_iState;
     EW_Offset       = b.EW_Offset;
@@ -164,9 +145,8 @@ namespace Cantera {
     return *this;
   }
 
-  PDSS_Water::~PDSS_Water() {
-    delete m_waterProps;
-    delete m_sub;
+  PDSS_Water::~PDSS_Water() { 
+    delete m_sub; 
   }
 
   PDSS *PDSS_Water::duplMyselfAsPDSS() const {
@@ -174,7 +154,7 @@ namespace Cantera {
     return (PDSS *) kPDSS;
   }
 
-  /*
+  /**
    * constructPDSSXML:
    *
    * Initialization of a Debye-Huckel phase using an
@@ -191,11 +171,11 @@ namespace Cantera {
    *            phase element will be used.
    */
   void PDSS_Water::constructPDSSXML(VPStandardStateTP *tp, int spindex,
-				    const XML_Node& phaseNode, std::string id) {
+				   const XML_Node& phaseNode, std::string id) {
     constructSet();
   }
    
-  /*
+  /**
    * constructPDSSFile():
    *
    * Initialization of a Debye-Huckel phase using an
@@ -212,7 +192,7 @@ namespace Cantera {
    *            phase element will be used.
    */
   void PDSS_Water::constructPDSSFile(VPStandardStateTP *tp, int spindex,
-				     std::string inputFile, std::string id) {
+				    std::string inputFile, std::string id) {
 
     if (inputFile.size() == 0) {
       throw CanteraError("PDSS_Water::constructPDSSFile",

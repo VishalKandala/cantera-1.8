@@ -17,7 +17,7 @@
  * U.S. Government retains certain rights in this software.
  */
 /*
- *  $Id: MolalityVPSSTP.h 470 2010-05-09 03:18:33Z hkmoffa $
+ *  $Id: MolalityVPSSTP.h,v 1.20 2009/01/20 21:48:54 hkmoffa Exp $
  */
 
 #ifndef CT_MOLALITYVPSSTP_H
@@ -799,14 +799,6 @@ namespace Cantera {
      *                    about the thermodynamic state of the system.
      */
     virtual std::string report(bool show_thermo = true) const;
-
-    //! returns a summary of the state of the phase to specified 
-    //! comma separated files
-    /*!
-     * @param csvFile     ofstream file to print comma separated data for
-     *                    the phase
-     */
-    virtual void reportCSV(std::ofstream& csvFile) const;
 
   protected:
 

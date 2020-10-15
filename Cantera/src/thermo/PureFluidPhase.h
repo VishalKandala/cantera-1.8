@@ -10,9 +10,9 @@
  * It inherits from ThermoPhase, but is built on top of the tpx package.
  */
 
-/*  $Author: hkmoffa $
- *  $Date: 2010-05-08 22:18:33 -0500 (Sat, 08 May 2010) $
- *  $Revision: 470 $
+/*  $Author: dggoodwin $
+ *  $Date: 2007/12/24 15:32:30 $
+ *  $Revision: 1.7 $
  *
  *  Copyright 2003 California Institute of Technology
  */
@@ -302,14 +302,6 @@ namespace Cantera {
      *                    about the thermodynamic state of the system.
      */
     virtual std::string report(bool show_thermo = true) const;
-
-    //! returns a summary of the state of the phase to specified 
-    //! comma separated files
-    /*!
-     * @param csvFile     ofstream file to print comma separated data for
-     *                    the phase
-     */
-    virtual void reportCSV(std::ofstream& csvFile) const;
 
   protected:
 

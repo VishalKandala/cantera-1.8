@@ -2,7 +2,7 @@
  * @file ctfunc.cpp
  */
 /*
- *      $Id: ctfunc.cpp 368 2010-01-04 00:46:26Z hkmoffa $
+ *      $Id: ctfunc.cpp,v 1.10 2009/07/11 17:16:09 hkmoffa Exp $
  */
 
 #ifdef WIN32

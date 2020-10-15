@@ -3,7 +3,7 @@
  *  Internal definitions for utility functions for the VCSnonideal package
  */
 /*
- * $Id: vcs_util.cpp 368 2010-01-04 00:46:26Z hkmoffa $
+ * $Id: vcs_util.cpp,v 1.13 2009/07/06 22:30:58 hkmoffa Exp $
  */
 /*
  * Copywrite (2005) Sandia Corporation. Under the terms of 

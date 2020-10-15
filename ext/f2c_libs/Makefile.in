@@ -1,8 +1,8 @@
 #
 # $Source: /cvsroot/cantera/cantera/ext/f2c_libs/Makefile.in,v $
-# $Author: hkmoffa $
-# $Revision: 358 $
-# $Date: 2009-12-28 21:01:18 -0600 (Mon, 28 Dec 2009) $
+# $Author: dggoodwin $
+# $Revision: 1.13 $
+# $Date: 2008/02/05 23:36:13 $
 #
 # Unix makefile: see README.
 # For C++, first "make hadd".

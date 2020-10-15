@@ -20,8 +20,8 @@
  */
 /*
  *  $Author: hkmoffa $
- *  $Date: 2009-12-05 13:08:43 -0600 (Sat, 05 Dec 2009) $
- *  $Revision: 279 $
+ *  $Date: 2009/03/27 00:51:38 $
+ *  $Revision: 1.24 $
  */
 
 #ifndef CT_IDEALMOLALSOLN_H
@@ -278,7 +278,6 @@ namespace Cantera {
      */
     virtual void setPressure(doublereal p);
 
-  protected:
     /**
      * Calculate the density of the mixture using the partial 
      * molar volumes and mole fractions as input
@@ -304,7 +303,6 @@ namespace Cantera {
      */
     void calcDensity();
 
-  public:
     /**
      * Overwritten setDensity() function is necessary because the
      * density is not an indendent variable.
@@ -337,15 +335,6 @@ namespace Cantera {
      * @param rho   Input Density
      */
     void setMolarDensity(const doublereal rho);
-
-    //! Set the temperature (K) and pressure (Pa)
-    /*!
-     *  Set the temperature and pressure.
-     *
-     * @param t    Temperature (K)
-     * @param p    Pressure (Pa)
-     */
-    virtual void setState_TP(doublereal t, doublereal p);
 
     //! The isothermal compressibility. Units: 1/Pa.
     /*!

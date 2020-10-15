@@ -1,8 +1,8 @@
 #/bin/sh
 ###############################################################
 # 
-#  $Date: 2010-01-03 18:46:26 -0600 (Sun, 03 Jan 2010) $
-#  $Revision: 368 $
+#  $Date: 2009/02/15 19:41:33 $
+#  $Revision: 1.22 $
 #
 #  Copyright 2002 California Institute of Technology
 #
@@ -35,13 +35,11 @@ CXX_FLAGS = -O3 -Wall   $(CXX_OPT) $(PIC_FLAG) $(DEBUG_FLAG)
 
 # Base Transport Object Files
 TRAN_OBJ    = TransportFactory.o MultiTransport.o MixTransport.o MMCollisionInt.o \
-              SolidTransport.o DustyGasTransport.o TransportBase.o WaterTransport.o \
-              SimpleTransport.o
+              SolidTransport.o DustyGasTransport.o TransportBase.o
 
 TRAN_H  =  TransportFactory.h MultiTransport.h MixTransport.h \
            MMCollisionInt.h  SolidTransport.h DustyGasTransport.h \
-           TransportBase.h L_matrix.h TransportParams.h WaterTransport.h \
-           SimpleTransport.h LiquidTransportData.h
+           TransportBase.h L_matrix.h TransportParams.h
 
 ifeq ($(do_electro),1)
 do_issp = 1
@@ -60,11 +58,11 @@ CATRAN_OBJ = $(TRAN_OBJ) $(ELECTRO_OBJ) $(ISSP_OBJ)
 CATRAN_H   = $(TRAN_H) $(ELECTRO_H) $(ISSP_H)
 
 CXX_INCLUDES = -I../base -I../thermo -I../numerics 
-LIB = /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libtransport.a
+LIB = /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libtransport.a
 
 DEPENDS = $(CATRAN_OBJ:.o=.d)
 
-all:  $(LIB) .depends  
+all:  $(LIB) .depends
 	@(/usr/bin/install -c -d $(INCDIR))
 	@(for lh in $(CATRAN_H) ; do \
 	  $(INSTALL_TSC) "$${lh}" $(INCDIR) ; \

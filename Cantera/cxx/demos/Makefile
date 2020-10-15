@@ -19,7 +19,7 @@ test:
 
 install:
 	/usr/bin/install -c -d       /usr/local/cantera/demos/cxx
-	/usr/bin/install -c  -m ug+rw,o+r Makefile /usr/local/cantera/demos/cxx
+	/usr/bin/install -c Makefile -m ug+rw,o+r /usr/local/cantera/demos/cxx
 	cd combustor;       make install
 	cd flamespeed;      make install
 	cd kinetics1;       make install

@@ -6,7 +6,7 @@
  *    \link Cantera::VPSSMgrFactory VPSSMgrFactory\endlink);
  */
 /*
- * $Id: VPSSMgrFactory.cpp 634 2010-11-11 00:19:59Z hkmoffa $
+ * $Id: VPSSMgrFactory.cpp,v 1.8 2009/03/04 01:01:57 hkmoffa Exp $
  */
 
 /*
@@ -114,10 +114,6 @@ namespace Cantera {
 	    } else if (ssModel == "constant_incompressible" ||
 		       ssModel == "constantVolume") {
 	      has_nasa_constVol++;
-	    } else if (ssModel == "temperature_polynomial" ||
-		       ssModel == "density_temperature_polynomial"  ||
-		       ssModel == "constant") {
-	      has_other++;
 	    } else {
 	      throw UnknownVPSSMgrModel("getVPSSMgrTypes:",
 					spNode->attrib("name"));
@@ -130,10 +126,6 @@ namespace Cantera {
 	    } else if (ssModel == "constant_incompressible" ||
 		       ssModel == "constantVolume") {
 	      has_shomate_constVol++;
-	    } else if (ssModel == "temperature_polynomial" ||
-		       ssModel == "density_temperature_polynomial"  ||
-		       ssModel == "constant") {
-	      has_other++;
 	    } else {
 	      throw UnknownVPSSMgrModel("getVPSSMgrTypes:",
 					spNode->attrib("name"));
@@ -146,10 +138,6 @@ namespace Cantera {
 	    } else if (ssModel == "constant_incompressible" ||
 		       ssModel == "constantVolume") {
 	      has_simple_constVol++;
-	    } else if (ssModel == "temperature_polynomial" ||
-		       ssModel == "density_temperature_polynomial"  ||
-		       ssModel == "constant") {
-	      has_other++;
 	    } else {
 	      throw UnknownVPSSMgrModel("getVPSSMgrTypes:",
 					spNode->attrib("name"));
@@ -200,7 +188,7 @@ namespace Cantera {
   void VPSSMgrFactory::deleteFactory() {
 
 #if defined(THREAD_SAFE_CANTERA)
-      boost::mutex::scoped_lock lock(vpss_species_thermo_mutex);
+      boost::mutex::scoped_lock lock(species_thermo_mutex);
 #endif
       if (s_factory) {
 	delete s_factory;
@@ -351,17 +339,22 @@ namespace Cantera {
     switch (type) {
     case cVPSSMGR_IDEALGAS:
       return new VPSSMgr_IdealGas(vp_ptr, &spthermoRef);
+      break;
     case cVPSSMGR_CONSTVOL:
       return new VPSSMgr_ConstVol(vp_ptr, &spthermoRef);
+      break;
     case cVPSSMGR_PUREFLUID:
       throw CanteraError("VPSSMgrFactory::newVPSSMgr",
 			 "unimplemented");
     case cVPSSMGR_WATER_CONSTVOL:
       return new VPSSMgr_Water_ConstVol(vp_ptr, &spthermoRef);
+      break;
     case cVPSSMGR_WATER_HKFT:
       return new VPSSMgr_Water_HKFT(vp_ptr, &spthermoRef);
+      break;
     case cVPSSMGR_GENERAL:
       return new VPSSMgr_General(vp_ptr, &spthermoRef);
+      break;
     case cVPSSMGR_UNDEF:
     default:
       throw UnknownVPSSMgrModel("VPSSMgrFactory::newVPSSMgr", int2str(type));

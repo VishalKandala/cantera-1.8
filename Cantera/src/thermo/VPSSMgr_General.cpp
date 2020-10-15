@@ -13,8 +13,8 @@
  */
 /*
  *  $Author: hkmoffa $
- *  $Date: 2009-12-05 13:08:43 -0600 (Sat, 05 Dec 2009) $
- *  $Revision: 279 $
+ *  $Date: 2009/05/28 23:08:06 $
+ *  $Revision: 1.5 $
  */
 
 // turn off warnings under Windows
@@ -30,9 +30,7 @@
 #include "PDSS_IdealGas.h"
 #include "PDSS_Water.h"
 #include "PDSS_ConstVol.h"
-#include "PDSS_SSVol.h"
 #include "PDSS_HKFT.h"
-#include "PDSS_IonsFromNeutral.h"
 #include "GeneralSpeciesThermo.h"
 
 using namespace std;
@@ -63,23 +61,12 @@ namespace Cantera {
     m_useTmpRefStateStorage = true;
     *this = right;
   }
-  //====================================================================================================================
+
+
   VPSSMgr_General& VPSSMgr_General::operator=(const VPSSMgr_General &b) 
   {
-    if (&b == this) {
-      return *this;
-    }
+    if (&b == this) return *this;
     VPSSMgr::operator=(b);
-    /*
-     *  Must fill in the shallow pointers. These must have already been transfered
-     *  and storred in the owning VPStandardStateTP class.  Note we are aware that at this point
-     *  m_vptr_ptr may refer back to the wrong ThermoPhase object. However, the shallow copy 
-     *  performed here is consistent with the assignment operator's general functionality.
-     */
-    m_PDSS_ptrs.resize(m_kk);
-    for (int k = 0; k < m_kk; k++) {
-       m_PDSS_ptrs[k] = m_vptp_ptr->providePDSS(k);
-    }
     return *this;
   }
 
@@ -87,29 +74,8 @@ namespace Cantera {
     VPSSMgr_General *vpm = new VPSSMgr_General(*this);
     return (VPSSMgr *) vpm;
   }
-  //====================================================================================================================
-  // Initialize the internal shallow pointers in this object
-  /*
-   * There are a bunch of internal shallow pointers that point to the owning
-   * VPStandardStateTP and SpeciesThermo objects. This function reinitializes
-   * them. This function is called like an onion.
-   * 
-   *  @param vp_ptr   Pointer to the VPStandardStateTP standard state
-   *  @param sp_ptr   Poitner to the SpeciesThermo standard state
-   */
-  void VPSSMgr_General::initAllPtrs(VPStandardStateTP *vp_ptr, SpeciesThermo *sp_ptr)
-  {
-    VPSSMgr::initAllPtrs(vp_ptr, sp_ptr);
-    /*
-     *  Must fill in the shallow pointers. These must have already been transfered
-     *  and storred in the owning VPStandardStateTP class.
-     */
-    m_PDSS_ptrs.resize(m_kk);
-    for (int k = 0; k < m_kk; k++) {
-      m_PDSS_ptrs[k] = m_vptp_ptr->providePDSS(k);
-    }
-  }
-  //====================================================================================================================
+
+
   void VPSSMgr_General::_updateRefStateThermo() const
   {
     if (m_useTmpRefStateStorage) {
@@ -192,9 +158,6 @@ namespace Cantera {
     if (model == "constant_incompressible") {
       VPSSMgr::installSTSpecies(k, speciesNode, phaseNode_ptr);
       kPDSS = new PDSS_ConstVol(m_vptp_ptr, k, speciesNode, *phaseNode_ptr, true);
-      if (!kPDSS) {
-	throw CanteraError("VPSSMgr_General::returnPDSS_ptr", "new PDSS_ConstVol failed");
-      }
     } else if (model == "waterIAPWS" || model == "waterPDSS") { 
       // VPSSMgr::installSTSpecies(k, speciesNode, phaseNode_ptr);
       kPDSS = new PDSS_Water(m_vptp_ptr, 0);
@@ -212,29 +175,9 @@ namespace Cantera {
 			   "failed dynamic cast");
       }
       genSpthermo->installPDSShandler(k, kPDSS, this);
-
-    } else if (model == "IonFromNeutral") {
-      if (!genSpthermo) {
-	throw CanteraError("VPSSMgr_General::returnPDSS_ptr",
-			   "failed dynamic cast");
-      }
-      doST = false;
-      kPDSS = new PDSS_IonsFromNeutral(m_vptp_ptr, k, speciesNode, *phaseNode_ptr, true);
-      if (!kPDSS) {
-	throw CanteraError("VPSSMgr_General::returnPDSS_ptr",
-			   "new PDSS_IonsFromNeutral failed");
-      }
-      genSpthermo->installPDSShandler(k, kPDSS, this);
-
-    } else if (model == "constant" || model == "temperature_polynomial" || model == "density_temperature_polynomial") {
-      VPSSMgr::installSTSpecies(k, speciesNode, phaseNode_ptr);
-      kPDSS = new PDSS_SSVol(m_vptp_ptr, k, speciesNode, *phaseNode_ptr, true);
-      if (!kPDSS) {
-	throw CanteraError("VPSSMgr_General::returnPDSS_ptr", "new PDSS_SSVol failed");
-      }
     } else {
       throw CanteraError("VPSSMgr_General::returnPDSS_ptr",
-			 "unknown standard state formulation: " + model);
+			 "unknown");
     }
     return kPDSS;
   }

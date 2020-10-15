@@ -1,7 +1,7 @@
 
 ----------------------------------------------------------
 csvdiff: CSVFile comparison utility program
-         Version $Revision: 432 $
+         Version $Revision: 1.17 $
          Harry K. Moffat Div. 9114 Sandia National Labs
          
          First  CSV File = flame1_blessed.csv
@@ -11,21 +11,3 @@ csvdiff: CSVFile comparison utility program
          Relative tol = 0.001
 ----------------------------------------------------------
 
-Number of Title Lines in each file = 0
-Number of column title lines in each file = 1
-Number of Data rows in both files = 104
-Number of column variables in both files = 14
-Column variable z (m) passed
-Column variable u (m/s) passed
-Column variable V (1/s) passed
-Column variable T (K) passed
-Column variable rho (kg/m3) passed
-Column variable H2 passed
-Column variable H passed
-Column variable O passed
-Column variable O2 passed
-Column variable OH passed
-Column variable H2O passed
-Column variable HO2 passed
-Column variable H2O2 passed
-Column variable AR passed

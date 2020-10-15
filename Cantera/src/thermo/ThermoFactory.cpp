@@ -6,8 +6,8 @@
  */
 
 /*
- * $Revision: 311 $
- * $Date: 2009-12-10 19:32:26 -0600 (Thu, 10 Dec 2009) $
+ * $Revision: 1.20 $
+ * $Date: 2009/03/13 03:21:34 $
  */
 
 // Copyright 2001  California Institute of Technology
@@ -27,8 +27,6 @@
 
 #ifdef WITH_IDEAL_SOLUTIONS
 #include "IdealSolidSolnPhase.h"
-#include "MargulesVPSSTP.h"
-#include "IonsFromNeutralVPSSTP.h"
 #endif
 
 #ifdef WITH_PURE_FLUIDS
@@ -59,7 +57,6 @@
 
 #ifdef WITH_STOICH_SUBSTANCE
 #include "MineralEQ3.h"
-#include "MetalSHEelectrons.h"
 #endif
 
 //#include "importCTML.h"
@@ -88,14 +85,13 @@ namespace Cantera {
     boost::mutex ThermoFactory::thermo_mutex;
 #endif
 
-    static int ntypes = 18;
+    static int ntypes = 16;
     static string _types[] = {"IdealGas", "Incompressible", 
                               "Surface", "Edge", "Metal", "StoichSubstance",
                               "PureFluid", "LatticeSolid", "Lattice",
                               "HMW", "IdealSolidSolution", "DebyeHuckel", 
                               "IdealMolalSolution", "IdealGasVPSS",
-			      "MineralEQ3", "MetalSHEelectrons", "Margules",
-                              "IonsFromNeutralMolecule"
+			      "MineralEQ3", "electrodeElectron"
     };
 
     static int _itypes[]   = {cIdealGas, cIncompressible, 
@@ -103,8 +99,7 @@ namespace Cantera {
                               cPureFluid, cLatticeSolid, cLattice,
                               cHMW, cIdealSolidSolnPhase, cDebyeHuckel,
                               cIdealMolalSoln, cVPSS_IdealGas,
-			      cMineralEQ3, cMetalSHEelectrons,
-			      cMargulesVPSSTP, cIonsFromNeutral
+			      cMineralEQ3, cElectrodeElectron
     };
 
   /*
@@ -141,14 +136,6 @@ namespace Cantera {
     case cIdealSolidSolnPhase:
       th = new IdealSolidSolnPhase();
       break;
-
-    case cMargulesVPSSTP:
-      th = new MargulesVPSSTP();
-      break;
-
-    case cIonsFromNeutral:
-      th = new IonsFromNeutralVPSSTP();
-      break;
 #endif
 
 #ifdef WITH_METAL
@@ -174,8 +161,8 @@ namespace Cantera {
 #endif
 
 #ifdef WITH_STOICH_SUBSTANCE
-    case cMetalSHEelectrons:
-      th = new MetalSHEelectrons();
+    case cElectrodeElectron:
+      th = new electrodeElectron();
       break;
 #endif
 
@@ -219,26 +206,6 @@ namespace Cantera {
     return th;
   }
 
-  // Translate the eosType id into a string
-  /*
-   *  Returns a string representation of the eosType id for a phase.
-   *  @param ieos  eosType id of the phase. This is unique for the phase
-   *  @param length maximum length of the return string. Defaults to 100
-   *
-   *  @return returns a string representation.
-   */
-  std::string eosTypeString(int ieos, int length)
-  {
-    std::string ss = "UnknownPhaseType";
-    // bool found = false;
-    for (int n = 0; n <  ntypes; n++) {
-      if (_itypes[n] == ieos) {
-	ss = _types[n];
-	//found = true;
-      }  
-    }
-    return ss;
-  }
 
 
   /*
@@ -256,24 +223,14 @@ namespace Cantera {
     const XML_Node& th = xmlphase.child("thermo");
     string model = th["model"];
     ThermoPhase* t = newThermoPhase(model);
-    if (model == "singing cows") {
-      throw CanteraError(" newPhase", "Cows don't sing");
-    } 
 #ifdef WITH_ELECTROLYTES
-    else if (model == "HMW") {
-      HMWSoln* p = dynamic_cast<HMWSoln*>(t);
+    if (model == "HMW") {
+      HMWSoln* p = (HMWSoln*)t;
       p->constructPhaseXML(xmlphase,"");
     }
+    else
 #endif
-#ifdef WITH_IDEAL_SOLUTIONS
-    else if (model == "IonsFromNeutralMolecule") {
-      IonsFromNeutralVPSSTP* p = dynamic_cast<IonsFromNeutralVPSSTP*>(t);
-      p->constructPhaseXML(xmlphase,"");
-    }
-#endif
-    else {
       importPhase(xmlphase, t);
-    }
     return t;
   }
 
@@ -438,17 +395,6 @@ namespace Cantera {
 			 "Current const XML_Node named, " + phase.name() + 
 			 ", is not a phase element.");
     }
-
-    /*
-     * In this section of code, we get the reference to the 
-     * phase xml tree within the ThermoPhase object. Then,
-     * we clear it and fill it with the current information that
-     * we are about to use to construct the object. We will then
-     * be able to resurrect the information later by calling xml().
-     */
-    XML_Node &phaseNode_XML = th->xml();
-    phaseNode_XML.clear();
-    phase.copy(&phaseNode_XML);
 
     // set the id attribute of the phase to the 'id' attribute 
     // in the XML tree.
@@ -713,10 +659,7 @@ namespace Cantera {
     int m, nel = th.nElements();
     vector_fp ecomp(nel, 0.0);            
     for (m = 0; m < nel; m++) {
-      const char *es = comp[th.elementName(m)].c_str();
-      if (strlen(es) > 0) {
-        ecomp[m] = atofCheck(es);
-      }
+      ecomp[m] = atoi(comp[th.elementName(m)].c_str());
     }
 
 

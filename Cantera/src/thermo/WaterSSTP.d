@@ -5,4 +5,4 @@ WaterSSTP.o: WaterSSTP.cpp ../base/xml.h ../base/ctexceptions.h \
  SpeciesThermo.h ../base/ctexceptions.h ../base/stringUtils.h Elements.h \
  ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
  ../base/Array.h WaterPropsIAPWS.h WaterPropsIAPWSphi.h ../base/config.h \
- WaterProps.h ThermoFactory.h ../base/FactoryBase.h
+ ThermoFactory.h ../base/FactoryBase.h

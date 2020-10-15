@@ -7,8 +7,8 @@
  */
 
 /*
- *  $Date: 2010-05-08 22:18:33 -0500 (Sat, 08 May 2010) $
- *  $Revision: 470 $
+ *  $Date: 2009/02/18 22:31:32 $
+ *  $Revision: 1.26 $
  *
  *  Copyright 2002 California Institute of Technology
  *
@@ -778,53 +778,18 @@ namespace Cantera {
     }
         
 #ifdef H298MODIFY_CAPABILITY
-
-    //! Report the 298 K Heat of Formation of the standard state of one species (J kmol-1)
-    /*!
-     *   The 298K Heat of Formation is defined as the enthalpy change to create the standard state
-     *   of the species from its constituent elements in their standard states at 298 K and 1 bar.
-     *
-     *   @param k    species index
-     *   @return     Returns the current value of the Heat of Formation at 298K and 1 bar
-     */
     doublereal Hf298SS(const int k) const {
-      return (m_spthermo->reportOneHf298(k));
+	return (m_spthermo->reportOneHf298(k));
     }
 
-    //! Modify the value of the 298 K Heat of Formation of one species in the phase (J kmol-1)
-    /*!
-     *   The 298K heat of formation is defined as the enthalpy change to create the standard state
-     *   of the species from its constituent elements in their standard states at 298 K and 1 bar.
-     *
-     *   @param  k           Species k
-     *   @param  Hf298New    Specify the new value of the Heat of Formation at 298K and 1 bar                      
-     */
     virtual void modifyOneHf298SS(const int k, const doublereal Hf298New) {
-      m_spthermo->modifyOneHf298(k, Hf298New);
+       m_spthermo->modifyOneHf298(k, Hf298New);
     }
-
 #else
-
-    //! Report the 298 K Heat of Formation of the standard state of one species (J kmol-1)
-    /*!
-     *   The 298K Heat of Formation is defined as the enthalpy change to create the standard state
-     *   of the species from its constituent elements in their standard states at 298 K and 1 bar.
-     *
-     *   @param k    species index
-     *   @return     Returns the current value of the Heat of Formation at 298K and 1 bar
-     */
     doublereal Hf298SS(const int k) const {
        return err("Hf298SS - H298MODIFY_CAPABILITY not compiled in"); 
     }
 
-    //! Modify the value of the 298 K Heat of Formation of one species in the phase (J kmol-1)
-    /*!
-     *   The 298K heat of formation is defined as the enthalpy change to create the standard state
-     *   of the species from its constituent elements in their standard states at 298 K and 1 bar.
-     *
-     *   @param  k           Species k
-     *   @param  Hf298New    Specify the new value of the Heat of Formation at 298K and 1 bar                      
-     */
     virtual void modifyOneHf298SS(const int k, const doublereal Hf298New) {
       (void) err("Hf298SS - H298MODIFY_CAPABILITY not compiled in"); 
     }
@@ -880,66 +845,6 @@ namespace Cantera {
     /// Molar heat capacity at constant volume. Units: J/kmol/K. 
     virtual doublereal cv_mole() const {
       return err("cv_mole");
-    }
-
-
-    //! Get the change in activity coefficients w.r.t. change in state 
-    //! (temp, mole fraction, etc.)
-    /*!
-     * This function is a virtual method.  For ideal mixtures 
-     * (unity activity coefficients), this can gradX/X.  
-     *
-     * @param dT    Input of temperature change
-     * @param dX    Input vector of changes in mole fraction. length = m_kk
-     * @param dlnActCoeff    Output vector of derivatives of the 
-     *                         log Activity Coefficients. length = m_kk
-     */
-    virtual void getdlnActCoeff(const doublereal dT, const doublereal * const dX, doublereal *dlnActCoeff) const {
-      err("getdlnActCoeff");
-    }
-
-    //! Get the array of log concentration-like derivatives of the 
-    //! log activity coefficients
-    /*!
-     * This function is a virtual method.  For ideal mixtures 
-     * (unity activity coefficients), this can return zero.  
-     * Implementations should take the derivative of the 
-     * logarithm of the activity coefficient with respect to the 
-     * logarithm of the concentration-like variable (i.e. mole fraction)
-     * that represents the standard state.  
-     * This quantity is to be used in conjunction with derivatives of 
-     * that concentration-like variable when the derivative of the chemical 
-     * potential is taken.  
-     *
-     *  units = dimensionless
-     *
-     * @param dlnActCoeffdlnX    Output vector of derivatives of the 
-     *                         log Activity Coefficients. length = m_kk
-     */
-    virtual void getdlnActCoeffdlnX(doublereal *dlnActCoeffdlnX) const {
-      err("getdlnActCoeffdlnX");
-    }
-
-    //! Get the array of log concentration-like derivatives of the 
-    //! log activity coefficients
-    /*!
-     * This function is a virtual method.  For ideal mixtures 
-     * (unity activity coefficients), this can return zero.  
-     * Implementations should take the derivative of the 
-     * logarithm of the activity coefficient with respect to the 
-     * logarithm of the concentration-like variable (i.e. moles)
-     * that represents the standard state.  
-     * This quantity is to be used in conjunction with derivatives of 
-     * that concentration-like variable when the derivative of the chemical 
-     * potential is taken.  
-     *
-     *  units = dimensionless
-     *
-     * @param dlnActCoeffdlnN    Output vector of derivatives of the 
-     *                         log Activity Coefficients. length = m_kk
-     */
-    virtual void getdlnActCoeffdlnN(doublereal *dlnActCoeffdlnN) const {
-      err("getdlnActCoeffdlnN");
     }
 
 
@@ -1124,7 +1029,7 @@ namespace Cantera {
      * @param k Optional parameter indicating the species. The default
      *          is to assume this refers to species 0.
      * @return 
-     *   Returns the standard concentration. The units are by definition
+     *   Returns the standard Concentration. The units are by definition
      *   dependent on the ThermoPhase and kinetics manager representation.
      */
     virtual doublereal standardConcentration(int k=0) const {
@@ -1487,20 +1392,6 @@ namespace Cantera {
       err("getStandardVolumes_ref");
     }
 
-    //! Sets the reference composition
-    /*!
-     *  @param x   Mole fraction vector to set the reference composition to.
-     *             If this is zero, then the reference mole fraction
-     *             is set to the current mole fraction vector.
-     */
-    virtual void setReferenceComposition(const doublereal * const x);
-
-    //! Gets the reference composition
-    /*!
-     *  The reference mole fraction is a safe mole fraction.
-     *  @param x   Mole fraction vector containing the reference composition.
-     */
-    virtual void getReferenceComposition(doublereal * const x) const;
    
     //
     //  The methods below are not virtual, and should not
@@ -2111,13 +2002,6 @@ namespace Cantera {
      *                    about the thermodynamic state of the system.
      */
     virtual std::string report(bool show_thermo = true) const;
-
-    //! returns a summary of the state of the phase to a comma separated file
-    /*!
-     * @param csvFile     ofstream file to print comma separated data for
-     *                    the phase
-     */
-    virtual void reportCSV(std::ofstream& csvFile) const;
             
   protected:
 
@@ -2131,11 +2015,9 @@ namespace Cantera {
 
     //! Vector of pointers to the species databases.
     /*!
-     * This is used to access data needed to
+     *  This is used to access data needed to
      * construct the transport manager and other properties
      * later in the initialization process.
-     * We create a copy of the XML_Node data read in here. Therefore, we own this
-     * data.
      */
     std::vector<const XML_Node *> m_speciesData;
 
@@ -2175,15 +2057,6 @@ namespace Cantera {
 
     //! Contains the standard state convention
     int m_ssConvention;
-
-    //! Reference Mole Fraction Composition
-    /*!
-     *  Occasionally, the need arises to find a safe mole fraction vector to initialize
-     *  the object to. This contains such a vector.
-     *  The algorithm will pick up the mole fraction vector that is applied from 
-     *  the state xml file in the input file 
-     */
-    std::vector<doublereal> xMol_Ref;
 
   private:
 

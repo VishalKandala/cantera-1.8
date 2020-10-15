@@ -43,7 +43,7 @@ if test ! -f "${th}" ; then
     fi
 else 
 #            if test "${lh}" -nt "${th}" ; then 
-   /pkg/Cantera/bin/tscompare "${lh}" "${th}"
+   /Cantera1.8-Radcal/bin/tscompare "${lh}" "${th}"
    res=$?
    if test "$res" = "0" ; then
     if test -x "${lh}" ; then

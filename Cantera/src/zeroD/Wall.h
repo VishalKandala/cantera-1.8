@@ -3,9 +3,9 @@
  *  Header file for class Wall.
  */
 
-/*  $Author: hkmoffa $
- *  $Date: 2010-01-03 18:46:26 -0600 (Sun, 03 Jan 2010) $
- *  $Revision: 368 $
+/*  $Author: dggoodwin $
+ *  $Date: 2007/05/04 14:41:28 $
+ *  $Revision: 1.9 $
  */
 
 // Copyright 2001-2004  California Institute of Technology

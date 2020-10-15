@@ -16,4 +16,3 @@ PrintCtrl.o: PrintCtrl.cpp PrintCtrl.h
 LogPrintCtrl.o: LogPrintCtrl.cpp LogPrintCtrl.h PrintCtrl.h global.h \
  ct_defs.h config.h ../../../config.h
 mdp_allo.o: mdp_allo.cpp mdp_allo.h
-checkFinite.o: checkFinite.cpp ct_defs.h config.h ../../../config.h

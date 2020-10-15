@@ -7,8 +7,8 @@
  *      Kinetics managers calculate rates of progress of species due to homogeneous or heterogeneous kinetics.
  */
 /*
- *  $Date: 2010-05-07 22:15:22 -0500 (Fri, 07 May 2010) $
- *  $Revision: 462 $
+ *  $Date: 2008/12/16 20:32:18 $
+ *  $Revision: 1.3 $
  */
 
 // Copyright 2001-2004  California Institute of Technology            
@@ -29,16 +29,9 @@ using namespace std;
 namespace Cantera {
 
     
-  Kinetics::Kinetics() :
-    m_ii(0), 
-    m_nTotalSpecies(0),
-    m_thermo(0),
-    m_index(-1), 
-    m_surfphase(-1),
-    m_rxnphase(-1), 
-    m_mindim(4)
-  {
-  }
+  Kinetics::Kinetics() : m_ii(0), m_thermo(0),
+			 m_index(-1), m_surfphase(-1), m_rxnphase(-1), 
+			 m_mindim(4) {}
 
   Kinetics::~Kinetics(){}
 
@@ -49,8 +42,7 @@ namespace Cantera {
    * throw an exception.
    */
   Kinetics::Kinetics(const Kinetics &right) :
-    m_ii(0),
-    m_nTotalSpecies(0),
+    m_ii(0), 
     m_thermo(0),
     m_index(-1), 
     m_surfphase(-1),
@@ -78,7 +70,6 @@ namespace Cantera {
     if (this == &right) return *this;
     
     m_ii                = right.m_ii;
-    m_nTotalSpecies     = right.m_nTotalSpecies;
     m_perturb           = right.m_perturb;
     m_reactants         = right.m_reactants;
     m_products          = right.m_products;
@@ -222,11 +213,9 @@ namespace Cantera {
       if (k >= 0) return thermo(n);
     }
     throw CanteraError("speciesPhase", "unknown species "+nm);
-    return thermo(0);
   }
 
-  //==============================================================================================
-  /*
+  /**
    * This function takes as an argument the kineticsSpecies index
    * (i.e., the list index in the list of species in the kinetics
    * manager) and returns the index of the phase owning the 
@@ -239,8 +228,8 @@ namespace Cantera {
 	return n;
       }
     }
-    throw CanteraError("speciesPhaseIndex", "illegal species index: "+int2str(k));
-    return -1;
+    throw CanteraError("speciesPhaseIndex", 
+		       "illegal species index: "+int2str(k));
   }
 
   /*
@@ -294,15 +283,6 @@ namespace Cantera {
     }
     m_thermo.push_back(&thermo);
     m_phaseindex[m_thermo.back()->id()] = nPhases();
-  }
-
-  void Kinetics::finalize() {
-    m_nTotalSpecies = 0;
-    int np = nPhases();
-    for (int n = 0; n < np; n++) {
-      int nsp = m_thermo[n]->nSpecies();
-      m_nTotalSpecies += nsp;
-    }
   }
 
   

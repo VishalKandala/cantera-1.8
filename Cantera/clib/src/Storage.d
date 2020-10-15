@@ -11,6 +11,5 @@ Storage.o: Storage.cpp ../../src/kinetics/Kinetics.h \
  ../../src/base/ctml.h ../../src/base/xml.h ../../src/base/Array.h \
  ../../src/thermo/mix_defs.h ../../src/transport/TransportFactory.h \
  ../../src/transport/TransportBase.h ../../src/base/FactoryBase.h \
- ../../src/transport/LiquidTransportData.h Storage.h \
- ../../src/transport/TransportBase.h Cabinet.h ../../src/base/config.h \
- clib_defs.h
+ Storage.h ../../src/transport/TransportBase.h Cabinet.h \
+ ../../src/base/config.h clib_defs.h

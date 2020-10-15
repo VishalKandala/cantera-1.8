@@ -14,7 +14,7 @@
  */
 
 /*
- * $Id: MineralEQ3.cpp 279 2009-12-05 19:08:43Z hkmoffa $ 
+ * $Id: MineralEQ3.cpp,v 1.2 2008/12/27 00:27:55 hkmoffa Exp $ 
  */
 
 #include "ct_defs.h"

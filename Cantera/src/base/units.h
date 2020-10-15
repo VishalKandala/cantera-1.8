@@ -7,7 +7,7 @@
  * This header is included only by file misc.cpp.
  */
 /*
- * $Id: units.h 459 2010-05-07 14:48:15Z hkmoffa $
+ * $Id: units.h,v 1.5 2007/12/15 17:15:50 dggoodwin Exp $
  */
 //    Copyright 2002 California Institute of Technology
 
@@ -173,15 +173,11 @@ namespace Cantera {
         static boost::mutex units_mutex;
 #endif
 
-         //! Units class constructor, containing the default mappings between
-         //! strings and units.
-        Unit() :
-          m_u(),
-          m_act_u()
-          {
-
-	    // unity
-	    m_u["1"] = 1.0;
+        /*!
+         * Units class constructor, containing the default mappings between
+         * strings and units.
+         */
+        Unit(){
 
             // length
             m_u["m"]    = 1.0;
@@ -201,9 +197,6 @@ namespace Cantera {
             m_u["kcal"]     = 4184.0;
             m_u["eV"]       = Faraday; //1.60217733e-19;
 
-	    // resistance
-	    m_u["ohm"]      = 1.0;
-
             // quantity
             m_u["mol"]      = 1.0e-3;
             m_u["gmol"]     = 1.0e-3;
@@ -217,7 +210,6 @@ namespace Cantera {
             m_u["C"]        = 1.0;
 
             // mass
-	    m_u["gm"]       = 1.0e-3;
             m_u["g"]        = 1.0e-3;
             m_u["kg"]       = 1.0;
 
@@ -232,32 +224,14 @@ namespace Cantera {
             m_u["hr"]       = 3600.0;
             m_u["ms"]       = 0.001;
 
-            /*
-            // frequency  - Took frequency out to reevaluate it. Inverse cm is probably the wrong default unit
+            // frequency
             m_u["hZ"]       = 0.01/(lightSpeed);
             m_u["cm^-1"]    = 1.0;
             m_u["m^-1"]     = 0.1; 
             m_u["cm-1"]     = m_u["cm^-1"];
             m_u["m-1"]      = m_u["m^-1"];
             m_u["wavenumbers"] = m_u["cm^-1"];
-            */
 
-            // viscosity
-	    m_u["Pa-s"] = 1;
-            m_u["poise"]    = 0.1;
-            m_u["centipoise"] = 0.001;
-	    m_u["P"] = 0.1;
-	    m_u["cP"] = 0.001;
-
-	    // volume
-	    m_u["kL"] = 1.0;
-	    m_u["liter"] = 0.001;
-	    m_u["L"] = 0.001;
-	    m_u["l"] = 0.001;
-	    m_u["mL"] = 1.0e-6;
-	    m_u["ml"] = 1.0e-6;
-	    m_u["cc"] = 1.0e-6;
-	    
             m_act_u["eV"] = m_u["eV"]; // /m_u["molec"];
             m_act_u["K"] =  GasConstant;
             m_act_u["Kelvin"] =  GasConstant;

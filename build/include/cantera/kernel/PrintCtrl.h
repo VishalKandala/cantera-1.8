@@ -4,8 +4,8 @@
  *   (see \ref Cantera::PrintCtrl).
  */
 /*
- * $Revision: 368 $
- * $Date: 2010-01-03 18:46:26 -0600 (Sun, 03 Jan 2010) $
+ * $Revision: 1.3 $
+ * $Date: 2009/03/14 00:27:10 $
  */
 /*
  * Copywrite 2004 Sandia Corporation. Under the terms of Contract

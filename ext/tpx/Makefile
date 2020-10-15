@@ -17,7 +17,7 @@ COBJS = Methane.o Nitrogen.o Oxygen.o Water.o Hydrogen.o RedlichKwong.o \
 
 CXX_LIBS = 
 CXX_INCLUDES = -I../include 
-TPLIB = /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libtpx.a
+TPLIB = /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libtpx.a
 
 DEPENDS = $(COBJS:.o=.d)
 

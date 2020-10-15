@@ -5,7 +5,7 @@
  */
 
 /*
- * $Id: stringUtils.cpp 368 2010-01-04 00:46:26Z hkmoffa $
+ * $Id: stringUtils.cpp,v 1.22 2009/01/15 20:08:50 hkmoffa Exp $
  */
 
 // Copyright 2001  California Institute of Technology

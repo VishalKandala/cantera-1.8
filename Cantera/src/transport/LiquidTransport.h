@@ -4,8 +4,8 @@
  *   Header file defining class LiquidTransport
  */
 /*
- * $Revision: 368 $
- * $Date: 2010-01-03 18:46:26 -0600 (Sun, 03 Jan 2010) $
+ * $Revision: 1.9 $
+ * $Date: 2009/03/27 18:24:39 $
  */
 
 #ifndef CT_LIQUIDTRAN_H
@@ -25,14 +25,13 @@ using namespace std;
 // Cantera includes
 #include "TransportBase.h"
 #include "DenseMatrix.h"
-#include "TransportParams.h"
 #include "LiquidTransportParams.h"
 
 namespace Cantera {
 
   const int LVISC_CONSTANT     = 0;
-  const int LVISC_INTERACTION  = 1;
-  const int LVISC_AVG_ENERGIES = 2;
+  const int LVISC_WILKES       = 1;
+  const int LVISC_MIXTUREAVG   = 2;
 
   const int LDIFF_MIXDIFF_UNCORRECTED     = 0;
   const int LDIFF_MIXDIFF_FLUXCORRECTED  = 1;
@@ -40,7 +39,7 @@ namespace Cantera {
 
 
 
-  class LiquidTransportParams;
+  class TransportParams;
 
     
   //! Class LiquidTransport implements mixture-averaged transport
@@ -136,21 +135,12 @@ namespace Cantera {
   class LiquidTransport : public Transport {
   public:
 
-    //! Default constructor.  
-    /*!
-     * This requires call to initLiquid(LiquidTransportParams& tr)
-     * after filling LiquidTransportParams to complete instantiation.
-     * The filling of LiquidTransportParams is currently carried out 
-     * in the TransportFactory class, but might be moved at some point.
-     * 
-     * @param thermo  ThermoPhase object holding species information.
-     * @param ndim    Number of spatial dimensions.
-     */
+    //! default constructor
     LiquidTransport(thermo_t* thermo = 0, int ndim = 1);
 
     //!Copy Constructor for the %LiquidThermo object.
     /*!
-     * @param right  %LiquidTransport to be copied
+     * @param right  ThermoPhase to be copied
      */
     LiquidTransport(const LiquidTransport &right);
 
@@ -158,8 +148,8 @@ namespace Cantera {
     /*!
      *  This is NOT a virtual function.
      *
-     * @param right    Reference to %LiquidTransport object to be copied 
-     *                 into the current one.
+     * @param right    Reference to %ThermoPhase object to be copied into the
+     *                 current one.
      */
     LiquidTransport&  operator=(const  LiquidTransport& right);
     
@@ -179,21 +169,8 @@ namespace Cantera {
     //! virtual destructor
     virtual ~LiquidTransport() {}
 
-    //! Initialize the transport object
-    /*!
-     * Here we change all of the internal dimensions to be sufficient.
-     * We get the object ready to do property evaluations.
-     *
-     * @param tr  Transport parameters for all of the species
-     *            in the phase.
-     */
-    virtual bool initLiquid(LiquidTransportParams& tr);
-
-    friend class TransportFactory;
-
-
     //! Return the model id for this transport parameterization
-    virtual int model() const {
+    virtual int model() {
       return cLiquidTransport; 
     }
 
@@ -201,14 +178,17 @@ namespace Cantera {
 
     //! Returns the viscosity of the solution
     /*!
-     * The viscosity is computed using mixture averaging plus
-     * any information on interaction parameters
+     * The viscosity is computed using the Wilke mixture rule.
      * \f[
-     * \mu = \sum_k {\mu_k X_k} {\sum_j \sum_k {G_{j,k} X_k X_j} }.
+     * \mu = \sum_k \frac{\mu_k X_k}{\sum_j \Phi_{k,j} X_j}.
      * \f]
      * Here \f$ \mu_k \f$ is the viscosity of pure species \e k,
-     * and  \f$ G_{k,j} \f$ is the interaction parameter.
-
+     * and 
+     * \f[
+     * \Phi_{k,j} = \frac{\left[1 
+     * + \sqrt{\left(\frac{\mu_k}{\mu_j}\sqrt{\frac{M_j}{M_k}}\right)}\right]^2}
+     * {\sqrt{8}\sqrt{1 + M_k/M_j}}
+     * \f] 
      * @see updateViscosity_T();
      *
      * Controlling update boolean m_viscmix_ok
@@ -217,10 +197,24 @@ namespace Cantera {
 
     //! Returns the pure species viscosities
     /*!
-     *  The pure species viscosities are to be given in an Arrhenius 
-     * form in accordance with activated-jump-process dominated transport.
+     *
+     * 
      */
     virtual void getSpeciesViscosities(doublereal* const visc);
+
+    virtual void getThermalDiffCoeffs(doublereal* const dt);
+
+    //! Return the thermal conductivity of the solution
+    /*!
+     * The thermal conductivity is computed from the following mixture rule:
+     *   \f[
+     *    \lambda = 0.5 \left( \sum_k X_k \lambda_k 
+     *     + \frac{1}{\sum_k X_k/\lambda_k}\right)
+     *   \f]
+     *
+     *  Controlling update boolean = m_condmix_ok
+     */
+    virtual doublereal thermalConductivity();
 
     //! Returns the binary diffusion coefficients
     /*!
@@ -237,56 +231,11 @@ namespace Cantera {
     virtual void getMixDiffCoeffs(doublereal* const d);
 
 
-    virtual void getThermalDiffCoeffs(doublereal* const dt);
-
-    //! Return the thermal conductivity of the solution
+    //! Get the Mobilities
     /*!
-     * The thermal conductivity is computed from the following mixture rule:
-     *   \f[
-     *    \lambda = 0.5 \left( \sum_k X_k \lambda_k 
-     *     + \frac{1}{\sum_k X_k/\lambda_k}\right)
-     *   \f]
-     *
-     *  Controlling update boolean = m_condmix_ok
+     * @param mobil
      */
-    virtual doublereal thermalConductivity();
-
-    //! Get the Electrical mobilities (m^2/V/s).
-    /*!
-     *   This function returns the mobilities. In some formulations
-     *   this is equal to the normal mobility multiplied by faraday's constant.
-     *
-     *   The mobility is calculated from the
-     *   diffusion coefficient using the Einstein relation
-     *
-     *     \f[ 
-     *          \mu^e_k = \frac{F D_k}{R T}
-     *     \f]
-     *
-     * @param mobil_e  Returns the electrical mobilities of
-     *               the species in array \c mobil_e. The array must be
-     *               dimensioned at least as large as the number of species.
-     */
-    virtual void getMobilities(doublereal* const mobil_e);
-
-    //! Get the fluid mobilities (s kmol/kg).
-    /*!
-     *   This function returns the fluid mobilities. Usually, you have
-     *   to multiply Faraday's constant into the resulting expression
-     *   to general a species flux expression.
-     *
-     *   The mobility is calculated from the
-     *   diffusion coefficient using the Einstein relation
-     *
-     *     \f[ 
-     *          \mu^f_k = \frac{D_k}{R T}
-     *     \f]
-     *
-     * @param mobil_f  Returns the fluid mobilities of
-     *               the species in array \c mobil_f. The array must be
-     *               dimensioned at least as large as the number of species.
-     */
-    virtual void getFluidMobilities(doublereal* const mobil_f);
+    virtual void getMobilities(doublereal* const mobil);
 
     //! Specify the value of the gradient of the voltage
     /*!
@@ -357,6 +306,19 @@ namespace Cantera {
 				  int ldx, const doublereal* grad_X, 
 				  int ldf, doublereal* fluxes);
 
+    //!  Return the species diffusive mass fluxes
+    /*!
+     *
+     *
+     *
+     * @param ndim The number of spatial dimensions (1, 2, or 3).
+     * @param grad_T The temperature gradient (ignored in this model).
+     * @param ldx  Leading dimension of the grad_X array.
+     * The diffusive mass flux of species \e k is computed from
+     *
+     *
+     */
+    virtual void getSpeciesDiffusiveMassFluxes(doublereal* const fluxes);
     
     /**
      * @param ndim The number of spatial dimensions (1, 2, or 3).
@@ -367,6 +329,20 @@ namespace Cantera {
      *
      */
     virtual void getSpeciesFluxesExt(int ldf, doublereal* fluxes);
+
+
+    //! Initialize the transport object
+    /*!
+     * Here we change all of the internal dimensions to be sufficient.
+     * We get the object ready to do property evaluations.
+     *
+     * @param tr  Transport parameters for all of the species
+     *            in the phase.
+     */
+    virtual bool initLiquid(LiquidTransportParams& tr);
+
+    friend class TransportFactory;
+
 
 
     //! Solve the stefan_maxell equations for the diffusive fluxes.
@@ -392,34 +368,22 @@ namespace Cantera {
      */
     vector_fp  m_mw;
 
-    //! Pure species viscosities in Arrhenius temperature-dependent form.
-    vector_fp  m_visc_A; 
-    vector_fp  m_visc_logA; //logarithm of coefficient 
-    vector_fp  m_visc_n; 
-    vector_fp  m_visc_Tact; 
+    // polynomial fits
+    vector<vector<int> >         m_poly;
 
-    //! Molecular interaction energies associated with viscosity 
-    /** 
-     * These multiply the viscosity according to
-     *  \f[ exp( \sum_{i} \sum_{j} X_i X_j E_{i,j} / T \f].
+    //! Polynomial coefficients of the viscosity
+    /*!
+     * These express the temperature dependendence of the pures
+     * species viscosities.
      */
-    DenseMatrix m_visc_Eij;
+    std::vector<vector_fp> viscCoeffsVector_;
 
-    //! Molecular interaction entropies associated with viscosity 
-    /** 
-     * These multiply the viscosity according to
-     *  \f[ exp( \sum_{i} \sum{j} X_i X_j S_{i,j} \f].
+    //! Polynomial coefficients of the conductivities
+    /*!
+     * These express the temperature dependendence of the pures
+     * species conductivities
      */
-    DenseMatrix m_visc_Sij;
-
-    //! Pure species thermal conductivities in Arrhenius temperature-dependent form.
-    vector_fp  m_thermCond_A; 
-    vector_fp  m_thermCond_n; 
-    vector_fp  m_thermCond_Tact; 
-
-    //! Species hydrodynamic radius
-    vector_fp  m_hydrodynamic_radius;
-
+    vector<vector_fp>            m_condcoeffs;
 
     //! Polynomial coefficients of the binary diffusion coefficients
     /*!
@@ -428,6 +392,7 @@ namespace Cantera {
      * added.
      */
     vector<vector_fp>            m_diffcoeffs;
+ 
 
     //! Internal value of the gradient of the mole fraction vector
     /*!
@@ -510,9 +475,9 @@ namespace Cantera {
      */
     DenseMatrix  m_bdiff;
 
-    //! Species viscosities and their logarithm
+    //! Species viscosities
     /*!
-     *  Viscosity of the species and its logarithm
+     *  Viscosity of the species
      *   Length = number of species
      *
      *   Depends on the temperature. We have set the pressure dependence
@@ -520,8 +485,19 @@ namespace Cantera {
      *
      * controlling update boolean -> m_visc_temp_ok
      */
-    vector_fp m_viscSpecies;
-    vector_fp m_logViscSpecies;
+    vector_fp viscSpecies_;
+
+    //! Sqrt of the species viscosities
+    /*!
+     * The sqrt(visc) is used in the mixing formulas
+     * Length = m_nsp
+     *
+     * Depends on the temperature and perhaps pressure, but
+     * not the species concentrations
+     *
+     * controlling update boolean m_visc_temp_ok
+     */
+    vector_fp m_sqvisc;
 
     //! Internal value of the species individual thermal conductivities
     /*!
@@ -532,7 +508,10 @@ namespace Cantera {
      *
      * controlling update boolean -> m_cond_temp_ok
      */
-    vector_fp  m_condSpecies;
+    vector_fp  m_cond;
+
+    //! Polynomials of the log of the temperature
+    vector_fp m_polytempvec;
 
     //! State of the mole fraction vector.
     int m_iStateMF;
@@ -616,11 +595,34 @@ namespace Cantera {
      */
     int viscosityModel_;
 
+    //! viscosity weighting functions
+    DenseMatrix m_phi;         
+
+    //! Matrix of the ratios of the species molecular weights
+    /*!
+     * m_wratjk(i,j) = (m_mw[j]/m_mw[k])**0.25
+     */
+    DenseMatrix m_wratjk;
+
+    //! Matrix of the ratios of the species molecular weights
+    /*!
+     * m_wratkj1(i,j) = (1.0 + m_mw[k]/m_mw[j])**0.5
+     */
+    DenseMatrix m_wratkj1;
+
     //! RHS to the stefan-maxwell equation
     DenseMatrix   m_B;
 
     //! Matrix for the stefan maxwell equation.
     DenseMatrix m_A;
+
+    //! Internal storage for the species LJ well depth
+    vector_fp   m_eps;
+
+    //! Internal storage for species polarizability
+    vector_fp   m_alpha;
+
+    
 
     //! Current Temperature -> locally storred
     /*!
@@ -634,6 +636,21 @@ namespace Cantera {
 
     //! Current value of kT
     doublereal m_kbt;
+
+    //! Current Temperature **0.5
+    doublereal m_sqrt_t;
+
+    //! Current Temperature **0.25
+    doublereal m_t14;
+
+    //! Current Temperature **1.5
+    doublereal m_t32;
+
+    //! Current temperature function
+    /*!
+     *  This is equal to sqrt(Boltzmann * T)
+     */
+    doublereal m_sqrt_kbt;
 
     //! Current value of the pressure
     doublereal m_press;
@@ -735,17 +752,6 @@ namespace Cantera {
      * Either 1, 2, or 3
      */
     int m_nDim;
-
-  private:
-    
-    //! Throw an exception if this method is invoked. 
-    /*!
-     * This probably indicates something is not yet implemented.
-     *
-     * @pram msg   Indicates the member function which is not implemented
-     */
-    doublereal err(std::string msg) const;
-
   };
 }
 #endif

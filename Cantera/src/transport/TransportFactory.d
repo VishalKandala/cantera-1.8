@@ -7,9 +7,8 @@ TransportFactory.o: TransportFactory.cpp ../thermo/ThermoPhase.h \
  ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
  ../base/Array.h MultiTransport.h TransportBase.h \
  ../numerics/DenseMatrix.h ../base/Array.h MixTransport.h \
- SolidTransport.h DustyGasTransport.h SimpleTransport.h TransportParams.h \
- ../base/XML_Writer.h LiquidTransportParams.h LiquidTransportData.h \
- ../base/FactoryBase.h LiquidTransport.h AqueousTransport.h \
- TransportFactory.h ../numerics/polyfit.h MMCollisionInt.h \
- ../base/global.h ../thermo/IdealGasPhase.h ../thermo/mix_defs.h \
- ../thermo/ThermoPhase.h
+ SolidTransport.h DustyGasTransport.h LiquidTransport.h \
+ LiquidTransportParams.h ../base/XML_Writer.h AqueousTransport.h \
+ TransportFactory.h ../base/FactoryBase.h ../numerics/polyfit.h \
+ MMCollisionInt.h TransportParams.h ../base/global.h \
+ ../thermo/IdealGasPhase.h ../thermo/mix_defs.h ../thermo/ThermoPhase.h

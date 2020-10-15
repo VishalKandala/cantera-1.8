@@ -6,8 +6,8 @@
  */
 
 /* 
- * $Revision: 387 $
- * $Date: 2010-01-17 12:17:55 -0600 (Sun, 17 Jan 2010) $
+ * $Revision: 1.23 $
+ * $Date: 2009/07/22 01:21:35 $
  */
 
 // Copyright 2001  California Institute of Technology
@@ -303,7 +303,7 @@ namespace Cantera {
      */
     std::string value(const std::string &cname) const;
 
-    //!  The Overloaded parenthesis operator with one augment 
+    //!  Overloaded parenthesis operator with one augment 
     //!  returns the value of an XML child node as a string
     /*!
      *  @param cname  Name of the child node to the current
@@ -380,13 +380,6 @@ namespace Cantera {
      */
     std::string attrib(const std::string & attr) const;
 
-    //! Clear the current node and everything under it
-    /*!
-     *  The value, attributes and children are all zeroed. The name and the 
-     *  parent information is kept.
-     */
-    void clear();
-
   private:
     //! Returns a changeable value of the attributes map for the current node
     /*!
@@ -442,14 +435,6 @@ namespace Cantera {
      * The name is the XML node is the XML node name
      */
     std::string name() const { return m_name; }
-
-    //! Sets the name of the XML node
-    /*!
-     * @param name The name of the XML node
-     */
-    void setName(std::string name) { 
-      m_name = name;
-    }
 
     //! Return the id attribute, if present
     /*!
@@ -659,7 +644,7 @@ namespace Cantera {
     //! into the destination XML_Node tree, doing a complete copy 
     //! as we go.
     /*!
-     *  Note this is a const function because the current XML_Node and
+     *  Note this is a const function becuase the current XML_Node and
      *  its children isn't altered by this operation.
      *
      *  @param node_dest  This is the XML node to receive the information

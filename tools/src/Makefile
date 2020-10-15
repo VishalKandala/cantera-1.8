@@ -1,24 +1,24 @@
 #/bin/sh
 
-LIBDIR = /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu
-INCDIR = -I/pkg/Cantera/Cantera/src/
-BINDIR = /pkg/Cantera/build/bin/x86_64-unknown-linux-gnu
+LIBDIR = /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu
+INCDIR = -I/Cantera1.8-Radcal/Cantera/src/
+BINDIR = /Cantera1.8-Radcal/build/bin/x86_64-unknown-linux-gnu
 build_ck = 1
 
 PURIFY=
 
-LCXX_FLAGS = -L$(LIBDIR)   -L/pkg/Cantera/build/lib/x86_64-unknown-linux-gnu -L/usr/local/bin//lib -O3 -Wall  
+LCXX_FLAGS = -L$(LIBDIR)   -L/Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu -L/usr/local/bin//lib -O3 -Wall  
 LOCAL_LIBS =  -luser -loneD -lzeroD -lequil -lkinetics -ltransport -lthermo -lctnumerics -lctmath -ltpx -lctspectra -lconverters -lctbase -lsundials_cvodes -lsundials_nvecserial -lctlapack -lctblas -lctf2c  
 
-LL_DEPS= /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libuser.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/liboneD.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libzeroD.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libequil.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libkinetics.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libtransport.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libthermo.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libctnumerics.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libctmath.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libtpx.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libctspectra.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libconverters.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libctbase.a /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libctf2c.a
+LL_DEPS= /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libuser.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/liboneD.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libzeroD.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libequil.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libkinetics.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libtransport.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libthermo.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libctnumerics.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libctmath.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libtpx.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libctspectra.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libconverters.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libctbase.a /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libctf2c.a
 
-LCXX_END_LIBS = -lctf2c -lm -lm -lstdc++  
+LCXX_END_LIBS = -lctf2c -lm 
 
 OBJS = ck2cti.o cti2ctml.o fixtext.o
 
 DEPENDS = $(OBJS:.o=.d)
 
-CONVLIB_DEP = /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libconverters.a
+CONVLIB_DEP = /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libconverters.a
 
 
 progs = $(BINDIR)/cti2ctml $(BINDIR)/fixtext

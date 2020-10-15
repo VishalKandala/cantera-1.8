@@ -1,9 +1,9 @@
 /**
  * @file Crystal.h
  *
- *  $Author: hkmoffa $
- *  $Date: 2009-12-05 13:08:43 -0600 (Sat, 05 Dec 2009) $
- *  $Revision: 279 $
+ *  $Author: dggoodwin $
+ *  $Date: 2007/05/04 14:02:40 $
+ *  $Revision: 1.1 $
  */
 #ifndef CT_CRYSTAL_H
 #define CT_CRYSTAL_H
@@ -53,16 +53,6 @@ namespace Cantera {
  
     };
 
-    //! Prints out the current internal state of the Crystal ThermoPhase object
-    /*!
-     *  Example of usage:
-     *        s << x << endl;
-     *
-     *  @param s   Reference to the ostream to write to
-     *  @param x   Object of type Crystal that you are querying
-     * 
-     *  @return    Returns a reference to the ostream.
-     */
     inline std::ostream& operator<<(std::ostream& s, Cantera::Crystal& x) {
         size_t ip;
         for (ip = 0; ip < x.nPhases(); ip++) {

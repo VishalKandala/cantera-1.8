@@ -2,7 +2,7 @@
  * @file: solveSP.cpp Implicit surface site concentration solver
  */
 /*
- * $Id: solveSP.cpp 377 2010-01-13 22:12:27Z hkmoffa $
+ * $Id: solveSP.cpp,v 1.4 2008/12/17 17:09:37 hkmoffa Exp $
  */
 /*
  * Copywrite 2004 Sandia Corporation. Under the terms of Contract
@@ -30,17 +30,17 @@ namespace Cantera {
      *       STATIC ROUTINES DEFINED IN THIS FILE
      ***************************************************************************/
 
-    static doublereal calc_damping(doublereal *x, doublereal *dx, int dim, int *);
-    static doublereal calcWeightedNorm(const doublereal [], const doublereal dx[], int);
+    static double calc_damping(double *x, double *dx, int dim, int *);
+    static double calcWeightedNorm(const double [], const double dx[], int);
 
     /***************************************************************************
      *                    LAPACK PROTOTYPES
      ***************************************************************************/
     //#define FSUB_TYPE void
     // extern "C" {
-    //  extern FSUB_TYPE dgetrf_(int *, int *, doublereal *, int *, int [], int *);
-    // extern FSUB_TYPE dgetrs_(char *, int *, int *, doublereal *, int *, int [],
-    //			     doublereal [], int *, int *, unsigned int);
+    //  extern FSUB_TYPE dgetrf_(int *, int *, double *, int *, int [], int *);
+    // extern FSUB_TYPE dgetrs_(char *, int *, int *, double *, int *, int [],
+    //			     double [], int *, int *, unsigned int);
     // }
     /*****************************************************************************
      *   PROTOTYPES and PREPROC DIRECTIVES FOR MISC. ROUTINES 
@@ -208,10 +208,10 @@ namespace Cantera {
      * surface species production rate = 0 and that the bulk fractions are
      * proportional to their production rates. 
      */
-    int solveSP::solveSurfProb(int ifunc, doublereal time_scale, doublereal TKelvin, 
-        doublereal PGas, doublereal reltol, doublereal abstol)
+    int solveSP::solveSurfProb(int ifunc, double time_scale, double TKelvin, 
+        double PGas, double reltol, double abstol)
     {
-        doublereal EXTRA_ACCURACY = 0.001;
+        double EXTRA_ACCURACY = 0.001;
         if (ifunc == SFLUX_JACOBIAN) {
             EXTRA_ACCURACY *= 0.001;
         }
@@ -220,24 +220,24 @@ namespace Cantera {
         int label_t=-1; /* Species IDs for time control */
         int label_d; /* Species IDs for damping control */
         int        label_t_old=-1;
-        doublereal     label_factor = 1.0;
+        double     label_factor = 1.0;
         int iter=0; // iteration number on numlinear solver
         int iter_max=1000; // maximum number of nonlinear iterations
         int nrhs=1;
-        doublereal deltaT = 1.0E-10; // Delta time step
-        doublereal damp=1.0, tmp;
+        double deltaT = 1.0E-10; // Delta time step
+        double damp=1.0, tmp;
         //  Weighted L2 norm of the residual.  Currently, this is only
         //  used for IO purposes. It doesn't control convergence.
         //  Therefore, it is turned off when DEBUG_SOLVESP isn't defined.
-        doublereal  resid_norm;
-        doublereal inv_t = 0.0;
-        doublereal t_real = 0.0, update_norm = 1.0E6;
+        double  resid_norm;
+        double inv_t = 0.0;
+        double t_real = 0.0, update_norm = 1.0E6;
 
         bool do_time = false, not_converged = true;
 
 #ifdef DEBUG_SOLVESP
 #ifdef DEBUG_SOLVESP_TIME
-        doublereal         t1;
+        double         t1;
 #endif
 #else
         if (m_ioflag > 1) {
@@ -548,7 +548,7 @@ namespace Cantera {
     /*
      * Update the surface states of the surface phases.
      */
-    void solveSP::updateState(const doublereal *CSolnSP) {
+    void solveSP::updateState(const double *CSolnSP) {
         int loc = 0;
         for (int n = 0; n < m_numSurfPhases; n++) {
             m_ptrsSurfPhase[n]->setConcentrations(CSolnSP + loc);
@@ -565,7 +565,7 @@ namespace Cantera {
     /*
      * Update the mole fractions for phases which are part of the equation set
      */
-    void solveSP::updateMFSolnSP(doublereal *XMolSolnSP) {
+    void solveSP::updateMFSolnSP(double *XMolSolnSP) {
         for (int isp = 0; isp < m_numSurfPhases; isp++) {
             int keqnStart = m_eqnIndexStartSolnPhase[isp];
             m_ptrsSurfPhase[isp]->getMoleFractions(XMolSolnSP + keqnStart);
@@ -582,7 +582,7 @@ namespace Cantera {
      * Update the mole fractions for phases which are part of a single
      * interfacial kinetics object
      */
-    void solveSP::updateMFKinSpecies(doublereal *XMolKinSpecies, int isp) {
+    void solveSP::updateMFKinSpecies(double *XMolKinSpecies, int isp) {
         InterfaceKinetics *m_kin = m_objects[isp];
         int nph = m_kin->nPhases();
         for (int iph = 0; iph < nph; iph++) {
@@ -596,11 +596,11 @@ namespace Cantera {
      * Update the vector that keeps track of the largest species in each
      * surface phase.
      */
-    void solveSP::evalSurfLarge(const doublereal *CSolnSP) {
+    void solveSP::evalSurfLarge(const double *CSolnSP) {
         int kindexSP = 0;
         for (int isp = 0; isp < m_numSurfPhases; isp++) {
             int nsp = m_nSpeciesSurfPhase[isp];
-            doublereal Clarge = CSolnSP[kindexSP];
+            double Clarge = CSolnSP[kindexSP];
             m_spSurfLarge[isp] = 0;
             kindexSP++;
             for (int k = 1; k < nsp; k++, kindexSP++) {
@@ -622,14 +622,14 @@ namespace Cantera {
      *   This routine uses the m_numEqn1 and m_netProductionRatesSave vectors
      *   as temporary internal storage.
      */
-    void solveSP::fun_eval(doublereal * resid, const doublereal *CSoln, 
-        const doublereal *CSolnOld,  const bool do_time,
-        const doublereal deltaT)
+    void solveSP::fun_eval(double* resid, const double *CSoln, 
+        const double *CSolnOld,  const bool do_time,
+        const double deltaT)
     {
         int isp, nsp, kstart, k, kindexSP, kins, kspecial;
-        doublereal lenScale = 1.0E-9;
-        doublereal sd = 0.0;
-        doublereal grRate;
+        double lenScale = 1.0E-9;
+        double sd = 0.0;
+        double grRate;
         if (m_numSurfPhases > 0) {
             /*
              * update the surface concentrations with the input surface 
@@ -690,7 +690,7 @@ namespace Cantera {
             if (m_bulkFunc == BULK_DEPOSITION) {
                 kindexSP = m_numTotSurfSpecies;
                 for (isp = 0; isp < m_numBulkPhasesSS; isp++) {
-                    doublereal *XBlk = DATA_PTR(m_numEqn1);
+                    double *XBlk = DATA_PTR(m_numEqn1);
                     //ThermoPhase *THptr = m_bulkPhasePtrs[isp];
                     //THptr->getMoleFractions(XBlk);
                     nsp = m_nSpeciesSurfPhase[isp];
@@ -743,14 +743,14 @@ namespace Cantera {
      *   This routine uses the m_numEqn2 vector
      *   as temporary internal storage.
      */
-    void solveSP::resjac_eval(std::vector<doublereal *> &JacCol,
-        doublereal resid[], doublereal CSoln[], 
-        const doublereal CSolnOld[], const bool do_time, 
-        const doublereal deltaT)
+    void solveSP::resjac_eval(std::vector<double*> &JacCol,
+        double resid[], double CSoln[], 
+        const double CSolnOld[], const bool do_time, 
+        const double deltaT)
     {
         int kColIndex = 0, nsp, jsp, i, kCol;
-        doublereal dc, cSave, sd;
-        doublereal *col_j;
+        double dc, cSave, sd;
+        double *col_j;
         /*
          * Calculate the residual
          */
@@ -798,7 +798,7 @@ namespace Cantera {
 
 #define APPROACH 0.80
 
-    static doublereal calc_damping(doublereal x[], doublereal dxneg[], int dim, int *label)
+    static double calc_damping(double x[], double dxneg[], int dim, int *label)
 
         /* This function calculates a damping factor for the Newton iteration update
          * vector, dxneg, to insure that all site and bulk fractions, x, remain
@@ -813,8 +813,8 @@ namespace Cantera {
 
     {
         int       i;
-        doublereal    damp = 1.0, xnew, xtop, xbot;
-        static doublereal damp_old = 1.0;
+        double    damp = 1.0, xnew, xtop, xbot;
+        static double damp_old = 1.0;
 
         *label = -1;
 
@@ -873,9 +873,9 @@ namespace Cantera {
      *    This function calculates the norm  of an update, dx[], 
      *    based on the weighted values of x.
      */
-    static doublereal calcWeightedNorm(const doublereal wtX[], const doublereal dx[], int dim) {
-        doublereal norm = 0.0;
-        doublereal tmp;
+    static double calcWeightedNorm(const double wtX[], const double dx[], int dim) {
+        double norm = 0.0;
+        double tmp;
         if (dim == 0) return 0.0;
         for (int i = 0; i < dim; i++) {
             tmp = dx[i] / wtX[i];
@@ -889,12 +889,12 @@ namespace Cantera {
      * concentration unknowns and the residual unknowns.
      *
      */
-    void solveSP::calcWeights(doublereal wtSpecies[], doublereal wtResid[],
-        const Array2D &Jac, const doublereal CSoln[],
-        const doublereal abstol, const doublereal reltol)
+    void solveSP::calcWeights(double wtSpecies[], double wtResid[],
+        const Array2D &Jac, const double CSoln[],
+        const double abstol, const double reltol)
     {
         int k, jcol, kindex, isp, nsp;
-        doublereal sd;
+        double sd;
         /*
          * First calculate the weighting factor for the concentrations of
          * the surface species and bulk species.
@@ -941,13 +941,13 @@ namespace Cantera {
      *
      *     Maximum time step set to time_scale.
      */
-    doublereal solveSP::
-    calc_t(doublereal netProdRateSolnSP[], doublereal XMolSolnSP[],
-        int *label, int *label_old, doublereal *label_factor, int ioflag)
+    double solveSP::
+    calc_t(double netProdRateSolnSP[], double XMolSolnSP[],
+        int *label, int *label_old, double *label_factor, int ioflag)
     {
         int  k, isp, nsp, kstart;
-        doublereal   inv_timeScale = 1.0E-10;
-        doublereal sden, tmp;
+        double   inv_timeScale = 1.0E-10;
+        double sden, tmp;
         int kindexSP = 0;
         *label = 0;
         int ispSpecial = 0;
@@ -1025,8 +1025,8 @@ namespace Cantera {
      */
 #ifdef DEBUG_SOLVESP
     void solveSP::printResJac(int ioflag, int neq, const Array2D &Jac,
-        doublereal resid[], doublereal wtRes[],
-        doublereal norm)
+        double resid[], double wtRes[],
+        double norm)
     {
         int i, j, isp, nsp, irowKSI, irowISP;
         int kstartKSI;
@@ -1085,11 +1085,11 @@ namespace Cantera {
     /*
      * Optional printing at the start of the solveSP problem
      */
-    void solveSP::print_header(int ioflag, int ifunc, doublereal time_scale, 
-        int damping, doublereal reltol, doublereal abstol,  
-        doublereal TKelvin,
-        doublereal PGas, doublereal netProdRate[],
-        doublereal XMolKinSpecies[]) {
+    void solveSP::print_header(int ioflag, int ifunc, double time_scale, 
+        int damping, double reltol, double abstol,  
+        double TKelvin,
+        double PGas, double netProdRate[],
+        double XMolKinSpecies[]) {
         if (ioflag) {
             printf("\n================================ SOLVESP CALL SETUP "
                 "========================================\n");
@@ -1194,13 +1194,13 @@ namespace Cantera {
         }
     } 
 
-    void solveSP::printIteration(int ioflag, doublereal damp, int label_d,
+    void solveSP::printIteration(int ioflag, double damp, int label_d,
         int label_t,
-        doublereal inv_t, doublereal t_real, int iter,
-        doublereal update_norm, doublereal resid_norm,
-        doublereal netProdRate[], doublereal CSolnSP[],
-        doublereal resid[], doublereal XMolSolnSP[],
-        doublereal wtSpecies[], int dim, bool do_time)
+        double inv_t, double t_real, int iter,
+        double update_norm, double resid_norm,
+        double netProdRate[], double CSolnSP[],
+        double resid[], double XMolSolnSP[],
+        double wtSpecies[], int dim, bool do_time)
     {
         int i, k;
         string nm;
@@ -1278,14 +1278,14 @@ namespace Cantera {
     } /* printIteration */
 
 
-    void solveSP::printFinal(int ioflag, doublereal damp, int label_d, int label_t,
-        doublereal inv_t, doublereal t_real, int iter,
-        doublereal update_norm, doublereal resid_norm,
-        doublereal netProdRateKinSpecies[], const doublereal CSolnSP[],
-        const doublereal resid[], doublereal XMolSolnSP[],
-        const doublereal wtSpecies[], const doublereal wtRes[],
+    void solveSP::printFinal(int ioflag, double damp, int label_d, int label_t,
+        double inv_t, double t_real, int iter,
+        double update_norm, double resid_norm,
+        double netProdRateKinSpecies[], const double CSolnSP[],
+        const double resid[], double XMolSolnSP[],
+        const double wtSpecies[], const double wtRes[],
         int dim, bool do_time,
-        doublereal TKelvin, doublereal PGas)
+        double TKelvin, double PGas)
     {
         int i, k;
         string nm;
@@ -1363,7 +1363,7 @@ namespace Cantera {
             }
             printf("---------------------------------------------------------------"
                 "---------------------------------------------\n");
-            doublereal *XMolKinSpecies = DATA_PTR(m_numEqn2);
+            double *XMolKinSpecies = DATA_PTR(m_numEqn2);
             kindexSP = 0;
             for (int isp = 0; isp < m_numSurfPhases; isp++) {
                 InterfaceKinetics *m_kin = m_objects[isp];
@@ -1417,7 +1417,7 @@ namespace Cantera {
 
 #ifdef DEBUG_SOLVESP
     void solveSP::
-    printIterationHeader(int ioflag, doublereal damp,doublereal inv_t, doublereal t_real,
+    printIterationHeader(int ioflag, double damp,double inv_t, double t_real,
         int iter, bool do_time)
     {
         if (ioflag > 1) {

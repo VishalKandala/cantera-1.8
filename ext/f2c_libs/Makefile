@@ -1,8 +1,8 @@
 #
 # $Source: /cvsroot/cantera/cantera/ext/f2c_libs/Makefile.in,v $
-# $Author: hkmoffa $
-# $Revision: 358 $
-# $Date: 2009-12-28 21:01:18 -0600 (Mon, 28 Dec 2009) $
+# $Author: dggoodwin $
+# $Revision: 1.13 $
+# $Date: 2008/02/05 23:36:13 $
 #
 # Unix makefile: see README.
 # For C++, first "make hadd".
@@ -32,7 +32,7 @@ CFLAGS =   $(CXX_OPT) $(PIC_FLAG)
 # Destination f2c lib located in Cantera's build directory
 # -> Calling it ctf2c
 BUILDINCDIR=../../build/include/cantera
-F2C_LIB = /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libctf2c.a
+F2C_LIB = /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libctf2c.a
 F2C_H   = $(BUILDINCDIR)/f2c.h
 
 # compile, then strip unnecessary symbols

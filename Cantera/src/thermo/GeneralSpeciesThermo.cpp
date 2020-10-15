@@ -5,7 +5,7 @@
  * \link Cantera::GeneralSpeciesThermo GeneralSpeciesThermo\endlink).
  */
 /*
- * $Id: GeneralSpeciesThermo.cpp 279 2009-12-05 19:08:43Z hkmoffa $
+ * $Id: GeneralSpeciesThermo.cpp,v 1.10 2008/12/13 01:59:49 hkmoffa Exp $
  */
 // Copyright 2001-2004  California Institute of Technology
                 

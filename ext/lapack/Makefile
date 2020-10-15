@@ -6,7 +6,7 @@
 .SUFFIXES :
 .SUFFIXES : .f .o
 
-LAPACKLIB = /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libctlapack.a
+LAPACKLIB = /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libctlapack.a
 
 do_ranlib = 1
 

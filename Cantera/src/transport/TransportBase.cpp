@@ -3,18 +3,16 @@
  *  Mixture-averaged transport properties for ideal gas mixtures.
  */
 /* 
- * $Revision: 368 $
- * $Date: 2010-01-03 18:46:26 -0600 (Sun, 03 Jan 2010) $
+ * $Revision: 1.1 $
+ * $Date: 2009/02/15 19:41:33 $
  */
 
 #include "ThermoPhase.h"
 #include "LiquidTransport.h"
-#include "ctexceptions.h"
 
 #include "utilities.h"
 #include "LiquidTransportParams.h"
 #include "TransportFactory.h"
-#include "stringUtils.h"
 
 #include "ctlapack.h"
 
@@ -31,6 +29,8 @@ using namespace std;
 namespace Cantera {
 
   //////////////////// class LiquidTransport methods //////////////
+
+
 
 
   Transport::Transport(thermo_t* thermo, int ndim) :
@@ -109,37 +109,5 @@ namespace Cantera {
   {
     err("setParameters"); 
   }
-
-
-  void Transport::setThermo(thermo_t& thermo) { 
-    if (!ready()) { 
-      m_thermo = &thermo;
-      m_nmin = m_thermo->nSpecies();
-    }
-    else 
-      throw CanteraError("Transport::setThermo",
-			 "the phase object cannot be changed after "
-			 "the transport manager has been constructed.");
-  }
-
-
-  doublereal Transport::err(std::string msg) const {
-
-    throw CanteraError("Transport Base Class",
-		       "\n\n\n**** Method "+ msg +" not implemented in model "
-		       + int2str(model()) + " ****\n"
-		       "(Did you forget to specify a transport model?)\n\n\n");
-   	 
-    return 0.0;
-  }
-
   
-  void Transport::finalize() {
-    if (!ready()) 
-      m_ready = true;
-    else 
-      throw CanteraError("Transport::finalize",
-			 "finalize has already been called.");
-  }
-
 }

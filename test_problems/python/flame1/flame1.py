@@ -1,4 +1,4 @@
-#
+#/usr/bin/python
 # FLAME1 - A burner-stabilized flat flame
 #
 #    This script simulates a burner-stablized lean hydrogen-oxygen flame

@@ -5,7 +5,6 @@ VPSSMgr_General.o: VPSSMgr_General.cpp VPSSMgr_General.h \
  ../base/utilities.h PDSS_IdealGas.h PDSS_Water.h VPStandardStateTP.h \
  ThermoPhase.h Phase.h State.h ../base/utilities.h Constituents.h \
  SpeciesThermo.h ../base/ctexceptions.h ../base/stringUtils.h Elements.h \
- ../base/vec_functions.h PDSS_ConstVol.h PDSS_SSVol.h PDSS_HKFT.h \
- PDSS_IonsFromNeutral.h GeneralSpeciesThermo.h SpeciesThermoMgr.h \
- NasaPoly1.h ../base/global.h SpeciesThermoInterpType.h \
- speciesThermoTypes.h Nasa9Poly1.h
+ ../base/vec_functions.h PDSS_ConstVol.h PDSS_HKFT.h \
+ GeneralSpeciesThermo.h SpeciesThermoMgr.h NasaPoly1.h ../base/global.h \
+ SpeciesThermoInterpType.h speciesThermoTypes.h Nasa9Poly1.h

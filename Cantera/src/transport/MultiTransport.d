@@ -9,4 +9,4 @@ MultiTransport.o: MultiTransport.cpp ../thermo/ThermoPhase.h \
  ../numerics/DenseMatrix.h ../base/Array.h ../numerics/ctlapack.h \
  L_matrix.h TransportParams.h ../base/XML_Writer.h \
  ../thermo/IdealGasPhase.h ../thermo/mix_defs.h ../thermo/ThermoPhase.h \
- TransportFactory.h ../base/FactoryBase.h LiquidTransportData.h
+ TransportFactory.h ../base/FactoryBase.h

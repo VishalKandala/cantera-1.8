@@ -40,18 +40,18 @@ CXX = g++
 #
 # The directory where Cantera include files may be found.
 #
-CANTERA_INCDIR=/pkg/Cantera/build/include/cantera
+CANTERA_INCDIR=/Cantera1.8-Radcal/build/include/cantera
 
 INCLUDE_DIRS = -I$(CANTERA_INCDIR) 
 
 # C++ compile flags
-CXX_FLAGS = -O3 -Wall   $(INCLUDE_DIRS) 
+CXX_FLAGS = -O3 -Wall   $(INCLUDE_DIRS)
 
 # Ending C++ linking libraries
-LCXX_END_LIBS = -lctf2c -lm -lm -lstdc++ 
+LCXX_END_LIBS = -lctf2c -lm
 
 # the directory where the Cantera libraries are located
-CANTERA_LIBDIR=/pkg/Cantera/build/lib/x86_64-unknown-linux-gnu
+CANTERA_LIBDIR=/Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu
 #
 # Setup The Cantera Interface
 #
@@ -74,7 +74,7 @@ CANTERA_LIBDEP = \
 
 
 # flags passed to the C++ compiler/linker for the linking step
-LCXX_FLAGS = -O3 -Wall    -L/pkg/Cantera/build/lib/x86_64-unknown-linux-gnu -L/usr/local/bin//lib 
+LCXX_FLAGS = -O3 -Wall    -L/Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu -L/usr/local/bin//lib 
 
 # How to compile C++ source files to object files
 .cpp.o:

@@ -13,9 +13,9 @@ import sys
 ######################################################################
 
 bindir = '/usr/local/cantera/bin'
-libdir = '-L/pkg/Cantera/build/lib/x86_64-unknown-linux-gnu  -L/pkg/Cantera/build/lib/x86_64-unknown-linux-gnu -L/usr/local/bin//lib'
-incdir = '/pkg/Cantera/build/include'
-libs   = '-lclib  -luser -loneD -lzeroD -lequil -lkinetics -ltransport -lthermo -lctnumerics -lctmath -ltpx -lctspectra -lconverters -lctbase -lsundials_cvodes -lsundials_nvecserial -lctlapack -lctblas -lctf2c   -lctf2c -lm -lm -lstdc++ '
+libdir = '-L/Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu  -L/Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu -L/usr/local/bin//lib'
+incdir = '/Cantera1.8-Radcal/build/include'
+libs   = '-lclib  -luser -loneD -lzeroD -lequil -lkinetics -ltransport -lthermo -lctnumerics -lctmath -ltpx -lctspectra -lconverters -lctbase -lsundials_cvodes -lsundials_nvecserial -lctlapack -lctblas -lctf2c   -lctf2c -lm'
 
 f = open('setup.m','w')
 f.write('cd cantera\nbuildux\nexit\n')

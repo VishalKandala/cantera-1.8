@@ -16,10 +16,10 @@ apps:
 apps-install:
 	/usr/bin/install -c -d /usr/local/cantera/bin
 ifeq ($(build_ck),1)
-	/usr/bin/install -c -c /pkg/Cantera/build/bin/x86_64-unknown-linux-gnu/ck2cti /usr/local/cantera/bin
+	/usr/bin/install -c -c /Cantera1.8-Radcal/build/bin/x86_64-unknown-linux-gnu/ck2cti /usr/local/cantera/bin
 endif
-	/usr/bin/install -c -c /pkg/Cantera/build/bin/x86_64-unknown-linux-gnu/cti2ctml /usr/local/cantera/bin
-	/usr/bin/install -c -c /pkg/Cantera/build/bin/x86_64-unknown-linux-gnu/csvdiff /usr/local/cantera/bin
+	/usr/bin/install -c -c /Cantera1.8-Radcal/build/bin/x86_64-unknown-linux-gnu/cti2ctml /usr/local/cantera/bin
+	/usr/bin/install -c -c /Cantera1.8-Radcal/build/bin/x86_64-unknown-linux-gnu/csvdiff /usr/local/cantera/bin
 
 man-install:
 	/usr/bin/install -c -d /usr/local/cantera/man1

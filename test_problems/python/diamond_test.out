@@ -1,0 +1,27 @@
+
+----------------------------------------------------------
+csvdiff: CSVFile comparison utility program
+         Version $Revision: 1.17 $
+         Harry K. Moffat Div. 9114 Sandia National Labs
+         
+         First  CSV File = diamond.csv
+         Second CSV file = diamond_blessed.csv
+
+         Absolute tol = 1e-09
+         Relative tol = 0.001
+----------------------------------------------------------
+
+Number of Title Lines in each file = 0
+Number of column title lines in each file = 1
+Number of Data rows in both files = 20
+Number of column variables in both files = 10
+Column variable H mole Fraction passed
+Column variable Growth Rate (microns/hour) passed
+Column variable c6HH passed
+Column variable c6H* passed
+Column variable c6*H passed
+Column variable c6** passed
+Column variable c6HM passed
+Column variable c6HM* passed
+Column variable c6*M passed
+Column variable c6B passed

@@ -5,7 +5,7 @@
  */
 
 /*
- * $Id: vcs_prob.cpp 368 2010-01-04 00:46:26Z hkmoffa $
+ * $Id: vcs_prob.cpp,v 1.22 2008/12/17 16:56:43 hkmoffa Exp $
  */
 
 /*

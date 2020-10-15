@@ -4,7 +4,7 @@
  *
  */
 /*
- * $Id: equilibrate.cpp 398 2010-02-09 20:24:11Z hkmoffa $
+ * $Id: equilibrate.cpp,v 1.11 2009/03/18 17:27:20 hkmoffa Exp $
  */
 #include "equil.h"
 #include "ChemEquil.h"
@@ -27,7 +27,7 @@ namespace Cantera {
   doublereal equilibrate(MultiPhase& s, const char* XY, 
 			 doublereal tol, int maxsteps, int maxiter, 
 			 int loglevel) {
-    
+
     if (loglevel > 0) {
       beginLogGroup("equilibrate",loglevel);
       addLogEntry("multiphase equilibrate function");
@@ -65,9 +65,9 @@ namespace Cantera {
 	endLogGroup("equilibrate");
       }
       throw CanteraError("equilibrate","unsupported option");
-      return -1.0;
+      //return -1.0;
     }
-    return 0.0; 
+    
   }
 
   /*

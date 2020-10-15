@@ -2,7 +2,7 @@
  *
  *  @file LatticeSolidPhase.cpp
  *
- * $Id: LatticeSolidPhase.cpp 279 2009-12-05 19:08:43Z hkmoffa $
+ * $Id: LatticeSolidPhase.cpp,v 1.4 2008/10/08 22:11:08 hkmoffa Exp $
  */
 
 #ifdef WIN32

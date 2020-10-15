@@ -1,8 +1,8 @@
 #/bin/sh
 ###############################################################
 #  $Author: hkmoffa $
-#  $Date: 2010-01-03 18:46:26 -0600 (Sun, 03 Jan 2010) $
-#  $Revision: 368 $
+#  $Date: 2008/12/30 21:49:41 $
+#  $Revision: 1.19 $
 #
 #  Copyright 2001 California Institute of Technology
 #
@@ -41,7 +41,7 @@ CXX = g++
 EXT_LIBS = -lzeroD -loneD  -luser -loneD -lzeroD -lequil -lkinetics -ltransport -lthermo -lctnumerics -lctmath -ltpx -lctspectra -lconverters -lctbase -lsundials_cvodes -lsundials_nvecserial -lctlapack -lctblas -lctf2c 
 
 # the directory where the Cantera libraries are located
-CANTERA_LIBDIR=/pkg/Cantera/build/lib/x86_64-unknown-linux-gnu
+CANTERA_LIBDIR=/Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu
 # ../../../lib
 LIB_DEPS = $(CANTERA_LIBDIR)/libctbase.a \
            $(CANTERA_LIBDIR)/libequil.a \
@@ -67,9 +67,9 @@ LCXX_FLAGS = -L$(CANTERA_LIBDIR) -O3 -Wall
 LIB_NAME=libclib
 
 ifeq ($(shared_ctlib),1)
-CTLIB = /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/$(LIB_NAME).so
+CTLIB = /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/$(LIB_NAME).so
 else
-CTLIB = /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/$(LIB_NAME).a
+CTLIB = /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/$(LIB_NAME).a
 endif
 
 all: $(CTLIB) .depends

@@ -53,7 +53,7 @@ CANTERA_LIBS =
 CANTERA_INCDIR=@CANTERA_INCDIR@
 
 # flags passed to the C++ compiler/linker for the linking step
-LCXX_FLAGS = -L$(CANTERA_LIBDIR)  -L/pkg/Cantera/build/lib/x86_64-unknown-linux-gnu -L/usr/local/bin//lib -O3 -Wall  
+LCXX_FLAGS = -L$(CANTERA_LIBDIR)  -L/Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu -L/usr/local/bin//lib -O3 -Wall  
 
 # how to compile C++ source files to object files
 .cpp.o:

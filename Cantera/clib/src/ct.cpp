@@ -8,7 +8,7 @@
  *   pointers are passed to or from the calling application.
  */
 
-/* $Id: ct.cpp 399 2010-02-09 20:39:03Z hkmoffa $  */
+/* $Id: ct.cpp,v 1.45 2009/07/22 01:23:40 hkmoffa Exp $  */
 
 // turn off warnings under Windows
 #ifdef WIN32
@@ -60,7 +60,6 @@ static PureFluidPhase* purefluid(int n) {
     catch (CanteraError) {
         return 0;
     }
-    return 0;
 }
 
 static double pfprop(int n, int i, double v=0.0, double x=0.0) {

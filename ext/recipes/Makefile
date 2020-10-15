@@ -6,7 +6,7 @@
 .SUFFIXES :
 .SUFFIXES : .f .d .o
 
-LIB = /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/librecipes.a
+LIB = /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/librecipes.a
 
 do_ranlib = 1
 

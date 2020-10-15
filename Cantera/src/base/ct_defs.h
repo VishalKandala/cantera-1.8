@@ -10,8 +10,8 @@
  */
 
 /*
- * $Revision: 454 $
- * $Date: 2010-05-07 09:41:34 -0500 (Fri, 07 May 2010) $
+ * $Revision: 1.9 $
+ * $Date: 2009/01/24 00:15:00 $
  */
 
 // Copyright 2001  California Institute of Technology
@@ -32,11 +32,9 @@
 #include <string>
 #include <algorithm>
 
-/**
- * Namespace for the Cantera kernel.
- */
-namespace Cantera {
 
+//! creates a pointer to the start of the raw data for a ctvector
+#define DATA_PTR(vec) &vec[0]
 
 #ifdef WIN32
 #define TYPENAME_KEYWORD
@@ -48,10 +46,10 @@ namespace Cantera {
 
 #undef CHEMKIN_COMPATIBILITY_MODE
 
-//! Creates a pointer to the start of the raw data for a ctvector
-#ifndef DATA_PTR
-#define DATA_PTR(vec) &vec[0]
-#endif
+/**
+ * Namespace for the Cantera kernel.
+ */
+namespace Cantera {
 
  /*!
   * All physical constants are stored here.
@@ -76,30 +74,21 @@ namespace Cantera {
    */
   //@{
 
-    //! Avogadro's Number
-    /*!
-     *  Units are number/kmol
-     */
-    const doublereal Avogadro = 6.02214179e26; 
+    /// Avogadro's Number
+    const doublereal Avogadro = 6.02214179e26; //   /kmol
 
     /// Universal Gas Constant. 2006 CODATA value.
     const doublereal GasConstant = 8314.47215; // J/kmol/K
 
     const doublereal logGasConstant = 9.025752908;
 
-    //! One atmosphere
-    /*!
-     *  Units are Pa
-     */
-    const doublereal OneAtm = 1.01325e5;  
+    /// One atmosphere
+    const doublereal OneAtm = 1.01325e5;             // Pa
 
-    //! Universal gas constant in cal/mol/K
+    /// Universal gas constant in cal/mol/K
     const doublereal GasConst_cal_mol_K = 1.987;
 
-    //! Boltzmann's constant
-    /*!
-     *  Units are J/K
-     */
+    /// Boltzmann's constant
     const doublereal Boltzmann = GasConstant / Avogadro;
 
     /// Planck's constant. Units of J-s
@@ -200,9 +189,6 @@ namespace Cantera {
 #define USE_STL_VECTOR
 #ifdef USE_STL_VECTOR
   //! Vector of doubles.
-  /*!
-   *  @deprecated array_fp is going away, because vector_fp means the same thing
-   */
     typedef std::vector<double>        array_fp;
   //! Vector of doubles.
     typedef std::vector<double>        vector_fp;

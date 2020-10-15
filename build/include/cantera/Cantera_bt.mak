@@ -23,8 +23,6 @@
 #
 in_CanteraBuildTree = 0
 
-CANTERA_VERSION=1.8.x
-
 ###############################################################################
 #        CANTERA CORE 
 ###############################################################################
@@ -66,7 +64,7 @@ CANTERA_BOOST_LIB_DIR=
 #
 # Linkage extras for linking against boost
 #
-ifeq ("x$(CANTERA_BOOST_LIB_DIR)","x")
+ifeq ($(CANTERA_BOOST_LIB_DIR),"")
 CANTERA_BOOST_LIBS=
 else
 CANTERA_BOOST_LIBS= -L$(CANTERA_BOOST_LIB_DIR) -l
@@ -97,7 +95,7 @@ endif
 CANTERA_build_lapack= 1
 CANTERA_build_blas= 1
 
-CANTERA_BLAS_LAPACK_DIR= /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu
+CANTERA_BLAS_LAPACK_DIR= /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu
 
 CANTERA_BLAS_LAPACK_LIBS = -L$(CANTERA_BLAS_LAPACK_DIR) -lctlapack -lctblas
 
@@ -119,12 +117,8 @@ endif
 ####################################################################
 
 CANTERA_TOTAL_INCLUDES= $(CANTERA_CORE_INCLUDES) $(CANTERA_BOOST_INCLUDES) $(CANTERA_CVODE_INCLUDE)
-#
-# You can add this into the compilation environment to identify the version number
-#
-CANTERA_DEFINES = -DCANTERA_VERSION=1.8.x
 
-CANTERA_TOTAL_LIBS2 =  -L/pkg/Cantera/build/lib/x86_64-unknown-linux-gnu -L/usr/local/bin//lib  -luser -loneD -lzeroD -lequil -lkinetics -ltransport -lthermo -lctnumerics -lctmath -ltpx -lctspectra -lconverters -lctbase -lsundials_cvodes -lsundials_nvecserial -lctlapack -lctblas -lctf2c
+CANTERA_TOTAL_LIBS2 =  -L/Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu -L/usr/local/bin//lib  -luser -loneD -lzeroD -lequil -lkinetics -ltransport -lthermo -lctnumerics -lctmath -ltpx -lctspectra -lconverters -lctbase -lsundials_cvodes -lsundials_nvecserial -lctlapack -lctblas -lctf2c
 
 CANTERA_TOTAL_LIBS= $(CANTERA_CORE_LIBS) $(CANTERA_BOOST_LIBS) \
                     $(CANTERA_CVODE_LIBS) $(CANTERA_BLAS_LAPACK_LIBS) \

@@ -3,7 +3,7 @@
  *     Nondimensionalization routines within VCSnonideal
  */
 /*
- * $Id: vcs_nondim.cpp 368 2010-01-04 00:46:26Z hkmoffa $
+ * $Id: vcs_nondim.cpp,v 1.17 2008/12/17 16:56:43 hkmoffa Exp $
  */
 /*
  * Copywrite (2007) Sandia Corporation. Under the terms of 

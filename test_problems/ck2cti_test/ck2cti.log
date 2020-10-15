@@ -1,7 +1,7 @@
 CKReader version 1.0
 http://www.cantera.org
 
-Mon Sep 28 16:07:58 2020
+Fri Oct  9 03:16:09 2020
 
         input file:                     ./soot.inp
   species database:               ./therm_soot.dat
@@ -235,5 +235,5 @@ reaction 6
    rate coeff:  A, n, E = (4.56E+12, 0.5, 0)
 
 
-Success... elapsed CPU time = 0.00144 s
+Success... elapsed CPU time = 0.003733 s
 *** no validation performed ***

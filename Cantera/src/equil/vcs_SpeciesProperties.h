@@ -1,5 +1,5 @@
 
-/* $Id: vcs_SpeciesProperties.h 368 2010-01-04 00:46:26Z hkmoffa $ */
+/* $Id: vcs_SpeciesProperties.h,v 1.1 2007/12/19 21:19:28 hkmoffa Exp $ */
 
 #ifndef VCS_SPECIES_PROPERTIES_H
 #define VCS_SPECIES_PROPERTIES_H

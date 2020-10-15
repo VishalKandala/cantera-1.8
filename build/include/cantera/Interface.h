@@ -5,7 +5,7 @@
  */
 
 /*
- * $Id: Interface.h 368 2010-01-04 00:46:26Z hkmoffa $
+ * $Id: Interface.h,v 1.10 2008/01/09 13:43:26 dggoodwin Exp $
  */
 
 #ifndef CXX_INTERFACE

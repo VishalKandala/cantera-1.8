@@ -1,7 +1,7 @@
 #!/bin/sh
 # run ck2cti to convert Chemkin-format files to Cantera format
 #
-BUILDBIN="/pkg/Cantera/build/bin/x86_64-unknown-linux-gnu"
+BUILDBIN="/Cantera1.8-Radcal/build/bin/x86_64-unknown-linux-gnu"
 #
 $BUILDBIN/ck2cti -i gri30.inp -id gri30              -tr ../transport/gri30_tran.dat > gri30.cti
 $BUILDBIN/ck2cti -i air.inp -id air -t gri30.inp     -tr ../transport/gri30_tran.dat > air.cti

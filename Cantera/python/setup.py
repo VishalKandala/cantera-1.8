@@ -55,14 +55,14 @@ if need_cathermo == 1:
 extra_link = linkargs + " " + ""
 linkargs = extra_link.split()    
 
-bldirstr = " -L/pkg/Cantera/build/lib/x86_64-unknown-linux-gnu -L/usr/local/bin//lib"
+bldirstr = " -L/Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu -L/usr/local/bin//lib"
 bldirs = bldirstr.replace('-L',' ')
 dirlist = bldirs.split()
-libdir = ['/pkg/Cantera/build/lib/x86_64-unknown-linux-gnu']
+libdir = ['/Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu']
 for d in dirlist:
     libdir.append(d)
 
-endlibstr1 = "-lctf2c -lm -lm -lstdc++ "
+endlibstr1 = "-lctf2c -lm"
 endlib1 = endlibstr1.replace('-l', ' ')
 endlib = endlib1.split()
 
@@ -98,7 +98,7 @@ if buildPython >= 2:
 
 #    try:
         setup(name="Cantera",
-              version="1.8.x",
+              version="1.8.0",
               description="The Cantera Python Interface",
               long_description="""
               """,
@@ -127,7 +127,7 @@ if buildPython >= 2:
 if buildPython == 1:
 #    try:
         setup(name="Cantera CTI File Processor",
-              version="1.8.x",
+              version="1.8.0",
               description="Converts .cti files to CTML",
               long_description="""
               """,

@@ -4,8 +4,8 @@
  *   check for the presence of NaNs in the code.
  */
 /*
- * $Revision: 397 $
- * $Date: 2010-02-09 13:57:02 -0600 (Tue, 09 Feb 2010) $
+ * $Revision: 1.2 $
+ * $Date: 2009/03/27 00:39:43 $
  */
 /*
  * Copywrite 2004 Sandia Corporation. Under the terms of Contract
@@ -13,8 +13,6 @@
  * retains certain rights in this software.
  * See file License.txt for licensing information.
  */
-
-#include "ct_defs.h"
 
 #include <stdexcept>
 #include <string>

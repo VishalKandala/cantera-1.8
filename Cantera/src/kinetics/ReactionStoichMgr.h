@@ -6,8 +6,8 @@
 
 /*
  * $Author: hkmoffa $
- * $Revision: 462 $
- * $Date: 2010-05-07 22:15:22 -0500 (Fri, 07 May 2010) $
+ * $Revision: 1.2 $
+ * $Date: 2007/06/12 14:20:02 $
  */
 
 #ifndef CT_RXN_STOICH
@@ -214,7 +214,6 @@ namespace Cantera {
      * \f[
      *  R_i = R_i * \prod_k C_k^{o_{k,i}}
      * \f]
-     *
      * Here \f$ o_{k,i} \f$ is the reaction order of species k in reaction i.
      */
       virtual void multiplyReactants(const doublereal* C, doublereal* R);

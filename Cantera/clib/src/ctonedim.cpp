@@ -2,7 +2,7 @@
  * @file ctonedim.cpp
  */
 /*
- *      $Id: ctonedim.cpp 399 2010-02-09 20:39:03Z hkmoffa $
+ *      $Id: ctonedim.cpp,v 1.25 2009/07/11 17:16:09 hkmoffa Exp $
  */
 
 // turn off warnings under Windows
@@ -47,18 +47,16 @@ inline Domain1D* _domain(int i) {
 static StFlow* _stflow(int i) {
     Domain1D* d = _domain(i);
     if (d->domainType() == cFlowType) return (StFlow*)d;
-    else {
+    else
         throw CanteraError("_stflow","wrong domain type");
-    }
-    return 0;
 }
 
 static Bdry1D* _bdry(int i) {
     Domain1D* d = _domain(i);
-    if (! d->isConnector()) {
-      throw CanteraError("_bdry","wrong domain type: " +int2str(d->domainType()));
-    }
-    return (Bdry1D*)d;
+    if (d->isConnector()) return (Bdry1D*)d;
+    else
+        throw CanteraError("_bdry","wrong domain type: "
+            +int2str(d->domainType()));
 }
 
 inline ThermoPhase* _phase(int n) {

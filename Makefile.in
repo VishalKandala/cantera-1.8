@@ -192,21 +192,17 @@ endif
 finish-install:
 	@INSTALL@ -d @ct_docdir@
 	@INSTALL@ -d @ct_bindir@
-	-( cd bin ;   @INSTALL@ -c exp3to2.sh "@ct_bindir@" )
-	-( cd bin ;   @INSTALL@ -c csvdiff    "@ct_bindir@" )
 ifeq ($(os_is_win),0)
 #          Commands to be executed for non-win systems
 	cp -f License.rtf "@ct_bindir@"
 	cp -f License.txt "@ct_bindir@"
 ifneq ($(build_python),0)
 	@INSTALL@ -c tools/src/finish_install.py tools/bin
-	@PYTHON_CMD@ tools/bin/finish_install.py @prefix@ @PYTHON_CMD@
+	(PYTHONPATH=''; @PYTHON_CMD@ tools/bin/finish_install.py @prefix@ @PYTHON_CMD@)
 	cp -f "@homedir@/setup_cantera" "@ct_bindir@"
 	chmod +x @ct_bindir@/setup_cantera
 	chmod +x @ct_bindir@/ctnew
-ifeq ($(build_python),2)
 	chmod +x @ct_bindir@/mixmaster
-endif
 endif
 else
 #          Commands to be executed for win systems

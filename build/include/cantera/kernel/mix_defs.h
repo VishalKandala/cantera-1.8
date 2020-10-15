@@ -44,7 +44,7 @@ namespace Cantera {
   const int cSemiconductor = 7;
 
   const int cMineralEQ3 = 8; // MineralEQ3 in MineralEQ3.h
-  const int cMetalSHEelectrons = 9; // SHE electrode electrons
+  const int cElectrodeElectron = 9; // electrodeElectron
 
   const int cLatticeSolid = 20; // LatticeSolidPhase.h
   const int cLattice = 21; 
@@ -70,10 +70,7 @@ namespace Cantera {
   const int cIdealSolnGasVPSS = 500;
   const int cIdealSolnGasVPSS_iscv = 501;
 
-  const int cMargulesVPSSTP = 301;
 
-
-  const int cIonsFromNeutral = 2000;
 
   //! Variable Pressure Standard State ThermoPhase objects
   const int cVPSS_IdealGas     = 1001;
@@ -83,33 +80,14 @@ namespace Cantera {
   const int cVPSS_DebyeHuckel = 1050;
   const int cVPSS_MolalSoln   = 1060;
 
-  //! Types of general formulations for the specification of the standard state volume
-  enum SSVolume_Model_enumType {
-    //! This approximation is for a constant volume
-    cSSVOLUME_CONSTANT = 0,
-    //! This approximation is for a species with a quadratic polynomial in temperature
-    /*!
-     *       V^ss_i = ai + bi T + ci T2
-     */
-    cSSVOLUME_TPOLY,
-    //! This approximation is for a species where the density is expressed as a
-    //! quadratic polynomial in temperature
-    /*!
-     *       V^ss_i = M_i / (ai + bi T + ci T2)
-     */
-    cSSVOLUME_DENSITY_TPOLY
-  };
-
   //! Types of PDSS's
   enum PDSS_enumType {
     cPDSS_UNDEF = 100,
     cPDSS_IDEALGAS,
     cPDSS_CONSTVOL,
-    cPDSS_SSVOL,
     cPDSS_MOLAL_CONSTVOL,
     cPDSS_WATER,
-    cPDSS_MOLAL_HKFT,
-    cPDSS_IONSFROMNEUTRAL
+    cPDSS_MOLAL_HKFT
   };
 
 

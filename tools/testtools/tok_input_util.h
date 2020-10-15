@@ -5,14 +5,14 @@
  *
  * $RCSfile: tok_input_util.h,v $
  *
- * $Author: hkmoffa $
+ * $Author: dggoodwin $
  *
- * $Date: 2010-04-02 14:29:07 -0500 (Fri, 02 Apr 2010) $
+ * $Date: 2003/04/14 17:58:00 $
  *
- * $Revision: 432 $
+ * $Revision: 1.1.1.1 $
  * Symbolic $Name:  $
  *
- * $Id: tok_input_util.h 432 2010-04-02 19:29:07Z hkmoffa $
+ * $Id: tok_input_util.h,v 1.1.1.1 2003/04/14 17:58:00 dggoodwin Exp $
  * $Source: /cvsroot/cantera/cantera/tools/testtools/tok_input_util.h,v $
  *
  *

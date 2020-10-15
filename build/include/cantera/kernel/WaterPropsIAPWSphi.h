@@ -1,7 +1,7 @@
 /**
  * @file WaterPropsIAPWSphi.h
  *  Header for Lowest level of the classes which support a real water model
- *  (see class \link Cantera::WaterPropsIAPWS WaterPropsIAPWS\endlink and  class \link WaterPropsIAPWSphi WaterPropsIAPWSphi\endlink).
+ *  (see class #WaterPropsIAPWS and class  #WaterPropsIAPWSphi).
  *
  *   This class calculates dimensionless quantitites.
  */
@@ -11,7 +11,7 @@
  * U.S. Government retains certain rights in this software.
  */
 /*
- * $Id: WaterPropsIAPWSphi.h 387 2010-01-17 18:17:55Z hkmoffa $
+ * $Id: WaterPropsIAPWSphi.h,v 1.8 2008/09/12 21:51:04 hkmoffa Exp $
  */
 
 #ifndef WATERPROPSIAPWSPHI_H
@@ -45,35 +45,35 @@ public:
    * @param tau     Dimensionless temperature = T_c/T
    * @param delta   Dimensionless density =  delta = rho / Rho_c
    */
-  doublereal phi(doublereal tau, doublereal delta);
+  double phi(double tau, double delta);
 
   //! Delta derivative of phi
   /*!
    * @param tau     Dimensionless temperature = T_c/T
    * @param delta   Dimensionless density =  delta = rho / Rho_c
    */
-  doublereal phi_d(doublereal tau, doublereal delta);
+  double phi_d(double tau, double delta);
 
   //! 2nd derivative of phi wrt delta
   /*!
    * @param tau     Dimensionless temperature = T_c/T
    * @param delta   Dimensionless density =  delta = rho / Rho_c
    */
-  doublereal phi_dd(doublereal tau, doublereal delta);
+  double phi_dd(double tau, double delta);
 
   //! First derivative of phi wrt tau
   /*!
    * @param tau     Dimensionless temperature = T_c/T
    * @param delta   Dimensionless density =  delta = rho / Rho_c
    */
-  doublereal phi_t(doublereal tau, doublereal delta);
+  double phi_t(double tau, double delta);
 
   //! Second derivative of phi wrt tau
   /*!
    * @param tau     Dimensionless temperature = T_c/T
    * @param delta   Dimensionless density =  delta = rho / Rho_c
    */
-  doublereal phi_tt(doublereal tau, doublereal delta);
+  double phi_tt(double tau, double delta);
 
   //! Internal check # 1
   void   check1();
@@ -91,7 +91,7 @@ public:
    *
    * note: this is done so much, we have a seperate routine.
    */
-  doublereal pressureM_rhoRT(doublereal tau, doublereal delta);
+  double pressureM_rhoRT(double tau, double delta);
 
   //! Dimensionless derivative of p wrt rho at constant T
   /*!
@@ -101,7 +101,7 @@ public:
    * @param tau     Dimensionless temperature = T_c/T
    * @param delta   Dimensionless density =  delta = rho / Rho_c
    */
-  doublereal dimdpdrho(doublereal tau, doublereal delta);
+  double dimdpdrho(double tau, double delta);
 
   //! Dimensionless derivative of p wrt T at constant rho
   /*!
@@ -111,7 +111,7 @@ public:
    * @param tau     Dimensionless temperature = T_c/T
    * @param delta   Dimensionless density =  delta = rho / Rho_c
    */
-  doublereal dimdpdT(doublereal tau, doublereal delta);
+  double dimdpdT(double tau, double delta);
 
   /**
    * This program computes the reduced density, given the reduced pressure
@@ -126,37 +126,37 @@ public:
    * @return 
    *   Returns the dimensionless density.
    */
-  doublereal dfind(doublereal p_red, doublereal tau, doublereal deltaGuess);
+  double dfind(double p_red, double tau, double deltaGuess);
 
   /**
    * Calculate the dimensionless gibbs free energy
    */
-  doublereal gibbs_RT() const;
+  double gibbs_RT() const;
 
   /**
    * Calculate the dimensionless enthalpy, h/RT
    */
-  doublereal enthalpy_RT() const;
+  double enthalpy_RT() const;
     
   /**
    * Calculate the dimensionless entropy, s/R
    */
-  doublereal entropy_R() const;
+  double entropy_R() const;
 
   /**
    * Calculate the dimensionless internal energy, u/RT
    */
-  doublereal intEnergy_RT() const;
+  double intEnergy_RT() const;
 
   /**
    * Calculate the dimensionless constant volume heat capacity, Cv/R
    */
-  doublereal cv_R() const;
+  double cv_R() const;
 
   /**
    * Calculate the dimensionless constant pressure heat capacity, Cv/R
    */
-  doublereal cp_R() const;
+  double cp_R() const;
 
   
   //! Calculates internal polynomials in tau and delta.
@@ -167,35 +167,35 @@ public:
    * @param tau     Dimensionless temperature = T_c/T
    * @param delta   Dimensionless density =  delta = rho / Rho_c
    */
-  void tdpolycalc(doublereal tau, doublereal delta);
+  void tdpolycalc(double tau, double delta);
 
   //! Return the value of phiR(), res
-  doublereal phiR() const;
+  double phiR() const;
 
 private:
 
   //! nau calculation
-  doublereal phi0() const;
+  double phi0() const;
   //! calculation of d_phiR/d_d
-  doublereal phiR_d() const;
+  double phiR_d() const;
   //! calculation of d_nau/d_d
-  doublereal phi0_d() const;
+  double phi0_d() const;
   //! calculation of d2_res/d_dd
-  doublereal phiR_dd() const;
+  double phiR_dd() const;
   //! calculation of d2_nau/d_dd
-  doublereal phi0_dd() const;
+  double phi0_dd() const;
   //! calculation of d_nau/d_t
-  doublereal phi0_t() const;
+  double phi0_t() const;
   //! calculation of d_res/d_t
-  doublereal phiR_t() const;
+  double phiR_t() const;
   //! calculation of d2_res/d_tt
-  doublereal phiR_tt() const;
+  double phiR_tt() const;
   //! calculation of d2_nau/d_tt
-  doublereal phi0_tt() const;
+  double phi0_tt() const;
   //! calculation of d2_res/d_dt
-  doublereal phiR_dt() const;
+  double phiR_dt() const;
   //! calculation of d2_nau/d_dt
-  doublereal phi0_dt() const;
+  double phi0_dt() const;
 
   /**
    * intCheck() calculates all of the functions at a one point and
@@ -205,23 +205,23 @@ private:
    * @param tau     Dimensionless temperature = T_c/T
    * @param delta   Dimensionless density =  delta = rho / Rho_c
    */
-  void intCheck(doublereal tau, doublereal delta);
+  void intCheck(double tau, double delta);
 
 private:
 
   //! Value of internally calculated polynomials of powers of TAU
-  doublereal TAUp[52];
+  double TAUp[52];
 
  //! Value of internally calculated polynomials of powers of delta
-  doublereal DELTAp[16];
+  double DELTAp[16];
 
   //! Last tau that was used to calculate polynomials
-  doublereal TAUsave;
+  double TAUsave;
 
   //! sqrt of TAU
-  doublereal TAUsqrt;
+  double TAUsqrt;
 
   //! Last delta that was used to calculate polynomials
-  doublereal DELTAsave;
+  double DELTAsave;
 };
 #endif

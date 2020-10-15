@@ -1,8 +1,8 @@
 #/bin/sh
 ###############################################################
 #  $Author: hkmoffa $
-#  $Date: 2010-01-03 18:46:26 -0600 (Sun, 03 Jan 2010) $
-#  $Revision: 368 $
+#  $Date: 2009/02/11 19:55:56 $
+#  $Revision: 1.8 $
 #
 #  Copyright 2002 California Institute of Technology
 #
@@ -29,7 +29,7 @@ PIC_FLAG=-fPIC
 CXX_FLAGS = -O3 -Wall   $(LOCAL_DEFS) $(CXX_OPT) $(PIC_FLAG) $(DEBUG_FLAG)
 
 BASE_OBJ = ct2ctml.o ctml.o misc.o plots.o stringUtils.o xml.o clockWC.o\
-           PrintCtrl.o LogPrintCtrl.o mdp_allo.o checkFinite.o
+           PrintCtrl.o LogPrintCtrl.o mdp_allo.o
 
 BASE_H   = ct_defs.h ctexceptions.h logger.h XML_Writer.h \
            ctml.h plots.h stringUtils.h xml.h config.h utilities.h \
@@ -37,7 +37,7 @@ BASE_H   = ct_defs.h ctexceptions.h logger.h XML_Writer.h \
            PrintCtrl.h LogPrintCtrl.h  mdp_allo.h
 
 CXX_INCLUDES = -I. 
-LIB = /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libctbase.a
+LIB = /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libctbase.a
 
 DEPENDS = $(BASE_OBJ:.o=.d)
 

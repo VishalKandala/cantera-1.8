@@ -6,8 +6,8 @@
  * @ingroup transportProps
  *
  *  $Author: hkmoffa $
- *  $Date: 2010-01-03 18:46:26 -0600 (Sun, 03 Jan 2010) $
- *  $Revision: 368 $
+ *  $Date: 2009/03/27 18:24:39 $
+ *  $Revision: 1.17 $
  *
  *  Copyright 2001 California Institute of Technology
  *  See file License.txt for licensing information
@@ -142,7 +142,7 @@ namespace Cantera {
 
   }
 
-    bool MultiTransport::initGas( GasTransportParams& tr ) {
+    bool MultiTransport::init(TransportParams& tr) {
 
         // constant mixture attributes
         //m_phase = tr.mix;
@@ -167,7 +167,7 @@ namespace Cantera {
         m_zrot       = tr.zrot;
         m_crot       = tr.crot;
         m_epsilon    = tr.epsilon;
-        m_mode       = tr.mode_;
+        m_mode       = tr.mode;
         m_diam       = tr.diam;
         m_eps        = tr.eps;
 	m_alpha      = tr.alpha;

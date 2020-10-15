@@ -3,8 +3,8 @@
  *  Mixture-averaged transport properties for ideal gas mixtures.
  */
 /*
- * $Revision: 368 $
- * $Date: 2010-01-03 18:46:26 -0600 (Sun, 03 Jan 2010) $
+ * $Revision: 1.4 $
+ * $Date: 2009/03/27 18:24:39 $
  */
 
 
@@ -19,7 +19,6 @@
 
 #include "utilities.h"
 #include "TransportParams.h"
-#include "LiquidTransportParams.h"
 #include "TransportFactory.h"
 
 #include "ctlapack.h"
@@ -73,7 +72,7 @@ namespace Cantera {
   /*
    *  This is where we dimension everything.
    */
-  bool AqueousTransport::initLiquid( LiquidTransportParams& tr ) {
+  bool AqueousTransport::init(TransportParams& tr) {
 
     // constant substance attributes
     m_thermo = tr.thermo;
@@ -87,11 +86,15 @@ namespace Cantera {
 	 m_thermo->molecularWeights().end(), m_mw.begin());
 
     // copy polynomials and parameters into local storage
+    m_poly       = tr.poly;
     m_visccoeffs = tr.visccoeffs;
     m_condcoeffs = tr.condcoeffs;
     m_diffcoeffs = tr.diffcoeffs;
 
-    m_mode       = tr.mode_;
+    m_mode       = tr.mode;
+    m_diam       = tr.diam;
+    m_eps        = tr.eps;
+    m_alpha      = tr.alpha;
 
     m_phi.resize(m_nsp, m_nsp, 0.0);
 
@@ -181,7 +184,6 @@ namespace Cantera {
   /******************* binary diffusion coefficients **************/
 
 
-  //================================================================================================
   void AqueousTransport::getBinaryDiffCoeffs(const int ld, doublereal* const d) {
     int i,j;
 
@@ -198,52 +200,32 @@ namespace Cantera {
 	d[ld*j + i] = rp * m_bdiff(i,j);
       }
   }
-  //================================================================================================
-  //       Get the electrical Mobilities (m^2/V/s).
-  /*
-   *   This function returns the mobilities. In some formulations
-   *   this is equal to the normal mobility multiplied by faraday's constant.
-   *
-   *   Frequently, but not always, the mobility is calculated from the
-   *   diffusion coefficient using the Einstein relation
-   *
-   *     \f[
-   *          \mu^e_k = \frac{F D_k}{R T}
-   *     \f]
-   *
-   * @param mobil_e  Returns the mobilities of
-   *               the species in array \c mobil_e. The array must be
-   *               dimensioned at least as large as the number of species.
-   */
+
+
   void AqueousTransport::getMobilities(doublereal* const mobil) {
+    // this needs to be checked out. 
     int k;
     getMixDiffCoeffs(DATA_PTR(m_spwork));
     doublereal c1 = ElectronCharge / (Boltzmann * m_temp);
     for (k = 0; k < m_nsp; k++) {
-      mobil[k] = c1 * m_spwork[k];
+      mobil[k] = c1 * m_spwork[k] * m_thermo->charge(k);
     }
   } 
-  //================================================================================================
-  void AqueousTransport::getFluidMobilities(doublereal* const mobil) {
-    getMixDiffCoeffs(DATA_PTR(m_spwork));
-    doublereal c1 = 1.0 / (GasConstant * m_temp);
-    for (int k = 0; k < m_nsp; k++) {
-      mobil[k] = c1 * m_spwork[k];
-    }
-  } 
-  //================================================================================================
+  
+
+  
   void AqueousTransport::set_Grad_V(const doublereal* const grad_V) {
     for (int a = 0; a < m_nDim; a++) {
       m_Grad_V[a] = grad_V[a];
     }
   }
-  //================================================================================================
+
   void AqueousTransport::set_Grad_T(const doublereal* const grad_T) {
     for (int a = 0; a < m_nDim; a++) {
       m_Grad_T[a] = grad_T[a];
     }
   }
-  //================================================================================================
+
  void AqueousTransport::set_Grad_X(const doublereal* const grad_X) {
    int itop = m_nDim * m_nsp;
    for (int i = 0; i < itop; i++) {
@@ -603,15 +585,17 @@ namespace Cantera {
    * This function returns a Transport data object for a given species.
    *
    */
-  struct LiquidTransportData AqueousTransport::
-    getLiquidTransportData(int kSpecies) 
+  struct GasTransportData AqueousTransport::
+    getGasTransportData(int kSpecies) 
   {
-    struct LiquidTransportData td;
+    struct GasTransportData td;
     td.speciesName = m_thermo->speciesName(kSpecies);
 
-    /* NEEDS WORK
-    td.hydroradius = ???;
-    */
+
+    td.wellDepth = m_eps[kSpecies] / Boltzmann;
+    td.diameter = m_diam(kSpecies, kSpecies) * 1.0E10;
+    td.polarizability = m_alpha[kSpecies] * 1.0E30;
+  
 
     return td;
   }

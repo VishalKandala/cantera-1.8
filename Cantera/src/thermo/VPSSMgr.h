@@ -9,8 +9,8 @@
 
 /*
  * $Author: hkmoffa $
- * $Revision: 279 $
- * $Date: 2009-12-05 13:08:43 -0600 (Sat, 05 Dec 2009) $
+ * $Revision: 1.5 $
+ * $Date: 2009/05/28 23:08:06 $
  */
 /*
  * Copywrite (2005) Sandia Corporation. Under the terms of 
@@ -772,11 +772,11 @@ namespace Cantera {
 				     const XML_Node * const phaseNode_ptr);
     
 
-    //! Initialize the internal shallow pointers in this object
+    //! Initialize the internal pointers in this object
     /*!
      * There are a bunch of internal shallow pointers that point to the owning
      * VPStandardStateTP and SpeciesThermo objects. This function reinitializes
-     * them. This function is called like an onion.
+     * them.
      * 
      *  @param vp_ptr   Pointer to the VPStandardStateTP standard state
      *  @param sp_ptr   Poitner to the SpeciesThermo standard state

@@ -4,8 +4,8 @@
  * ------------------------
  * $RCSfile: csvdiff.cpp,v $
  * $Author: hkmoffa $
- * $Date: 2010-04-02 14:29:07 -0500 (Fri, 02 Apr 2010) $
- * $Revision: 432 $
+ * $Date: 2008/01/03 18:54:23 $
+ * $Revision: 1.17 $
  * $Name:  $
  *====================================================================*/
 /*
@@ -70,11 +70,6 @@ using namespace std;
 int Debug_Flag = TRUE;
 double grtol = 1.0E-3;
 double gatol = 1.0E-9;
-
-#define RT_PASSED  0
-#define RT_FAILED_COL 1
-#define RT_FAILED_HDR 2
-#define RT_FAILED_OTHER 3
 
 /*
  * First iteration towards getting this variable
@@ -651,7 +646,7 @@ int main(int argc, char *argv[])
   int    mixed_var = 0;
   int    i, j, ndiff, jmax, i1, i2, k, found;
   double max_diff, rel_diff;
-  int    testPassed = RT_PASSED;
+  int    testPassed = 1;
   double atol_j, atol_arg = 0.0, rtol_arg = 0.0;
   
   /********************** BEGIN EXECUTION ************************************/
@@ -724,7 +719,7 @@ int main(int argc, char *argv[])
   printf("\n");
   printf("----------------------------------------------------------\n");
   printf("csvdiff: CSVFile comparison utility program\n");
-  printf("         Version $Revision: 432 $\n");
+  printf("         Version $Revision: 1.17 $\n");
   printf("         Harry K. Moffat Div. 9114 Sandia National Labs\n");
   printf("         \n");
   printf("         First  CSV File = %s\n", fileName1);
@@ -756,37 +751,37 @@ int main(int argc, char *argv[])
   get_sizes(fp1, nTitleLines1, nColTitleLines1, nCol1, nDataRows1, &ColIsFloat1);
   if (nCol1 == 0) {
     printf("Number of columns in file %s is zero\n", fileName1);
-    testPassed = RT_FAILED_OTHER;
-    exit(RT_FAILED_OTHER);
+    testPassed = -1;
+    exit (-1);
   }
   if (nDataRows1 == 0) {
     printf("Number of data rows in file %s is zero\n", fileName1);
-    testPassed = RT_FAILED_OTHER;
-    exit(RT_FAILED_OTHER);
+    testPassed = -1;
+    exit (-1);
   }
 
   get_sizes(fp2, nTitleLines2, nColTitleLines2, nCol2, nDataRows2, &ColIsFloat2);
   if (nCol2 == 0) {
     printf("Number of columns in file %s is zero\n", fileName2);
-    testPassed = RT_FAILED_OTHER;
-    exit(RT_FAILED_OTHER);
+    testPassed = -1;
+    exit (-1);
   }
   if (nDataRows2 == 0) {
     printf("Number of data rows in file %s is zero\n", fileName2);
-    testPassed = RT_FAILED_OTHER;
-    exit(RT_FAILED_OTHER);
+    testPassed = -1;
+    exit (-1);
   }
 
   if (nTitleLines1 != nTitleLines2) {
-    printf("Number of Title Lines differ:, %d %d\n",nTitleLines1, nTitleLines2);
-    testPassed = RT_FAILED_OTHER;
+    printf("Number o Title Lines differ:, %d %d\n",nTitleLines1, nTitleLines2);
+    testPassed = 0;
   } else if (Debug_Flag) {
     printf("Number of Title Lines in each file = %d\n", nTitleLines1);
   }
   if (nColTitleLines1 != nColTitleLines2) {
     printf("Number of Column title lines differ:, %d %d\n", nColTitleLines1,
 	   nColTitleLines2);
-    testPassed = RT_FAILED_OTHER;
+    testPassed = 0;
   } else if (Debug_Flag) {
     printf("Number of column title lines in each file = %d\n", nColTitleLines1);
   }
@@ -814,27 +809,27 @@ int main(int argc, char *argv[])
     for (i = 0; i < n; i++) {
       if (strcmp(title1[i], title2[i]) != 0) {
 	printf("Title Line %d differ:\n\t\"%s\"\n\t\"%s\"\n", i, title1[i], title2[i]);
-        testPassed = RT_FAILED_HDR;
+        testPassed = 0;
       } else if (Debug_Flag) {
 	printf("Title Line %d for each file: \"%s\"\n", i, title1[i]);
       }
     }
     if (nTitleLines1 != nTitleLines2) {
       printf("Number of Title Lines differ: %d %d\n", nTitleLines1, nTitleLines2);
-      testPassed = RT_FAILED_HDR;;
+      testPassed = -1;
     }
   } else {
     if (nTitleLines1 != nTitleLines2) {
       if (nTitleLines1) {
 	printf("Titles differ: title for first file: \"%s\"\n", 
 	       title1[0]);
-        testPassed = RT_FAILED_HDR;
+        testPassed = 0;
       }
       if (nTitleLines2) {
 	printf("Titles differ: title for second file: \"%s\"\n", 
 	       title2[0]);
       }
-      testPassed = RT_FAILED_HDR;
+      testPassed = -1;
     }
   }
 
@@ -847,7 +842,7 @@ int main(int argc, char *argv[])
     printf("Number of column variables differ:, %d %d\n", 
                  nCol1, nCol2);
     mixed_var = TRUE;
-    testPassed = RT_FAILED_OTHER;
+    testPassed = 0;
   } else if (Debug_Flag) {
     printf("Number of column variables in both files = %d\n",
 	   nCol1);
@@ -884,7 +879,7 @@ int main(int argc, char *argv[])
     if (!found) {
       printf("csvdiff WARNING Variable %s (%d) in first file not found"
 	     " in second file\n", ColNames1[i], i);
-      testPassed = RT_FAILED_OTHER;
+      testPassed = 0;
     }
   }
   for (j = 0; j < nCol2; j++) {
@@ -896,7 +891,7 @@ int main(int argc, char *argv[])
       printf("csvdiff WARNING Variable %s (%d) in second file "
 	     "not found in first file\n",
 	     ColNames2[j], j);
-      testPassed = RT_FAILED_OTHER;
+      testPassed = 0;
     }
   }
 
@@ -1029,7 +1024,7 @@ int main(int argc, char *argv[])
 	printf("  Largest difference was at data row %d ", jmax + 1);
 	printf(": %g %g\n", curVarValues1[jmax],  curVarValues2[jmax]);
       }
-      testPassed = RT_FAILED_COL;
+      testPassed = 0;
     } else if (Debug_Flag) {
       printf("Column variable %s passed\n",  ColNames1[i1]);
     }

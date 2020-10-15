@@ -9,7 +9,7 @@
  * U.S. Government retains certain rights in this software.
  */
 /*
- * $Id: WaterSSTP.h 384 2010-01-16 18:57:05Z hkmoffa $
+ * $Id: WaterSSTP.h,v 1.13 2009/03/27 00:38:58 hkmoffa Exp $
  */
 
 #ifndef CT_WATERSSTP_H
@@ -17,11 +17,10 @@
 
 #include "SingleSpeciesTP.h"
 
+class WaterPropsIAPWS;
 
 namespace Cantera {
     
-  class WaterPropsIAPWS;
-  class WaterProps;
   //!  Class for single-component water. This is designed to cover just the
   //!  liquid part of water.
   /*!
@@ -400,24 +399,13 @@ namespace Cantera {
      */
     virtual doublereal vaporFraction() const;
 
-    //! Set the temperature of the phase
-    /*!
-     * The density and composition of the phase is constant during this
-     * operator.
-     *
-     * @param temp Temperature (Kelvin)
-     */
+
     virtual void setTemperature(const doublereal temp);
 
-    //! Set the density of the phase
-    /*!
-     * The temperature and composition of the phase is constant during this
-     * operator.
-     *
-     * @param dens value of the density in kg m-3
-     */
     virtual void setDensity(const doublereal dens);
     
+    void constructPhase();
+
  
     //! Initialization of a pure water phase using an
     //! xml file.
@@ -513,17 +501,6 @@ namespace Cantera {
      */
     virtual void setParametersFromXML(const XML_Node& eosdata);
 
-    //! Get a pointer to a changeable WaterPropsIAPWS object
-    WaterPropsIAPWS *getWater() {
-      return m_sub;
-    }
-
-    //! Get a pointer to a changeable WaterPropsIAPWS object
-    WaterProps *getWaterProps() {
-      return m_waterProps;
-    }
-
-
  protected:
 
     /**
@@ -538,34 +515,25 @@ namespace Cantera {
     //! of water.
     mutable WaterPropsIAPWS *m_sub;
 
-    //! Pointer to the WaterProps object
-    /*!
-     *   This class is used to house several approximation
-     *   routines for properties of water.
-     *
-     * This object owns m_waterProps, and the WaterPropsIAPWS object used by
-     * WaterProps is m_sub, which is defined above.
-     */
-    WaterProps *m_waterProps;
-
     //! Molecular weight of Water -> Cantera assumption
     doublereal m_mw;
 
-    //! Offset constants used to obtain consistency with the NIST database.
-    /*!
-     *  This is added to all internal energy and enthalpy results.
+    /**
+     * Offset constants used to obtain consistency with the NIST database.
+     * This is added to all internal energy and enthalpy results.
      *  units = J kmol-1.
      */
-    doublereal EW_Offset;
+    double EW_Offset;
 
-    //! Offset constant used to obtain consistency with NIST convention.
-    /*!
-     *  This is added to all internal entropy results.
+    /*
+     * Offset constant used to obtain consistency with NIST convention.
+     * This is added to all internal entropy results.
      *  units = J kmol-1 K-1.
      */
-    doublereal SW_Offset;
+    double SW_Offset;
 
-    //! Boolean  is true if object has been properly initialized for calculation
+    bool m_verbose;
+
     bool m_ready;
 
     /**

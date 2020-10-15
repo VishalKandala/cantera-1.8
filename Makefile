@@ -3,7 +3,7 @@
 # $Id: Makefile.in,v 1.96 2009/03/25 01:11:48 hkmoffa Exp $
 #
 export_dir = $(HOME)/sfdist
-version = 1.8.x
+version = 1.8.0
 ct = $(export_dir)/cantera-$(version)
 build_ck = 1
 build_clib = 1
@@ -45,8 +45,8 @@ demos: example_codes
 
 # build the Cantera static libraries
 kernel:  
-	/usr/bin/install -c -d /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu
-	/usr/bin/install -c -d /pkg/Cantera/build/bin/x86_64-unknown-linux-gnu
+	/usr/bin/install -c -d /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu
+	/usr/bin/install -c -d /Cantera1.8-Radcal/build/bin/x86_64-unknown-linux-gnu
 	cd ext; make
 	cd Cantera/src; make
 
@@ -78,7 +78,7 @@ utils:
 kernel-install:
 	/usr/bin/install -c -d /usr/local/cantera/lib
 	-rm -fR /usr/local/cantera/lib/*
-	( for ilib in /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/*.a ; do  \
+	( for ilib in /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/*.a ; do  \
 	  /usr/bin/install -c -c -m 644 $${ilib} /usr/local/cantera/lib ; \
           done )
 ifeq ($(do_ranlib),1)
@@ -93,12 +93,12 @@ endif
 win-kernel-install:
 	/usr/bin/install -c -d /usr/local/cantera/lib
 	-$(RMDIRTREE) /usr/local/cantera/lib/*
-	( for ilib in /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/*.lib ; do  \
+	( for ilib in /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/*.lib ; do  \
           /usr/bin/install -c -c -m 644 $${ilib} /usr/local/cantera/lib ;  done )
 ifeq ($(use_dll),1)
-	( for ilib in /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/*.dll ; do  \
+	( for ilib in /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/*.dll ; do  \
           /usr/bin/install -c -c -m 644 $${ilib} /usr/local/cantera/lib ;  done )
-	( for ilib in /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/*.exp ; do  \
+	( for ilib in /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/*.exp ; do  \
           /usr/bin/install -c -c -m 644 $${ilib} /usr/local/cantera/lib ;  done )
 endif
 
@@ -192,28 +192,24 @@ endif
 finish-install:
 	/usr/bin/install -c -d /usr/local/cantera/doc
 	/usr/bin/install -c -d /usr/local/cantera/bin
-	-( cd bin ;   /usr/bin/install -c -c exp3to2.sh "/usr/local/cantera/bin" )
-	-( cd bin ;   /usr/bin/install -c -c csvdiff    "/usr/local/cantera/bin" )
 ifeq ($(os_is_win),0)
 #          Commands to be executed for non-win systems
 	cp -f License.rtf "/usr/local/cantera/bin"
 	cp -f License.txt "/usr/local/cantera/bin"
 ifneq ($(build_python),0)
 	/usr/bin/install -c -c tools/src/finish_install.py tools/bin
-	/usr/bin/python2.6 tools/bin/finish_install.py /usr/local/cantera /usr/bin/python2.6
+	(PYTHONPATH=''; /usr/bin/python2.6 tools/bin/finish_install.py /usr/local/cantera /usr/bin/python2.6)
 	cp -f "/root/setup_cantera" "/usr/local/cantera/bin"
 	chmod +x /usr/local/cantera/bin/setup_cantera
 	chmod +x /usr/local/cantera/bin/ctnew
-ifeq ($(build_python),2)
 	chmod +x /usr/local/cantera/bin/mixmaster
-endif
 endif
 else
 #          Commands to be executed for win systems
 	cd Cantera/fortran/f77demos; sed s'/isentropic/ctlib/g' isentropic.dsp > ctlib.dsp
 	( for ihhh in Cantera/fortran/f77demos/*.dsp ; do  \
           /usr/bin/install -c -c $${ihhh} /usr/local/cantera/demos/f77 ;  done )
-	( for ihhh in  /pkg/Cantera/build/bin/x86_64-unknown-linux-gnu/* ; do  \
+	( for ihhh in  /Cantera1.8-Radcal/build/bin/x86_64-unknown-linux-gnu/* ; do  \
           /usr/bin/install -c -c $${ihhh} /usr/local/cantera/bin ;  done )
 endif
 
@@ -246,7 +242,7 @@ uninstall:
 	cd tools; make uninstall
 
 clean:
-	-$(RMDIRTREE) *.*~ /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/*.* build/include/cantera/config.h svn*~
+	-$(RMDIRTREE) *.*~ /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/*.* build/include/cantera/config.h svn*~
 	-cd Cantera; make clean
 	-cd tools; make clean
 	-cd ext; make clean

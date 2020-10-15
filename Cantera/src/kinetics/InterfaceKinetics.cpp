@@ -25,58 +25,46 @@ using namespace std;
 
 namespace Cantera {
 
-  //====================================================================================================================
-  /*
-   * Construct an empty InterfaceKinetics reaction mechanism.
-   *  @param thermo This is an optional parameter that may be
-   *         used to initialize the inherited Kinetics class with
-   *         one ThermoPhase class object -> in other words it's
-   *         useful for initialization of homogeneous kinetics 
-   *         mechanisms.
-   */    
-  InterfaceKinetics::InterfaceKinetics(thermo_t* thermo) :
-    Kinetics(),
-    m_kk(0), 
-    m_redo_rates(false),
-    m_nirrev(0), 
-    m_nrev(0),
-    m_surf(0),
-    m_integrator(0),
-    m_beta(0),
-    m_ctrxn(0),
-    m_ctrxn_ecdf(0),
-    m_StandardConc(0),
-    m_deltaG0(0),
-    m_ProdStanConcReac(0),
-    m_finalized(false),
-    m_has_coverage_dependence(false),
-    m_has_electrochem_rxns(false),
-    m_has_exchange_current_density_formulation(false),
-    m_phaseExistsCheck(false),
-    m_phaseExists(0),
-    m_rxnPhaseIsReactant(0),
-    m_rxnPhaseIsProduct(0),
-    m_ioFlag(0)
-  {
-    if (thermo != 0) addPhase(*thermo);
-    m_kdata = new InterfaceKineticsData;
-    m_kdata->m_temp = 0.0;
-  }
-  //====================================================================================================================
-  /*
-   * Destructor
-   */
-  InterfaceKinetics::~InterfaceKinetics(){
-    delete m_kdata;
-    if (m_integrator) {
-      delete m_integrator; 
+    //////////////////////////////////////////////////////////////////
+
+    /**
+     * Construct an empty InterfaceKinetics reaction mechanism.
+     *  @param thermo This is an optional parameter that may be
+     *         used to initialize the inherited Kinetics class with
+     *         one ThermoPhase class object -> in other words it's
+     *         useful for initialization of homogeneous kinetics 
+     *         mechanisms.
+     */    
+    InterfaceKinetics::
+    InterfaceKinetics(thermo_t* thermo) :
+        Kinetics(),
+        m_kk(0), 
+        m_redo_rates(false),
+        m_nirrev(0), 
+        m_nrev(0),
+        m_surf(0),
+        m_integrator(0),
+        m_finalized(false),
+        m_has_coverage_dependence(false),
+        m_has_electrochem_rxns(false),
+	m_ioFlag(0)
+    {
+        if (thermo != 0) addPhase(*thermo);
+        m_kdata = new InterfaceKineticsData;
+        m_kdata->m_temp = 0.0;
     }
-    for (int i = 0; i < m_ii; i++) {
-      delete m_rxnPhaseIsReactant[i];
-      delete  m_rxnPhaseIsProduct[i];
+
+    /**
+     * Destructor
+     */
+    InterfaceKinetics::
+    ~InterfaceKinetics(){
+        delete m_kdata;
+	if (m_integrator) {
+	  delete m_integrator; 
+	}
     }
-  }
-  //====================================================================================================================
+
   //  Copy Constructor for the %InterfaceKinetics object.
   /*
    * Currently, this is not fully implemented. If called it will
@@ -90,20 +78,9 @@ namespace Cantera {
     m_nrev(0),
     m_surf(0),
     m_integrator(0),
-    m_beta(0),
-    m_ctrxn(0),
-    m_ctrxn_ecdf(0),
-    m_StandardConc(0),
-    m_deltaG0(0),
-    m_ProdStanConcReac(0),
     m_finalized(false),
     m_has_coverage_dependence(false),
     m_has_electrochem_rxns(false),
-    m_has_exchange_current_density_formulation(false),
-    m_phaseExistsCheck(false),
-    m_phaseExists(0),
-    m_rxnPhaseIsReactant(0),
-    m_rxnPhaseIsProduct(0),
     m_ioFlag(0)
   {  
     m_kdata = new InterfaceKineticsData;
@@ -113,7 +90,7 @@ namespace Cantera {
      */
     *this = operator=(right);
   }
-  //====================================================================================================================  
+  
   // Assignment operator
   /*
    *  This is NOT a virtual function.
@@ -123,20 +100,12 @@ namespace Cantera {
    */
   InterfaceKinetics& InterfaceKinetics::
   operator=(const InterfaceKinetics &right) {
-    int i;
     /*
      * Check for self assignment.
      */
     if (this == &right) return *this;
 
-    for (i = 0; i < m_ii; i++) {
-      delete (m_rxnPhaseIsReactant[i]);
-      delete (m_rxnPhaseIsProduct[i]);
-    }
-
     Kinetics::operator=(right);
-
-    
 
     m_kk                   = right.m_kk;
     m_revindex             = right.m_revindex;
@@ -160,58 +129,17 @@ namespace Cantera {
     m_integrator           = right.m_integrator;  //DANGER - shallow copy
     m_beta                 = right.m_beta;
     m_ctrxn                = right.m_ctrxn;
-    m_ctrxn_ecdf           = right.m_ctrxn_ecdf;
-    m_StandardConc         = right.m_StandardConc;
-    m_deltaG0              = right.m_deltaG0;
-    m_ProdStanConcReac     = right.m_ProdStanConcReac;
     m_finalized            = right.m_finalized;
     m_has_coverage_dependence = right.m_has_coverage_dependence;
     m_has_electrochem_rxns = right.m_has_electrochem_rxns;
-    m_has_exchange_current_density_formulation = right.m_has_exchange_current_density_formulation;
-    m_phaseExistsCheck     = right.m_phaseExistsCheck;
-    m_phaseExists          = right.m_phaseExists;
-
-
-    m_rxnPhaseIsReactant.resize(m_ii, 0);
-    m_rxnPhaseIsProduct.resize(m_ii, 0);
-    int np = nPhases();
-    for (i = 0; i < m_ii; i++) {
-      m_rxnPhaseIsReactant[i] = new bool[np];
-      m_rxnPhaseIsProduct[i] = new bool[np];
-      for (int p = 0; p < np; p++) {
-	m_rxnPhaseIsReactant[i][p] = right.m_rxnPhaseIsReactant[i][p];
-	m_rxnPhaseIsProduct[i][p] = right.m_rxnPhaseIsProduct[i][p];  
-      }
-    }
-
-    m_rxnPhaseIsProduct    = right.m_rxnPhaseIsProduct;
-    
     m_ioFlag               = right.m_ioFlag;
 
     return *this;
   }
-  //====================================================================================================================
-  // Return the ID of the kinetics object
-  int  InterfaceKinetics::ID() const { 
-      return cInterfaceKinetics;
-    }
-  //====================================================================================================================
-  int InterfaceKinetics::type() const {
-    return cInterfaceKinetics; 
-  }
-  //====================================================================================================================
-  // Set the electric potential in the nth phase
-  /*
-   * @param n phase Index in this kinetics object.
-   * @param V Electric potential (volts)
-   */
-  void InterfaceKinetics::setElectricPotential(int n, doublereal V) {
-    thermo(n).setElectricPotential(V);
-    m_redo_rates = true;
-  }
 
-  //====================================================================================================================
-  // Duplication routine for objects which inherit from Kinetics
+
+  // Duplication routine for objects which inherit from
+  // Kinetics
   /*
    *  This virtual routine can be used to duplicate %Kinetics objects
    *  inherited from %Kinetics even if the application only has
@@ -224,52 +152,43 @@ namespace Cantera {
     InterfaceKinetics* tp = new InterfaceKinetics(*this);
     return dynamic_cast<Kinetics *>(tp);
   }
-  //====================================================================================================================
-  // Update properties that depend on temperature
-  /*
-   *  This is called to update all of the properties that depend on temperature
-   *
-   *  Current objects that this function updates
-   *       m_kdata->m_logtemp 
-   *       m_kdata->m_rfn
-   *       m_rates.
-   *       updateKc();
-   */
-  void InterfaceKinetics::_update_rates_T() {
-    _update_rates_phi();
-    if (m_has_coverage_dependence) {
-      m_surf->getCoverages(DATA_PTR(m_conc));
-      m_rates.update_C(DATA_PTR(m_conc));
-      m_redo_rates = true;
+
+
+    /**
+     * Update properties that depend on temperature
+     *
+     */ 
+    void InterfaceKinetics::
+    _update_rates_T() {
+        _update_rates_phi();
+        if (m_has_coverage_dependence) {
+            m_surf->getCoverages(DATA_PTR(m_conc));
+            m_rates.update_C(DATA_PTR(m_conc));
+            m_redo_rates = true;
+        }
+        doublereal T = thermo(surfacePhaseIndex()).temperature();
+        if (T != m_kdata->m_temp || m_redo_rates) {
+            m_kdata->m_logtemp = log(T);
+            m_rates.update(T, m_kdata->m_logtemp, DATA_PTR(m_kdata->m_rfn));
+            if (m_has_electrochem_rxns)
+                applyButlerVolmerCorrection(DATA_PTR(m_kdata->m_rfn));
+            m_kdata->m_temp = T;
+            updateKc();
+            m_kdata->m_ROP_ok = false;
+            m_redo_rates = false;
+        }
     }
-    doublereal T = thermo(surfacePhaseIndex()).temperature();
-    m_redo_rates = true;
-    if (T != m_kdata->m_temp || m_redo_rates) {
-      m_kdata->m_logtemp = log(T);
-      m_rates.update(T, m_kdata->m_logtemp, DATA_PTR(m_kdata->m_rfn));
-      if (m_has_exchange_current_density_formulation) {
-	applyExchangeCurrentDensityFormulation(DATA_PTR(m_kdata->m_rfn));
-      }
-      if (m_has_electrochem_rxns) {
-	applyButlerVolmerCorrection(DATA_PTR(m_kdata->m_rfn));
-      }
-      m_kdata->m_temp = T;
-      updateKc();
-      m_kdata->m_ROP_ok = false;
-      m_redo_rates = false;
+
+    void InterfaceKinetics::
+    _update_rates_phi() {
+        int np = nPhases();
+        for (int n = 0; n < np; n++) {
+            if (thermo(n).electricPotential() != m_phi[n]) {
+                m_phi[n] = thermo(n).electricPotential();
+                m_redo_rates = true;
+            }
+        }
     }
-  }
-  //====================================================================================================================
-  void InterfaceKinetics::_update_rates_phi() {
-    int np = nPhases();
-    for (int n = 0; n < np; n++) {
-      if (thermo(n).electricPotential() != m_phi[n]) {
-	m_phi[n] = thermo(n).electricPotential();
-	m_redo_rates = true;
-      }
-    }
-  }
-  //====================================================================================================================
 
 
   /**
@@ -279,7 +198,8 @@ namespace Cantera {
    * representing phases should overload to return the appropriate
    * quantities.
    */ 
-  void InterfaceKinetics::_update_rates_C() {
+  void InterfaceKinetics::
+  _update_rates_C() {
     int n;
 
     int np = nPhases();
@@ -343,112 +263,80 @@ namespace Cantera {
       }
     }
   }
-  //====================================================================================================================
 
 
+    void InterfaceKinetics::checkPartialEquil() {
+        int i, irxn;
+        vector_fp dmu(nTotalSpecies(), 0.0);
+        vector_fp rmu(nReactions(), 0.0);
+        vector_fp frop(nReactions(), 0.0);
+        vector_fp rrop(nReactions(), 0.0);
+        vector_fp netrop(nReactions(), 0.0);
+        if (m_nrev > 0) {
+            doublereal rt = GasConstant*thermo(0).temperature();
+            cout << "T = " << thermo(0).temperature() << " " << rt << endl;
+            int n, nsp, k, ik=0;
+            //doublereal rt = GasConstant*thermo(0).temperature();
+            //            doublereal rrt = 1.0/rt;
+            int np = nPhases();
+            doublereal delta;
+            for (n = 0; n < np; n++) {
+                thermo(n).getChemPotentials(DATA_PTR(dmu) + m_start[n]);
+                nsp = thermo(n).nSpecies();
+                for (k = 0; k < nsp; k++) {
+                    delta = Faraday * m_phi[n] * thermo(n).charge(k);
+                    //cout << thermo(n).speciesName(k) << "   " << (delta+dmu[ik])/rt << " " << dmu[ik]/rt << endl;
+                    dmu[ik] += delta;
+                    ik++;
+                }
+            }
 
-  void InterfaceKinetics::checkPartialEquil() {
-    int i, irxn;
-    vector_fp dmu(nTotalSpecies(), 0.0);
-    vector_fp rmu(nReactions(), 0.0);
-    vector_fp frop(nReactions(), 0.0);
-    vector_fp rrop(nReactions(), 0.0);
-    vector_fp netrop(nReactions(), 0.0);
-    if (m_nrev > 0) {
-      doublereal rt = GasConstant*thermo(0).temperature();
-      cout << "T = " << thermo(0).temperature() << " " << rt << endl;
-      int n, nsp, k, ik=0;
-      //doublereal rt = GasConstant*thermo(0).temperature();
-      //            doublereal rrt = 1.0/rt;
-      int np = nPhases();
-      doublereal delta;
-      for (n = 0; n < np; n++) {
-	thermo(n).getChemPotentials(DATA_PTR(dmu) + m_start[n]);
-	nsp = thermo(n).nSpecies();
-	for (k = 0; k < nsp; k++) {
-	  delta = Faraday * m_phi[n] * thermo(n).charge(k);
-	  //cout << thermo(n).speciesName(k) << "   " << (delta+dmu[ik])/rt << " " << dmu[ik]/rt << endl;
-	  dmu[ik] += delta;
-	  ik++;
-	}
-      }
-
-      // compute Delta mu^ for all reversible reactions
-      m_rxnstoich.getRevReactionDelta(m_ii, DATA_PTR(dmu), DATA_PTR(rmu));
-      getFwdRatesOfProgress(DATA_PTR(frop));
-      getRevRatesOfProgress(DATA_PTR(rrop));
-      getNetRatesOfProgress(DATA_PTR(netrop));
-      for (i = 0; i < m_nrev; i++) {
-	irxn = m_revindex[i];
-	cout << "Reaction " << reactionString(irxn) 
-	     << "  " << rmu[irxn]/rt << endl;
-	printf("%12.6e  %12.6e  %12.6e  %12.6e \n", 
-	       frop[irxn], rrop[irxn], netrop[irxn], 
-	       netrop[irxn]/(frop[irxn] + rrop[irxn]));
-      }
-    }
-  }
-
-
-  /**
-   * Get the equilibrium constants of all reactions, whether
-   * reversible or not.
-   */
-  void InterfaceKinetics::getEquilibriumConstants(doublereal* kc) {
-    int i;
-
-    int n, nsp, k, ik=0;
-    doublereal rt = GasConstant*thermo(0).temperature();
-    doublereal rrt = 1.0/rt;
-    int np = nPhases();
-    for (n = 0; n < np; n++) {
-      thermo(n).getStandardChemPotentials(DATA_PTR(m_mu0) + m_start[n]);
-      nsp = thermo(n).nSpecies();
-      for (k = 0; k < nsp; k++) {
-	m_mu0[ik] -= rt*thermo(n).logStandardConc(k);
-	m_mu0[ik] += Faraday * m_phi[n] * thermo(n).charge(k);
-	ik++;
-      }
+            // compute Delta mu^ for all reversible reactions
+            m_rxnstoich.getRevReactionDelta(m_ii, DATA_PTR(dmu), DATA_PTR(rmu));
+            getFwdRatesOfProgress(DATA_PTR(frop));
+            getRevRatesOfProgress(DATA_PTR(rrop));
+            getNetRatesOfProgress(DATA_PTR(netrop));
+            for (i = 0; i < m_nrev; i++) {
+                irxn = m_revindex[i];
+                cout << "Reaction " << reactionString(irxn) 
+                     << "  " << rmu[irxn]/rt << endl;
+                printf("%12.6e  %12.6e  %12.6e  %12.6e \n", 
+                    frop[irxn], rrop[irxn], netrop[irxn], 
+                    netrop[irxn]/(frop[irxn] + rrop[irxn]));
+            }
+        }
     }
 
-    fill(kc, kc + m_ii, 0.0);
 
-    m_rxnstoich.getReactionDelta(m_ii, DATA_PTR(m_mu0), kc);
-
-    for (i = 0; i < m_ii; i++) {
-      kc[i] = exp(-kc[i]*rrt);
-    }
-  }
-
-  void InterfaceKinetics::getExchangeCurrentQuantities() {
-    /*
-     * First collect vectors of the standard Gibbs free energies of the
-     * species and the standard concentrations
-     *   - m_mu0
-     *   - m_logStandardConc
+    /**
+     * Get the equilibrium constants of all reactions, whether
+     * reversible or not.
      */
-    int ik = 0;  
-    int np = nPhases();
+    void InterfaceKinetics::getEquilibriumConstants(doublereal* kc) {
+        int i;
 
-    for (int n = 0; n < np; n++) {
-      thermo(n).getStandardChemPotentials(DATA_PTR(m_mu0) + m_start[n]);
-      int nsp = thermo(n).nSpecies();
-      for (int k = 0; k < nsp; k++) {
-        m_StandardConc[ik] = thermo(n).standardConcentration(k);
-        ik++;
-      }
+        int n, nsp, k, ik=0;
+        doublereal rt = GasConstant*thermo(0).temperature();
+        doublereal rrt = 1.0/rt;
+        int np = nPhases();
+        for (n = 0; n < np; n++) {
+            thermo(n).getStandardChemPotentials(DATA_PTR(m_mu0) + m_start[n]);
+            nsp = thermo(n).nSpecies();
+            for (k = 0; k < nsp; k++) {
+                m_mu0[ik] -= rt*thermo(n).logStandardConc(k);
+                m_mu0[ik] += Faraday * m_phi[n] * thermo(n).charge(k);
+                ik++;
+            }
+        }
+
+        fill(kc, kc + m_ii, 0.0);
+
+        m_rxnstoich.getReactionDelta(m_ii, DATA_PTR(m_mu0), kc);
+
+        for (i = 0; i < m_ii; i++) {
+            kc[i] = exp(-kc[i]*rrt);
+        }
     }
-
-    m_rxnstoich.getReactionDelta(m_ii, DATA_PTR(m_mu0), DATA_PTR(m_deltaG0));
-
-    
-    for (int i = 0; i < m_ii; i++) {
-       m_ProdStanConcReac[i] = 1.0;
-    }
-
-    m_rxnstoich.multiplyReactants(DATA_PTR(m_StandardConc), DATA_PTR(m_ProdStanConcReac));
-
-  }
 
   // Returns the Species creation rates [kmol/m^2/s]. 
   /*
@@ -497,17 +385,12 @@ namespace Cantera {
 				      net);
   }
 
-  //====================================================================================================================
-  // Apply corrections for interfacial charge transfer reactions
-  /*
+  /**
    * For reactions that transfer charge across a potential difference,
    * the activation energies are modified by the potential difference.
    * (see, for example, ...). This method applies this correction.
-   *
-   * @param kf  Vector of forward reaction rate constants on which to have
-   *            the correction applied
    */
-  void InterfaceKinetics::applyButlerVolmerCorrection(doublereal* const kf) {
+  void InterfaceKinetics::applyButlerVolmerCorrection(doublereal* kf) {
     int i;
 
     int n, nsp, k, ik=0;
@@ -527,30 +410,23 @@ namespace Cantera {
     // Compute the change in electrical potential energy for each
     // reaction. This will only be non-zero if a potential
     // difference is present.
-    m_rxnstoich.getReactionDelta(m_ii, DATA_PTR(m_pot), DATA_PTR(m_rwork));
+    m_rxnstoich.getReactionDelta(m_ii, DATA_PTR(m_pot), 
+				 DATA_PTR(m_rwork));
 
     // Modify the reaction rates. Only modify those with a
-    // non-zero activation energy. Below we decrease the
-    // activation energy below zero but in some debug modes
-    // we print out a warning message about this. 
-    /*
-     *   NOTE, there is some discussion about this point.
-     *   Should we decrease the activiation energy below zero?
-     *   I don't think this has been decided in any definative way.
-     *   The treatment below is numerically more stable, however.
-     */
+    // non-zero activation energy, and do not decrease the
+    // activation energy below zero.
     doublereal eamod;
-#ifdef DEBUG_KIN_MODE
-    doublereal ea;
+#ifdef DEBUG_MODE
+    double ea;
 #endif
     int nct = m_beta.size();
     int irxn;
     for (i = 0; i < nct; i++) {
       irxn = m_ctrxn[i];
       eamod = m_beta[i]*m_rwork[irxn];
-      //  if (eamod != 0.0 && m_E[irxn] != 0.0) {
-      if (eamod != 0.0) {
-#ifdef DEBUG_KIN_MODE
+      if (eamod != 0.0 && m_E[irxn] != 0.0) {
+#ifdef DEBUG_MODE
 	ea = GasConstant * m_E[irxn];
 	if (eamod + ea < 0.0) {
 	  writelog("Warning: act energy mod too large!\n");
@@ -567,230 +443,165 @@ namespace Cantera {
       }
     }
   }
-  //====================================================================================================================
-  void InterfaceKinetics::applyExchangeCurrentDensityFormulation(doublereal* const kfwd) {
-    getExchangeCurrentQuantities();
-    int nct = m_ctrxn.size();
-    doublereal rt = GasConstant*thermo(0).temperature();
-    doublereal rrt = 1.0/rt;
-    for (int i = 0; i < nct; i++) {
-      int irxn = m_ctrxn[i];
-      int iECDFormulation =  m_ctrxn_ecdf[i];
-      if (iECDFormulation) {
-	double tmp = exp(- m_beta[i] * m_deltaG0[irxn] * rrt);
-	double tmp2 = m_ProdStanConcReac[irxn];
-	tmp *= 1.0  / tmp2 / Faraday;
-	kfwd[irxn] *= tmp;
-      }
-    }
 
 
-  }
-  //====================================================================================================================
-  /**
-   * Update the rates of progress of the reactions in the reaciton
-   * mechanism. This routine operates on internal data.
-   */
-  void InterfaceKinetics::getFwdRateConstants(doublereal* kfwd) {
 
-    updateROP();
 
-    const vector_fp& rf = m_kdata->m_rfn;
+    /**
+     * Update the rates of progress of the reactions in the reaciton
+     * mechanism. This routine operates on internal data.
+     */
+    void InterfaceKinetics::getFwdRateConstants(doublereal* kfwd) {
 
-    // copy rate coefficients into kfwd
-    copy(rf.begin(), rf.end(), kfwd);
+        _update_rates_T();
+        _update_rates_C();
 
-    // multiply by perturbation factor
-    multiply_each(kfwd, kfwd + nReactions(), m_perturb.begin());
+        const vector_fp& rf = m_kdata->m_rfn;
+
+        // copy rate coefficients into kfwd
+        copy(rf.begin(), rf.end(), kfwd);
+
+        // multiply by perturbation factor
+        multiply_each(kfwd, kfwd + nReactions(), m_perturb.begin());
            
-  }
-  //====================================================================================================================
-
-  /**
-   * Update the rates of progress of the reactions in the reaciton
-   * mechanism. This routine operates on internal data.
-   */
-  void InterfaceKinetics::getRevRateConstants(doublereal* krev, bool doIrreversible) {
-    getFwdRateConstants(krev);
-    if (doIrreversible) {
-      doublereal *tmpKc = DATA_PTR(m_kdata->m_ropnet);
-      getEquilibriumConstants(tmpKc);
-      for (int i = 0; i < m_ii; i++) {
-	krev[i] /=  tmpKc[i];
-      }
     }
-    else {
-      const vector_fp& rkc = m_kdata->m_rkcn;
-      multiply_each(krev, krev + nReactions(), rkc.begin());
+
+
+    /**
+     * Update the rates of progress of the reactions in the reaciton
+     * mechanism. This routine operates on internal data.
+     */
+    void InterfaceKinetics::getRevRateConstants(doublereal* krev, bool doIrreversible) {
+        getFwdRateConstants(krev);
+        if (doIrreversible) {
+            doublereal *tmpKc = DATA_PTR(m_kdata->m_ropnet);
+            getEquilibriumConstants(tmpKc);
+            for (int i = 0; i < m_ii; i++) {
+                krev[i] /=  tmpKc[i];
+            }
+        }
+        else {
+            const vector_fp& rkc = m_kdata->m_rkcn;
+            multiply_each(krev, krev + nReactions(), rkc.begin());
+        }
     }
-  }
-  //====================================================================================================================
 
-  void InterfaceKinetics::getActivationEnergies(doublereal *E) {
-    copy(m_E.begin(), m_E.end(), E);
-  }
- //====================================================================================================================
-  /**
-   * Update the rates of progress of the reactions in the reaction
-   * mechanism. This routine operates on internal data.
-   */
-  void InterfaceKinetics::updateROP() {
 
-    _update_rates_T();
-    _update_rates_C();
+    void InterfaceKinetics::getActivationEnergies(doublereal *E) {
+        copy(m_E.begin(), m_E.end(), E);
+    }
 
-    if (m_kdata->m_ROP_ok) return;
+    /**
+     * Update the rates of progress of the reactions in the reaciton
+     * mechanism. This routine operates on internal data.
+     */
+    void InterfaceKinetics::updateROP() {
 
-    const vector_fp& rf = m_kdata->m_rfn;
-    const vector_fp& m_rkc = m_kdata->m_rkcn;
-    array_fp& ropf = m_kdata->m_ropf;
-    array_fp& ropr = m_kdata->m_ropr;
-    array_fp& ropnet = m_kdata->m_ropnet;
+        _update_rates_T();
+        _update_rates_C();
 
-    // copy rate coefficients into ropf
-    copy(rf.begin(), rf.end(), ropf.begin());
+        if (m_kdata->m_ROP_ok) return;
 
-    // multiply by perturbation factor
-    multiply_each(ropf.begin(), ropf.end(), m_perturb.begin());
+        const vector_fp& rf = m_kdata->m_rfn;
+        const vector_fp& m_rkc = m_kdata->m_rkcn;
+        array_fp& ropf = m_kdata->m_ropf;
+        array_fp& ropr = m_kdata->m_ropr;
+        array_fp& ropnet = m_kdata->m_ropnet;
+
+        // copy rate coefficients into ropf
+        copy(rf.begin(), rf.end(), ropf.begin());
+
+        // multiply by perturbation factor
+        multiply_each(ropf.begin(), ropf.end(), m_perturb.begin());
            
-    // copy the forward rates to the reverse rates                
-    copy(ropf.begin(), ropf.end(), ropr.begin());
+        // copy the forward rates to the reverse rates                
+        copy(ropf.begin(), ropf.end(), ropr.begin());
         
-    // for reverse rates computed from thermochemistry, multiply
-    // the forward rates copied into m_ropr by the reciprocals of
-    // the equilibrium constants
-    multiply_each(ropr.begin(), ropr.end(), m_rkc.begin());
+        // for reverse rates computed from thermochemistry, multiply
+        // the forward rates copied into m_ropr by the reciprocals of
+        // the equilibrium constants
+        multiply_each(ropr.begin(), ropr.end(), m_rkc.begin());
 
-    // multiply ropf by concentration products
-    m_rxnstoich.multiplyReactants(DATA_PTR(m_conc), DATA_PTR(ropf)); 
-    //m_reactantStoich.multiply(m_conc.begin(), ropf.begin()); 
+        // multiply ropf by concentration products
+        m_rxnstoich.multiplyReactants(DATA_PTR(m_conc), DATA_PTR(ropf)); 
+        //m_reactantStoich.multiply(m_conc.begin(), ropf.begin()); 
 
-    // for reversible reactions, multiply ropr by concentration
-    // products
-    m_rxnstoich.multiplyRevProducts(DATA_PTR(m_conc), 
-				    DATA_PTR(ropr)); 
-    //m_revProductStoich.multiply(m_conc.begin(), ropr.begin());
+        // for reversible reactions, multiply ropr by concentration
+        // products
+        m_rxnstoich.multiplyRevProducts(DATA_PTR(m_conc), 
+            DATA_PTR(ropr)); 
+        //m_revProductStoich.multiply(m_conc.begin(), ropr.begin());
 
-    // do global reactions
-    //m_globalReactantStoich.power(m_conc.begin(), ropf.begin());
+        // do global reactions
+        //m_globalReactantStoich.power(m_conc.begin(), ropf.begin());
 
-    for (int j = 0; j != m_ii; ++j) {
-      ropnet[j] = ropf[j] - ropr[j];
-    }  
+        for (int j = 0; j != m_ii; ++j) {
+            ropnet[j] = ropf[j] - ropr[j];
+        }        
 
-
-    /*
-     *  For reactions involving multiple phases, we must check that the phase
-     *  being consumed actually exists. This is particularly important for 
-     *  phases that are stoichiometric phases containing one species with a unity activity
-     */
-    if (m_phaseExistsCheck) {
-      for (int j = 0; j != m_ii; ++j) {
-	if ((ropr[j] >  ropf[j]) && (ropr[j] > 0.0)) {
-	  for (int p = 0; p < nPhases(); p++) {
-	    if (m_rxnPhaseIsProduct[j][p]) {
-	      if (! m_phaseExists[p]) {
-		ropnet[j] = 0.0;
-		ropr[j] = ropf[j];
-		if (ropf[j] > 0.0) {
-		  for (int rp = 0; rp < nPhases(); rp++) {
-		    if (m_rxnPhaseIsReactant[j][rp]) {
-		      if (! m_phaseExists[rp]) {
-			ropnet[j] = 0.0;
-			ropr[j] = ropf[j] = 0.0;;
-		      }
-		    }
-		  }
-		}
-	      }
-	    }
-	  }
-	} else if ((ropf[j] > ropr[j]) && (ropf[j] > 0.0)) {
-	  for (int p = 0; p < nPhases(); p++) {
-	    if (m_rxnPhaseIsReactant[j][p]) {
-	      if (! m_phaseExists[p]) {
-		ropnet[j] = 0.0;
-		ropf[j] = ropr[j];     
-		if (ropf[j] > 0.0) {
-		  for (int rp = 0; rp < nPhases(); rp++) {
-		    if (m_rxnPhaseIsProduct[j][rp]) {
-		      if (! m_phaseExists[rp]) {
-			ropnet[j] = 0.0;
-			ropf[j] = ropr[j] = 0.0;
-		      }
-		    }
-		  }
-		}
-	      }
-	    }
-	  }
-	}
-      }
+        m_kdata->m_ROP_ok = true;
     }
 
-    m_kdata->m_ROP_ok = true;
-  }
 
-
-  /**
-   *
-   * getDeltaGibbs():
-   *
-   * Return the vector of values for the reaction gibbs free energy
-   * change
-   * These values depend upon the concentration
-   * of the ideal gas.
-   *
-   *  units = J kmol-1
-   */
-  void InterfaceKinetics::getDeltaGibbs(doublereal* deltaG) {
-    /*
-     * Get the chemical potentials of the species in the 
-     * ideal gas solution.
+    /**
+     *
+     * getDeltaGibbs():
+     *
+     * Return the vector of values for the reaction gibbs free energy
+     * change
+     * These values depend upon the concentration
+     * of the ideal gas.
+     *
+     *  units = J kmol-1
      */
-    int np = nPhases();
-    int n;
-    for (n = 0; n < np; n++) {
-      thermo(n).getChemPotentials(DATA_PTR(m_grt) + m_start[n]);
+    void InterfaceKinetics::getDeltaGibbs(doublereal* deltaG) {
+	/*
+	 * Get the chemical potentials of the species in the 
+	 * ideal gas solution.
+	 */
+        int np = nPhases();
+        int n;
+        for (n = 0; n < np; n++) {
+            thermo(n).getChemPotentials(DATA_PTR(m_grt) + m_start[n]);
+        }
+        //for (n = 0; n < m_grt.size(); n++) {
+        //    cout << n << "G_RT = " << m_grt[n] << endl;
+        //}
+
+	/*
+	 * Use the stoichiometric manager to find deltaG for each
+	 * reaction.
+	 */
+	m_rxnstoich.getReactionDelta(m_ii, DATA_PTR(m_grt), deltaG);
     }
-    //for (n = 0; n < m_grt.size(); n++) {
-    //    cout << n << "G_RT = " << m_grt[n] << endl;
-    //}
-
-    /*
-     * Use the stoichiometric manager to find deltaG for each
-     * reaction.
-     */
-    m_rxnstoich.getReactionDelta(m_ii, DATA_PTR(m_grt), deltaG);
-  }
     
-  /**
-   *
-   * getDeltaEnthalpy():
-   * 
-   * Return the vector of values for the reactions change in
-   * enthalpy.
-   * These values depend upon the concentration
-   * of the solution.
-   *
-   *  units = J kmol-1
-   */
-  void InterfaceKinetics::getDeltaEnthalpy(doublereal* deltaH) {
-    /*
-     * Get the partial molar enthalpy of all species in the 
-     * ideal gas.
+    /**
+     *
+     * getDeltaEnthalpy():
+     * 
+     * Return the vector of values for the reactions change in
+     * enthalpy.
+     * These values depend upon the concentration
+     * of the solution.
+     *
+     *  units = J kmol-1
      */
-    int np = nPhases();
-    int n;
-    for (n = 0; n < np; n++) {
-      thermo(n).getPartialMolarEnthalpies(DATA_PTR(m_grt) + m_start[n]);
+    void InterfaceKinetics::getDeltaEnthalpy(doublereal* deltaH) {
+	/*
+	 * Get the partial molar enthalpy of all species in the 
+	 * ideal gas.
+	 */
+        int np = nPhases();
+        int n;
+        for (n = 0; n < np; n++) {
+            thermo(n).getPartialMolarEnthalpies(DATA_PTR(m_grt) + m_start[n]);
+        }
+	/*
+	 * Use the stoichiometric manager to find deltaG for each
+	 * reaction.
+	 */
+	m_rxnstoich.getReactionDelta(m_ii, DATA_PTR(m_grt), deltaH);
     }
-    /*
-     * Use the stoichiometric manager to find deltaG for each
-     * reaction.
-     */
-    m_rxnstoich.getReactionDelta(m_ii, DATA_PTR(m_grt), deltaH);
-  }
 
    
   // Return the vector of values for the change in
@@ -822,189 +633,161 @@ namespace Cantera {
     m_rxnstoich.getReactionDelta(m_ii, DATA_PTR(m_grt), deltaS);
   }
 
-  /**
-   *
-   * getDeltaSSGibbs():
-   *
-   * Return the vector of values for the reaction 
-   * standard state gibbs free energy change.
-   * These values don't depend upon the concentration
-   * of the solution.
-   *
-   *  units = J kmol-1
-   */
-  void InterfaceKinetics::getDeltaSSGibbs(doublereal* deltaG) {
-    /*
-     *  Get the standard state chemical potentials of the species.
-     *  This is the array of chemical potentials at unit activity 
-     *  We define these here as the chemical potentials of the pure
-     *  species at the temperature and pressure of the solution.
+    /**
+     *
+     * getDeltaSSGibbs():
+     *
+     * Return the vector of values for the reaction 
+     * standard state gibbs free energy change.
+     * These values don't depend upon the concentration
+     * of the solution.
+     *
+     *  units = J kmol-1
      */
-    int np = nPhases();
-    int n;
-    for (n = 0; n < np; n++) {
-      thermo(n).getStandardChemPotentials(DATA_PTR(m_grt) + m_start[n]);
+    void InterfaceKinetics::getDeltaSSGibbs(doublereal* deltaG) {
+	/*
+	 *  Get the standard state chemical potentials of the species.
+         *  This is the array of chemical potentials at unit activity 
+	 *  We define these here as the chemical potentials of the pure
+	 *  species at the temperature and pressure of the solution.
+	 */
+        int np = nPhases();
+        int n;
+        for (n = 0; n < np; n++) {
+            thermo(n).getStandardChemPotentials(DATA_PTR(m_grt) + m_start[n]);
+        }
+	/*
+	 * Use the stoichiometric manager to find deltaG for each
+	 * reaction.
+	 */
+	m_rxnstoich.getReactionDelta(m_ii, DATA_PTR(m_grt), deltaG);
     }
-    /*
-     * Use the stoichiometric manager to find deltaG for each
-     * reaction.
+
+    /**
+     *
+     * getDeltaSSEnthalpy():
+     *
+     * Return the vector of values for the change in the
+     * standard state enthalpies of reaction.
+     * These values don't depend upon the concentration
+     * of the solution.
+     *
+     *  units = J kmol-1
      */
-    m_rxnstoich.getReactionDelta(m_ii, DATA_PTR(m_grt), deltaG);
-  }
+    void InterfaceKinetics::getDeltaSSEnthalpy(doublereal* deltaH) {
+	/*
+	 *  Get the standard state enthalpies of the species.
+         *  This is the array of chemical potentials at unit activity 
+	 *  We define these here as the enthalpies of the pure
+	 *  species at the temperature and pressure of the solution.
+	 */
+        int np = nPhases();
+        int n;
+        for (n = 0; n < np; n++) {
+            thermo(n).getEnthalpy_RT(DATA_PTR(m_grt) + m_start[n]);
+        }
+	doublereal RT = thermo().temperature() * GasConstant;
+	for (int k = 0; k < m_kk; k++) {
+	  m_grt[k] *= RT;
+	}
+	/*
+	 * Use the stoichiometric manager to find deltaG for each
+	 * reaction.
+	 */
+	m_rxnstoich.getReactionDelta(m_ii, DATA_PTR(m_grt), deltaH);
+    }
 
-  /**
-   *
-   * getDeltaSSEnthalpy():
-   *
-   * Return the vector of values for the change in the
-   * standard state enthalpies of reaction.
-   * These values don't depend upon the concentration
-   * of the solution.
-   *
-   *  units = J kmol-1
-   */
-  void InterfaceKinetics::getDeltaSSEnthalpy(doublereal* deltaH) {
-    /*
-     *  Get the standard state enthalpies of the species.
-     *  This is the array of chemical potentials at unit activity 
-     *  We define these here as the enthalpies of the pure
-     *  species at the temperature and pressure of the solution.
+    /*********************************************************************
+     *
+     * getDeltaSSEntropy():
+     *
+     * Return the vector of values for the change in the
+     * standard state entropies for each reaction.
+     * These values don't depend upon the concentration
+     * of the solution.
+     *
+     *  units = J kmol-1 Kelvin-1
      */
-    int np = nPhases();
-    int n;
-    for (n = 0; n < np; n++) {
-      thermo(n).getEnthalpy_RT(DATA_PTR(m_grt) + m_start[n]);
+    void InterfaceKinetics::getDeltaSSEntropy(doublereal* deltaS) {
+	/*
+	 *  Get the standard state entropy of the species.
+	 *  We define these here as the entropies of the pure
+	 *  species at the temperature and pressure of the solution.
+	 */
+        int np = nPhases();
+        int n;
+        for (n = 0; n < np; n++) {
+            thermo(n).getEntropy_R(DATA_PTR(m_grt) + m_start[n]);
+        }
+	doublereal R = GasConstant;
+	for (int k = 0; k < m_kk; k++) {
+	  m_grt[k] *= R;
+	}
+	/*
+	 * Use the stoichiometric manager to find deltaS for each
+	 * reaction.
+	 */
+	m_rxnstoich.getReactionDelta(m_ii, DATA_PTR(m_grt), deltaS);
     }
-    doublereal RT = thermo().temperature() * GasConstant;
-    for (int k = 0; k < m_kk; k++) {
-      m_grt[k] *= RT;
-    }
-    /*
-     * Use the stoichiometric manager to find deltaG for each
-     * reaction.
+
+
+    /**
+     * Add a single reaction to the mechanism. This routine
+     * must be called after init() and before finalize().
+     * This function branches on the types of reactions allowed
+     * by the interfaceKinetics manager in order to install
+     * the reaction correctly in the manager.
+     * The manager allows the following reaction types
+     *  Elementary
+     *  Surface
+     *  Global  
+     * There is no difference between elementary and surface 
+     * reactions.
      */
-    m_rxnstoich.getReactionDelta(m_ii, DATA_PTR(m_grt), deltaH);
-  }
+    void InterfaceKinetics::
+    addReaction(const ReactionData& r) {
 
-  /*********************************************************************
-   *
-   * getDeltaSSEntropy():
-   *
-   * Return the vector of values for the change in the
-   * standard state entropies for each reaction.
-   * These values don't depend upon the concentration
-   * of the solution.
-   *
-   *  units = J kmol-1 Kelvin-1
-   */
-  void InterfaceKinetics::getDeltaSSEntropy(doublereal* deltaS) {
-    /*
-     *  Get the standard state entropy of the species.
-     *  We define these here as the entropies of the pure
-     *  species at the temperature and pressure of the solution.
-     */
-    int np = nPhases();
-    int n;
-    for (n = 0; n < np; n++) {
-      thermo(n).getEntropy_R(DATA_PTR(m_grt) + m_start[n]);
-    }
-    doublereal R = GasConstant;
-    for (int k = 0; k < m_kk; k++) {
-      m_grt[k] *= R;
-    }
-    /*
-     * Use the stoichiometric manager to find deltaS for each
-     * reaction.
-     */
-    m_rxnstoich.getReactionDelta(m_ii, DATA_PTR(m_grt), deltaS);
-  }
+        addElementaryReaction(r);
 
-  //====================================================================================================================
-  /**
-   * Add a single reaction to the mechanism. This routine
-   * must be called after init() and before finalize().
-   * This function branches on the types of reactions allowed
-   * by the interfaceKinetics manager in order to install
-   * the reaction correctly in the manager.
-   * The manager allows the following reaction types
-   *  Elementary
-   *  Surface
-   *  Global  
-   * There is no difference between elementary and surface 
-   * reactions.
-   */
-  void InterfaceKinetics::addReaction(const ReactionData& r) {
-
-    addElementaryReaction(r);
-
-    // operations common to all reaction types
-    installReagents(r);
-    //installGroups(reactionNumber(), r.rgroups, r.pgroups);
-    incrementRxnCount();
-    m_rxneqn.push_back(r.equation);
-
-    m_rxnPhaseIsReactant.resize(m_ii, 0);
-    m_rxnPhaseIsProduct.resize(m_ii, 0);
- 
-    int np = nPhases(); 
-    int i = m_ii -1;
-    m_rxnPhaseIsReactant[i] = new bool[np];
-    m_rxnPhaseIsProduct[i] = new bool[np];
-
-    for (int p = 0; p < np; p++) {
-      m_rxnPhaseIsReactant[i][p] = false;
-      m_rxnPhaseIsProduct[i][p] = false;
+        // operations common to all reaction types
+        installReagents( r );
+        //installGroups(reactionNumber(), r.rgroups, r.pgroups);
+        incrementRxnCount();
+        m_rxneqn.push_back(r.equation);
     }
 
-    const vector_int& vr = reactants(i);
-    for (int ik = 0; ik < (int) vr.size(); ik++) {
-      int k = vr[ik];
-      int p = speciesPhaseIndex(k);
-      m_rxnPhaseIsReactant[i][p] = true;
-    }
-    const vector_int& vp = products(i);
-    for (int ik = 0; ik < (int) vp.size(); ik++) {
-      int k = vp[ik];
-      int p = speciesPhaseIndex(k);
-      m_rxnPhaseIsProduct[i][p] = true;
-    }
- }
-  //====================================================================================================================
-  void InterfaceKinetics::addElementaryReaction(const ReactionData& r) {
-    int iloc;
 
-    // install rate coeff calculator
+    void InterfaceKinetics::
+    addElementaryReaction(const ReactionData& r) {
+        int iloc;
 
-    vector_fp rp = r.rateCoeffParameters;
-    int ncov = r.cov.size();
-    if (ncov > 3) {
-      m_has_coverage_dependence = true;
-    }
-    for (int m = 0; m < ncov; m++) {
-      rp.push_back(r.cov[m]);
-    }
-    //    iloc = m_rates.install(reactionNumber(), r.rateCoeffType, rp.size(), DATA_PTR(rp));
-    iloc = m_rates.install(reactionNumber(), ARRHENIUS_REACTION_RATECOEFF_TYPE, rp.size(), DATA_PTR(rp));
-    // store activation energy
-    m_E.push_back(r.rateCoeffParameters[2]);
+        // install rate coeff calculator
 
-    if (r.beta > 0.0) {
-      m_has_electrochem_rxns = true;
-      m_beta.push_back(r.beta);
-      m_ctrxn.push_back(reactionNumber());
-      if (r.rateCoeffType == EXCHANGE_CURRENT_REACTION_RATECOEFF_TYPE) {
-	m_has_exchange_current_density_formulation = true;
-	m_ctrxn_ecdf.push_back(1);
-      } else {
-	m_ctrxn_ecdf.push_back(0);
-      }
+        vector_fp rp = r.rateCoeffParameters;
+        int ncov = r.cov.size();
+        if (ncov > 3) {
+            m_has_coverage_dependence = true;
+        }
+        for (int m = 0; m < ncov; m++) rp.push_back(r.cov[m]);
+
+        iloc = m_rates.install( reactionNumber(),
+				r.rateCoeffType, rp.size(), 
+				DATA_PTR(rp) );
+
+        // store activation energy
+        m_E.push_back(r.rateCoeffParameters[2]);
+
+        if (r.beta > 0.0) {
+            m_has_electrochem_rxns = true;
+            m_beta.push_back(r.beta);
+            m_ctrxn.push_back(reactionNumber());
+        }
+
+        // add constant term to rate coeff value vector
+        m_kdata->m_rfn.push_back(r.rateCoeffParameters[0]);                
+        registerReaction( reactionNumber(), ELEMENTARY_RXN, iloc);
     }
 
-    // add constant term to rate coeff value vector
-    m_kdata->m_rfn.push_back(r.rateCoeffParameters[0]);                
-    registerReaction( reactionNumber(), ELEMENTARY_RXN, iloc);
-  }
-  //====================================================================================================================
 
   void InterfaceKinetics::setIOFlag(int ioFlag) {
     m_ioFlag = ioFlag;
@@ -1013,32 +796,32 @@ namespace Cantera {
     }
   }
 
-  //     void InterfaceKinetics::
-  //     addGlobalReaction(const ReactionData& r) {
+//     void InterfaceKinetics::
+//     addGlobalReaction(const ReactionData& r) {
             
-  //         int iloc;
-  //         // install rate coeff calculator
-  //         vector_fp rp = r.rateCoeffParameters;
-  //         int ncov = r.cov.size();
-  //         for (int m = 0; m < ncov; m++) rp.push_back(r.cov[m]);
-  //         iloc = m_rates.install( reactionNumber(),
-  //             r.rateCoeffType, rp.size(),
-  //             rp.begin() );
-  //         // store activation energy
-  //         m_E.push_back(r.rateCoeffParameters[2]);
-  //         // add constant term to rate coeff value vector
-  //         m_kdata->m_rfn.push_back(r.rateCoeffParameters[0]);
+//         int iloc;
+//         // install rate coeff calculator
+//         vector_fp rp = r.rateCoeffParameters;
+//         int ncov = r.cov.size();
+//         for (int m = 0; m < ncov; m++) rp.push_back(r.cov[m]);
+//         iloc = m_rates.install( reactionNumber(),
+//             r.rateCoeffType, rp.size(),
+//             rp.begin() );
+//         // store activation energy
+//         m_E.push_back(r.rateCoeffParameters[2]);
+//         // add constant term to rate coeff value vector
+//         m_kdata->m_rfn.push_back(r.rateCoeffParameters[0]);
 
-  //         int nr = r.order.size();
-  //         vector_fp ordr(nr);
-  //         for (int n = 0; n < nr; n++) {
-  //             ordr[n] = r.order[n] - r.rstoich[n];
-  //         }
-  //         m_globalReactantStoich.add( reactionNumber(),
-  //             r.reactants, ordr);
+//         int nr = r.order.size();
+//         vector_fp ordr(nr);
+//         for (int n = 0; n < nr; n++) {
+//             ordr[n] = r.order[n] - r.rstoich[n];
+//         }
+//         m_globalReactantStoich.add( reactionNumber(),
+//             r.reactants, ordr);
 
-  //         registerReaction( reactionNumber(), GLOBAL_RXN, iloc);
-  //     }
+//         registerReaction( reactionNumber(), GLOBAL_RXN, iloc);
+//     }
 
         
   void InterfaceKinetics::installReagents(const ReactionData& r) {
@@ -1121,7 +904,7 @@ namespace Cantera {
      * calculates rates of species production from reaction rates of 
      * progress.
      */
-    m_rxnstoich.add(reactionNumber(), r);
+    m_rxnstoich.add( reactionNumber(), r);
     /*
      * register reaction in lists of reversible and irreversible rxns.
      */
@@ -1129,72 +912,56 @@ namespace Cantera {
       m_revindex.push_back(reactionNumber());
       m_nrev++;
     } else {
-      m_irrev.push_back(reactionNumber());
+      m_irrev.push_back( reactionNumber() );
       m_nirrev++;
     }        
   }
-  //===============================================================================================
-  void InterfaceKinetics::addPhase(thermo_t &thermo) {
-    Kinetics::addPhase(thermo);
-    m_phaseExists.push_back(true);
-  }
-  //================================================================================================
-  /**
-   * Prepare the class for the addition of reactions. This function
-   * must be called after instantiation of the class, but before
-   * any reactions are actually added to the mechanism.
-   * This function calculates m_kk the number of species in all
-   * phases participating in the reaction mechanism. We don't know
-   * m_kk previously, before all phases have been added. 
-   */
-  void InterfaceKinetics::init() {
-    int n;
-    m_kk = 0;
-    int np = nPhases();
-    for (n = 0; n < np; n++) {
-      m_kk += thermo(n).nSpecies();
-    }
-    m_rrxn.resize(m_kk);
-    m_prxn.resize(m_kk);
-    m_conc.resize(m_kk);
-    m_mu0.resize(m_kk);
-    m_grt.resize(m_kk);
-    m_pot.resize(m_kk, 0.0);
-    m_phi.resize(np, 0.0);
-  }
-  //================================================================================================
-  /**
-   * Finish adding reactions and prepare for use. This function
-   * must be called after all reactions are entered into the mechanism
-   * and before the mechanism is used to calculate reaction rates.
-   *
-   * Here, we resize work arrays based on the number of reactions,
-   * since we don't know this number up to now.
-   */
-  void InterfaceKinetics::finalize() {
-    Kinetics::finalize();
-    m_rwork.resize(nReactions());
-    int ks = reactionPhaseIndex();
-    if (ks < 0) throw CanteraError("InterfaceKinetics::finalize",
-				   "no surface phase is present.");
-    m_surf = (SurfPhase*)&thermo(ks);
-    if (m_surf->nDim() != 2) 
-      throw CanteraError("InterfaceKinetics::finalize",
-			 "expected interface dimension = 2, but got dimension = "
-			 +int2str(m_surf->nDim()));
 
-
-
-    m_StandardConc.resize(m_nTotalSpecies, 0.0);
-    m_deltaG0.resize(m_ii, 0.0);
-    m_ProdStanConcReac.resize(m_ii, 0.0);
-
-    if (m_thermo.size() != m_phaseExists.size()) {
-      throw CanteraError("InterfaceKinetics::finalize", "internal error");
+    /**
+     * Prepare the class for the addition of reactions. This function
+     * must be called after instantiation of the class, but before
+     * any reactions are actually added to the mechanism.
+     * This function calculates m_kk the number of species in all
+     * phases participating in the reaction mechanism. We don't know
+     * m_kk previously, before all phases have been added. 
+     */
+    void InterfaceKinetics::init() {
+        int n;
+        m_kk = 0;
+        int np = nPhases();
+        for (n = 0; n < np; n++) {
+            m_kk += thermo(n).nSpecies();
+        }
+        m_rrxn.resize(m_kk);
+        m_prxn.resize(m_kk);
+        m_conc.resize(m_kk);
+        m_mu0.resize(m_kk);
+        m_grt.resize(m_kk);
+        m_pot.resize(m_kk, 0.0);
+        m_phi.resize(np, 0.0);
     }
 
-    m_finalized = true;
-  }
+    /**
+     * Finish adding reactions and prepare for use. This function
+     * must be called after all reactions are entered into the mechanism
+     * and before the mechanism is used to calculate reaction rates.
+     *
+     * Here, we resize work arrays based on the number of reactions,
+     * since we don't know this number up to now.
+     */
+    void InterfaceKinetics::finalize() {
+        m_rwork.resize(nReactions());
+        int ks = reactionPhaseIndex();
+        if (ks < 0) throw CanteraError("InterfaceKinetics::finalize",
+             "no surface phase is present.");
+        m_surf = (SurfPhase*)&thermo(ks);
+        if (m_surf->nDim() != 2) 
+            throw CanteraError("InterfaceKinetics::finalize",
+                "expected interface dimension = 2, but got dimension = "
+                +int2str(m_surf->nDim()));
+        m_finalized = true;
+    }
+
 
   doublereal InterfaceKinetics::electrochem_beta(int irxn) const{
     int n = m_ctrxn.size();
@@ -1207,10 +974,10 @@ namespace Cantera {
   }
 
 
-  bool InterfaceKinetics::ready() const {
-    return (m_finalized);
-  }
-  //================================================================================================
+    bool InterfaceKinetics::ready() const {
+        return (m_finalized);
+    }
+
   // Advance the surface coverages in time
   /*
    * @param tstep  Time value to advance the surface coverages
@@ -1227,7 +994,7 @@ namespace Cantera {
     delete m_integrator;
     m_integrator = 0;
   }
-  //================================================================================================
+
   // Solve for the pseudo steady-state of the surface problem
   /*
    * Solve for the steady state of the surface problem.
@@ -1256,25 +1023,7 @@ namespace Cantera {
      */
     m_integrator->solvePseudoSteadyStateProblem(ifuncOverride, timeScaleOverride);
   }
-  //================================================================================================
 
-  void InterfaceKinetics::setPhaseExistence(const int iphase, const bool exists) {
-    if (iphase < 0 || iphase >= (int) m_thermo.size()) {
-      throw CanteraError("InterfaceKinetics:setPhaseExistence", "out of bounds");
-    }
-    if (exists) {
-      if (!m_phaseExists[iphase]) {
-	m_phaseExistsCheck--;
-	m_phaseExists[iphase] = true;
-      }
-    } else {
-      if (m_phaseExists[iphase]) {
-	m_phaseExistsCheck++;
-	m_phaseExists[iphase] = false;
-      }
-    }
-  }
-  //================================================================================================
   void EdgeKinetics::finalize() {
     m_rwork.resize(nReactions());
     int ks = reactionPhaseIndex();
@@ -1286,8 +1035,7 @@ namespace Cantera {
 			 "expected interface dimension = 1, but got dimension = "
 			 +int2str(m_surf->nDim()));
     m_finalized = true;
-  } 
-  //================================================================================================
+  }
 }
 
 

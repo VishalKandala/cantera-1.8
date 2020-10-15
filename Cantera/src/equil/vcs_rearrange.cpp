@@ -3,7 +3,7 @@
  *    implementation file for rearranging species.
  */
 /*
- * $Id: vcs_rearrange.cpp 368 2010-01-04 00:46:26Z hkmoffa $
+ * $Id: vcs_rearrange.cpp,v 1.5 2008/12/17 16:34:18 hkmoffa Exp $
  */
 /*
  * Copywrite (2007) Sandia Corporation. Under the terms of 

@@ -4,8 +4,8 @@
  *  module documentation (see \ref  kineticsmgr and class 
  *  \link Cantera::Kinetics Kinetics\endlink).
  *
- *  $Date: 2010-05-07 22:15:22 -0500 (Fri, 07 May 2010) $
- *  $Revision: 462 $
+ *  $Date: 2008/12/16 20:32:18 $
+ *  $Revision: 1.8 $
  */
 
 // Copyright 2001-2004  California Institute of Technology
@@ -811,7 +811,7 @@ namespace Cantera {
      * any initialization (allocating arrays, etc.) that must be
      * done after the reactions are entered.
      */
-    virtual void finalize();
+    virtual void finalize() {}
 
     /**
      * Add a single reaction to the mechanism. This routine
@@ -904,9 +904,6 @@ namespace Cantera {
 	
     //! Number of reactions in the mechanism
     int m_ii;
-
-    //! Number of species in the species vector for this kinetics operator
-    int m_nTotalSpecies;
 	
     /// Vector of perturbation factors for each reaction's rate of
     /// progress vector. It is initialized to one.

@@ -7,8 +7,8 @@
  */
 
 /*  $Author: hkmoffa $
- *  $Date: 2010-05-08 22:18:33 -0500 (Sat, 08 May 2010) $
- *  $Revision: 470 $
+ *  $Date: 2009/07/05 18:07:18 $
+ *  $Revision: 1.5 $
  *
  *  Copyright 2001 California Institute of Technology
  *
@@ -252,7 +252,7 @@ namespace Cantera {
    *
    *  where we can use the concept of microscopic reversibility to
    *  write the reverse rate constant in terms of the
-   *  forward rate constant and the concentration equilibrium
+   *  forward reate constant and the concentration equilibrium
    *   constant, \f$ K_c \f$.
    *
    *    \f[
@@ -329,7 +329,6 @@ namespace Cantera {
      * @param right Object to be copied.
      */
     IdealGasPhase(const IdealGasPhase &right);
-
 
     //! Asignment operator
     /*!

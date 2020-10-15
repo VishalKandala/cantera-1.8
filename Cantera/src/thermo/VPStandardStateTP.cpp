@@ -12,8 +12,8 @@
  */
 /*
  *  $Author: hkmoffa $
- *  $Date: 2010-01-17 11:05:46 -0600 (Sun, 17 Jan 2010) $
- *  $Revision: 385 $
+ *  $Date: 2009/01/04 06:34:20 $
+ *  $Revision: 1.16 $
  */
 
 // turn off warnings under Windows
@@ -60,7 +60,7 @@ namespace Cantera {
     m_P0(OneAtm),
     m_VPSS_ptr(0)
   {
-    VPStandardStateTP::operator=(b);
+    *this = b;
   }
 
   /*
@@ -74,7 +74,7 @@ namespace Cantera {
     if (&b != this) {
       /*
        * Mostly, this is a passthrough to the underlying
-       * assignment operator for the ThermoPhase parent object.
+       * assignment operator for the ThermoPhae parent object.
        */
       ThermoPhase::operator=(b);
       /*
@@ -85,9 +85,9 @@ namespace Cantera {
       m_Plast_ss     = b.m_Plast_ss;
       m_P0        = b.m_P0;
 
-      /*
-       * Duplicate the pdss objects
-       */
+   
+
+      // copy the pdss objects
       if (m_PDSS_storage.size() > 0) {
 	for (int k = 0; k < (int) m_PDSS_storage.size(); k++) {
 	  delete(m_PDSS_storage[k]);
@@ -99,41 +99,21 @@ namespace Cantera {
 	m_PDSS_storage[k] = ptmp->duplMyselfAsPDSS();
       }
 
-      /*
-       *  Duplicate the VPSS Manager object that conducts the calculations
-       */
       if (m_VPSS_ptr) {
 	delete m_VPSS_ptr; 
 	m_VPSS_ptr = 0;
       }
       m_VPSS_ptr = (b.m_VPSS_ptr)->duplMyselfAsVPSSMgr();
-
-      /*
-       *  The VPSSMgr object contains shallow pointers. Whenever you have shallow
-       *  pointers, they have to be fixed up to point to the correct objects refering
-       *  back to this ThermoPhase's properties.
-       */
       m_VPSS_ptr->initAllPtrs(this, m_spthermo);
-      /*
-       *  The PDSS objects contains shallow pointers. Whenever you have shallow
-       *  pointers, they have to be fixed up to point to the correct objects refering
-       *  back to this ThermoPhase's properties. This function also sets m_VPSS_ptr
-       *  so it occurs after m_VPSS_ptr is set.
-       */
+
       for (int k = 0; k < m_kk; k++) {
-	PDSS *ptmp = m_PDSS_storage[k];
+	PDSS *ptmp = b.m_PDSS_storage[k];
 	ptmp->initAllPtrs(this, m_VPSS_ptr, m_spthermo);
       }
-      /*
-       *  Ok, the VPSSMgr object is ready for business.
-       *  We need to resync the temperature and the pressure of the new standard states
-       *  with what is storred in this object.
-       */
-      m_VPSS_ptr->setState_TP(m_Tlast_ss, m_Plast_ss);
     }
     return *this;
   }
-  //====================================================================================================================
+
   /*
    * ~VPStandardStateTP():   (virtual)
    *
@@ -220,22 +200,6 @@ namespace Cantera {
     m_VPSS_ptr->getEnthalpy_RT(hrt);
   }
 
-  //================================================================================================
-#ifdef H298MODIFY_CAPABILITY
-  // Modify the value of the 298 K Heat of Formation of one species in the phase (J kmol-1)
-  /*
-   *   The 298K heat of formation is defined as the enthalpy change to create the standard state
-   *   of the species from its constituent elements in their standard states at 298 K and 1 bar.
-   *
-   *   @param  k           Species k
-   *   @param  Hf298New    Specify the new value of the Heat of Formation at 298K and 1 bar                      
-   */
-  void VPStandardStateTP::modifyOneHf298SS(const int k, const doublereal Hf298New) {
-    m_spthermo->modifyOneHf298(k, Hf298New);
-    m_Tlast_ss += 0.0001234;
-  }
-#endif
-  //================================================================================================
   void VPStandardStateTP::getEntropy_R(doublereal* srt) const {
     updateStandardStateThermo();
     m_VPSS_ptr->getEntropy_R(srt);
@@ -373,18 +337,9 @@ namespace Cantera {
   }
 
 
-  void VPStandardStateTP::setTemperature(const doublereal temp) {
-    setState_TP(temp, m_Pcurrent);
-    updateStandardStateThermo();
-  }
-
-  void VPStandardStateTP::setPressure(doublereal p) {
-    setState_TP(temperature(), p);
-    updateStandardStateThermo();
-  }
-
-  void VPStandardStateTP::calcDensity() {
-    err("VPStandardStateTP::calcDensity() called, but EOS for phase is not known");
+  void VPStandardStateTP::setTemperature(doublereal t) {
+    State::setTemperature(t);
+    //updateStandardStateThermo();
   }
 
 
@@ -404,14 +359,12 @@ namespace Cantera {
     /*
      * Now, we still need to do the calculations for general ThermoPhase objects.
      * So, we switch back to a virtual function call, setTemperature, and 
-     * setPressure to recalculate stuff for child ThermoPhase objects of 
-     * the VPStandardStateTP object. At this point,
+     * setPressure to recalculate stuff at the higher level. At this point,
      * we haven't touched m_tlast or m_plast, so some calculations may still
      * need to be done at the ThermoPhase object level.
      */
-    //setTemperature(t);
-    //setPressure(pres);
-    calcDensity();
+    setTemperature(t);
+    setPressure(pres);
   }
 
 

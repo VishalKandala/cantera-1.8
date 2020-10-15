@@ -23,8 +23,6 @@
 #
 in_CanteraBuildTree = 0
 
-CANTERA_VERSION=1.8.x
-
 ###############################################################################
 #        CANTERA CORE 
 ###############################################################################
@@ -58,15 +56,15 @@ CANTERA_CORE_LIBS_DEP=  /usr/local/cantera/lib/libequil.a /usr/local/cantera/lib
 #
 # Cantera Boost Include
 #
-CANTERA_BOOST_INCLUDES=
+CANTERA_BOOST_INCLUDES= 
 #
 # Location of the boost library that Cantera linked against
 #
-CANTERA_BOOST_LIB_DIR=
+CANTERA_BOOST_LIB_DIR= 
 #
 # Linkage extras for linking against boost
 #
-ifeq ("x$(CANTERA_BOOST_LIB_DIR)","x")
+ifeq ($(CANTERA_BOOST_LIB_DIR),"")
 CANTERA_BOOST_LIBS=
 else
 CANTERA_BOOST_LIBS= -L$(CANTERA_BOOST_LIB_DIR) -l
@@ -123,10 +121,6 @@ endif
 ####################################################################
 #
 CANTERA_TOTAL_INCLUDES= $(CANTERA_CORE_INCLUDES) $(CANTERA_BOOST_INCLUDES) $(CANTERA_CVODE_INCLUDE)
-#
-# You can add this into the compilation environment to identify the version number
-#
-CANTERA_DEFINES = -DCANTERA_VERSION=1.8.x
 #
 # LIBS and LIBS should be the same ...
 #

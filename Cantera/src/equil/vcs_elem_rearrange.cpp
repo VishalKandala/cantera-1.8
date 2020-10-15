@@ -4,8 +4,8 @@
  *   it contains the algorithm for choosing the rearrangement.
  */
 /*  $Author: hkmoffa $
- *  $Date: 2010-01-03 18:46:26 -0600 (Sun, 03 Jan 2010) $
- *  $Revision: 368 $
+ *  $Date: 2008/12/17 16:56:43 $
+ *  $Revision: 1.13 $
  */
 /*
  * Copywrite (2005) Sandia Corporation. Under the terms of 

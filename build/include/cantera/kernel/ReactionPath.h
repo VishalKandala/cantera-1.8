@@ -3,9 +3,9 @@
  *
  *  Classes for reaction path analysis.
  *
- * $Author: hkmoffa $
- * $Revision: 377 $
- * $Date: 2010-01-13 16:12:27 -0600 (Wed, 13 Jan 2010) $
+ * $Author: dggoodwin $
+ * $Revision: 1.1 $
+ * $Date: 2007/05/04 14:27:23 $
  */
 
 // Copyright 2001  California Institute of Technology
@@ -70,16 +70,15 @@ namespace Cantera {
         /// add a path to or from this node
         void addPath(Path* path);
 
-        doublereal outflow() {return m_out;}
-        doublereal inflow() {return m_in;}
-        doublereal netOutflow() {return m_out - m_in;}
+        double outflow() {return m_out;}
+        double inflow() {return m_in;}
+        double netOutflow() {return m_out - m_in;}
         
         void printPaths();
 
         
     protected:
-        doublereal m_in;
-        doublereal m_out;
+        double m_in, m_out;
         path_list m_paths;
     };
 
@@ -217,10 +216,10 @@ namespace Cantera {
         doublereal x_size, y_size;
         std::string name, dot_options;
         flow_t flow_type;
-        doublereal scale;
-        doublereal arrow_width; 
+        double scale;
+        double arrow_width; 
         bool show_details;
-        doublereal arrow_hue;
+        double arrow_hue;
 
     protected:
 

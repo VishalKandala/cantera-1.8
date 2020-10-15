@@ -2,7 +2,7 @@
  * @file ctrpath.h
  */
 /*
- *      $Id: ctrpath.h 368 2010-01-04 00:46:26Z hkmoffa $
+ *      $Id: ctrpath.h,v 1.2 2009/07/11 17:16:09 hkmoffa Exp $
  */
 
 #ifndef CTC_RXNPATH_H

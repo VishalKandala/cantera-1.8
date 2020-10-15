@@ -17,7 +17,7 @@
  * U.S. Government retains certain rights in this software.
  */
 /*
- *  $Id: PseudoBinaryVPSSTP.h 279 2009-12-05 19:08:43Z hkmoffa $
+ *  $Id: PseudoBinaryVPSSTP.h,v 1.1 2009/03/03 21:08:31 hkmoffa Exp $
  */
 
 #ifndef CT_PSEUDOBINARYVPSSTP_H

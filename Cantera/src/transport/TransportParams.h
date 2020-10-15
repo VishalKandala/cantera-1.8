@@ -3,6 +3,7 @@
 
 #include <vector>
 
+
 #include "ct_defs.h"
 #include "TransportBase.h"
 #include "xml.h"
@@ -10,9 +11,10 @@
 
 namespace Cantera {
 
-    /** 
-     * Base class to hold transport model parameters.  
-     * Used by TransportFactory.
+    /**
+     *
+     * Holds transport data. Used by TransportFactory.
+     *
      */
     class TransportParams {
 
@@ -20,43 +22,18 @@ namespace Cantera {
 
         TransportParams() : thermo(0), xml(0) {}
         virtual ~TransportParams();
-        int nsp_;
+        int nsp;
 
         //        phase_t* mix;
         thermo_t* thermo;
         vector_fp        mw;
 
         // polynomial fits
-	//temperature-fit viscosity 
-        std::vector<vector_fp>            visccoeffs; 
-	//temperature-fit heat conduction 
-        std::vector<vector_fp>            condcoeffs; 
-	//temperature-fit diffusivity 
-	std::vector<vector_fp>            diffcoeffs; 
-        vector_fp                         polytempvec;
-
-	//minimum and maximum temperatures for parameter fits
-        doublereal tmax, tmin;
-        int mode_;
-        XML_Writer* xml;
-        int log_level;
-
-    };
-
-
-    /**
-     * Holds transport model parameters relevant to transport in ideal 
-     * gases with a kinetic theory of gases derived transport model. 
-     * Used by TransportFactory.
-     */
-    class GasTransportParams : public TransportParams {
-
-    public:
-
-        GasTransportParams() {}
-        ~GasTransportParams() {}
-
-
+        std::vector<vector_fp>            visccoeffs;
+        std::vector<vector_fp>            condcoeffs;
+        std::vector<vector_fp>            diffcoeffs;
+        vector_fp                    polytempvec;
+        
         std::vector<std::vector<int> > poly;
         std::vector<vector_fp >   omega22_poly;
         std::vector<vector_fp >   astar_poly;
@@ -76,9 +53,11 @@ namespace Cantera {
         DenseMatrix  epsilon;        
         DenseMatrix  dipole;         
         DenseMatrix  delta;          
-
+        doublereal tmax, tmin;
+        int mode;
+        XML_Writer* xml;
+        int log_level;
     };
-
 }
 
-#endif //CT_TRANSPORTPARAMS_H
+#endif

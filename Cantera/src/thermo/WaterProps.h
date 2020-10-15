@@ -11,7 +11,7 @@
  * U.S. Government retains certain rights in this software.
  */
 /*
- * $Id: WaterProps.h 387 2010-01-17 18:17:55Z hkmoffa $
+ * $Id: WaterProps.h,v 1.5 2008/08/23 00:53:55 hkmoffa Exp $
  */
 
 #ifndef CT_WATERPROPS_H
@@ -19,8 +19,8 @@
 
 
 #include "ct_defs.h"
+class WaterPropsIAPWS;
 namespace Cantera {
-  class WaterPropsIAPWS;
   class PDSS_Water;
  
   /**
@@ -117,12 +117,6 @@ namespace Cantera {
 
     //! Constructor with pointer to Water PDSS object
     /*!
-     * @param wptr Pointer to WaterPropsIAPWS object
-     */
-    WaterProps(WaterPropsIAPWS *wptr);
-
-    //! Constructor with pointer to Water PDSS object
-    /*!
      * @param wptr Pointer to water standard state object
      */
     WaterProps(PDSS_Water *wptr);
@@ -146,7 +140,6 @@ namespace Cantera {
     //! Simple calculation of water density at atmospheric pressure.
     //! Valid up to boiling point.
     /*!
-     * static function.
      * This formulation has no dependence on the pressure and shouldn't
      * be used where accuracy is needed.
      *
@@ -165,7 +158,7 @@ namespace Cantera {
      *
      * units = returns density in kg m-3.
      */
-    static doublereal density_T(doublereal T, doublereal P, int ifunc);
+    static double density_T(double T, double P, int ifunc);
 
    
     //!     Bradley-Pitzer equation for the dielectric constant 
@@ -201,7 +194,7 @@ namespace Cantera {
      *   value at 25C and 1 atm, relEps = 78.38
      * 
      */
-    doublereal relEpsilon(doublereal T, doublereal P_pascal,  int ifunc = 0);
+    double relEpsilon(double T, double P_pascal,  int ifunc = 0);
 
     
     //! ADebye calculates the value of A_Debye as a function
@@ -244,7 +237,7 @@ namespace Cantera {
      *   - ifunc = 3 return pressure first derivative
      *   .
      *
-     * @return Returns a single doublereal whose meaning depends on ifunc:
+     * @return Returns a single double whose meaning depends on ifunc:
      *   - ifunc = 0 return value
      *   - ifunc = 1 return temperature derivative
      *   - ifunc = 2 return temperature second derivative
@@ -259,7 +252,7 @@ namespace Cantera {
      *    the Pitzer table p. 99 to 4 significant digits at 25C.
      *    and 20C. (Aphi = ADebye/3)
      */
-    doublereal ADebye(doublereal T, doublereal P, int ifunc);
+    double ADebye(double T, double P, int ifunc);
 
 
     //! Returns the saturation pressure given the temperature
@@ -267,78 +260,29 @@ namespace Cantera {
      * @param T temperature (kelvin)
      * @return returns the saturation pressure (pascal)
      */
-    doublereal satPressure(doublereal T);
+    double satPressure(double T);
  
 
     //! Returns the density of water
     /*!
-     * This function sets the internal temperature and pressure
-     * of the underlying object at the same time.
-     *
      * @param T Temperature (kelvin)
      * @param P pressure (pascal)
      */
-    doublereal density_IAPWS(doublereal T, doublereal P);
-
-    //! Returns the density of water
-    /*!
-     *  This function uses the internal state of the
-     *  underlying water object
-     */
-    doublereal density_IAPWS() const;
-
+    double density_IAPWS(double T, double P);
 
     //! returns the coefficient of thermal expansion
     /*!
      *  @param T Temperature (kelvin)
      *  @param P pressure (pascal)
      */
-    doublereal coeffThermalExp_IAPWS(doublereal T, doublereal P);
+    double coeffThermalExp_IAPWS(double T, double P);
 
     //! Returns the isothermal compressibility of water
     /*!
      * @param T  temperature in kelvin
      * @param P  pressure in pascal
      */
-    doublereal isothermalCompressibility_IAPWS(doublereal T, doublereal P);
-
-    //! Returns the viscosity of water at the current conditions
-    //! (kg/m/s)
-    /*!
-     *  This function calculates the value of the viscosity of pure
-     *  water at the current T and P.
-     *
-     *  The formulas used are from the paper
-     *     J. V. Sengers, J. T. R. Watson, "Improved International
-     *     Formulations for the Viscosity and Thermal Conductivity of
-     *     Water Substance", J. Phys. Chem. Ref. Data, 15, 1291 (1986).
-     *
-     *  The formulation is accurate for all temperatures and pressures,
-     *  for steam and for water, even near the critical point.
-     *  Pressures above 500 MPa and temperature above 900 C are suspect.
-     */
-    doublereal viscosityWater() const;  
-
-    //! Returns the thermal conductivity of water at the current conditions
-    //! (W/m/K)
-    /*!
-     *  This function calculates the value of the thermal conductivity of
-     *  water at the current T and P.
-     *
-     *  The formulas used are from the paper
-     *     J. V. Sengers, J. T. R. Watson, "Improved International
-     *     Formulations for the Viscosity and Thermal Conductivity of
-     *     Water Substance", J. Phys. Chem. Ref. Data, 15, 1291 (1986).
-     *
-     *  The formulation is accurate for all temperatures and pressures,
-     *  for steam and for water, even near the critical point.
-     *  Pressures above 500 MPa and temperature above 900 C are suspect.
-     */
-    doublereal thermalConductivityWater() const;
-
-
-
-
+    double isothermalCompressibility_IAPWS(double T, double P);
 
   protected:
 

@@ -2,7 +2,7 @@
  * @file ctreactor.h
  */
 /*
- *      $Id: ctreactor.h 368 2010-01-04 00:46:26Z hkmoffa $
+ *      $Id: ctreactor.h,v 1.7 2009/07/11 17:16:09 hkmoffa Exp $
  */
 
 #ifndef CTC_REACTOR_H

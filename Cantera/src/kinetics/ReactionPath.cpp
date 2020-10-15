@@ -4,9 +4,9 @@
  */
 
 /*
- * $Author: hkmoffa $
- * $Revision: 377 $
- * $Date: 2010-01-13 16:12:27 -0600 (Wed, 13 Jan 2010) $
+ * $Author: dggoodwin $
+ * $Revision: 1.2 $
+ * $Date: 2008/02/05 23:36:12 $
  */
 
 // Copyright 2001  California Institute of Technology
@@ -136,7 +136,7 @@ namespace Cantera {
 
     vector_int ReactionPathDiagram::reactions() {
         int i, npaths = nPaths();
-        doublereal flmax = 0.0, flxratio;
+        double flmax = 0.0, flxratio;
         Path* p;
         for (i = 0; i < npaths; i++) 
         {
@@ -163,7 +163,7 @@ namespace Cantera {
     }
 
     void ReactionPathDiagram::add(ReactionPathDiagram& d) {
-//        doublereal f1, f2;
+//        double f1, f2;
 //         int nnodes = nNodes();
 //         if (nnodes != d.nNodes()) {
 //             throw CanteraError("ReactionPathDiagram::add",
@@ -205,7 +205,7 @@ namespace Cantera {
     }
 
     void ReactionPathDiagram::writeData(ostream& s) {
-        doublereal f1, f2;
+        double f1, f2;
         int nnodes = nNodes();
         int i1, i2, k1, k2;
         s << title << endl;
@@ -275,7 +275,7 @@ namespace Cantera {
 
         int nnodes = nNodes();
         int kbegin, kend, i1, i2, k1, k2;
-        doublereal flx;
+        double flx;
 
         // draw paths representing net flows
         if (flow_type == NetFlow) 

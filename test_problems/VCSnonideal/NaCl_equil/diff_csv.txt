@@ -1,0 +1,13 @@
+
+----------------------------------------------------------
+csvdiff: CSVFile comparison utility program
+         Version $Revision: 1.17 $
+         Harry K. Moffat Div. 9114 Sandia National Labs
+         
+         First  CSV File = vcs_equilibrate_blessed.csv
+         Second CSV file = vcs_equilibrate_res.csv
+
+         Absolute tol = 1e-50
+         Relative tol = 0.001
+----------------------------------------------------------
+

@@ -21,7 +21,7 @@ install:
 
 
 clean:
-	rm -f *.log 
+	rm -f *.log *.csv *.xml
 	./cleanup
 
 # end of file

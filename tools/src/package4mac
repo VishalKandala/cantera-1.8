@@ -60,9 +60,9 @@ cp -R -f $pylibdir/MixMaster/*.py $PYDIR/$mixname
 cp -f $pylibdir/ctml_writer.py $PYDIR
 cp -f ~/setup_cantera $CTDIR
 
-chmod +x /pkg/Cantera/tools/src/postflight
-cp -f /pkg/Cantera/tools/src/postflight $RESDIR
-cp -f /pkg/Cantera/License.rtf $RESDIR
+chmod +x /Cantera1.8-Radcal/tools/src/postflight
+cp -f /Cantera1.8-Radcal/tools/src/postflight $RESDIR
+cp -f /Cantera1.8-Radcal/License.rtf $RESDIR
 
 cp -R -f $pylibdir/numarray/*.py $NUMARRAYPYDIR/numarray
 cp -R -f $pylibdir/numarray/*.so $NUMARRAYPYDIR/numarray

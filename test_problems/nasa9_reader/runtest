@@ -6,7 +6,7 @@ echo "***************************************************"
 echo "    Testing CK2CTI on NASA9 Thermodynamics : using the build/bin version of ck2cti"
 echo "***************************************************"
 echo " "
-BINDIR=/pkg/Cantera/build/bin/x86_64-unknown-linux-gnu
+BINDIR=/Cantera1.8-Radcal/build/bin/x86_64-unknown-linux-gnu
 CK2CTI=$BINDIR/ck2cti
 /bin/rm  -f sample.cti
 echo "...Test 1: Converting file sample.inp..."

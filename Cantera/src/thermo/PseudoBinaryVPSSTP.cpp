@@ -17,8 +17,8 @@
  * U.S. Government retains certain rights in this software.
  */
 /*
- *  $Date: 2009-12-05 13:08:43 -0600 (Sat, 05 Dec 2009) $
- *  $Revision: 279 $
+ *  $Date: 2009/03/27 01:08:55 $
+ *  $Revision: 1.2 $
  */
 
 
@@ -157,6 +157,7 @@ namespace Cantera {
     err("logStandardConc");
     return -1.0;
   }
+
 
 
 

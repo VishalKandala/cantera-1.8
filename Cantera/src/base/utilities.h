@@ -6,7 +6,7 @@
 
 // Copyright 2001  California Institute of Technology
 /*
- * $Id: utilities.h 457 2010-05-07 14:45:32Z hkmoffa $
+ * $Id: utilities.h,v 1.9 2008/08/22 14:41:07 hkmoffa Exp $
 
  */
 /**
@@ -29,7 +29,7 @@
 //! Unary operator to multiply the argument by a constant. 
 /*!
  *  The form of this operator is designed for use by std::transform. 
- *  @see @ref  scale().
+ *  @see @ref  scale.
  */
 template<class T> struct timesConstant : public std::unary_function<T, double>
 {
@@ -574,9 +574,9 @@ namespace Cantera {
     return sum;
   }
 
-  //!   Scale a templated vector by a constant factor.
+  //! scale a templated vector by a constant factor.
   /*!
-   *   The template arguments are:  template<class OutputIter>
+   * The template arguments are:  template<class OutputIter>
    *
    * This function is essentially a wrapper around the stl
    * function %scale(). The function is has one template
@@ -658,32 +658,6 @@ namespace Cantera {
   template<class D, class R>
   R poly3(D x, R* c) {
     return (((c[3]*x + c[2])*x + c[1])*x + c[0]);
-  }
-
-  //! Templated deep copy of a std vector of pointers
-  /*!
-   *  Performs a deep copy of a std vectors of pointers to an object. This template assumes that
-   *  that the templated object has a functioning copy constructor.
-   *  It also assumes that pointers are zero when they are not malloced.
-   *
-   *  @param fromVec   Vector of pointers to a templated class. This will be 
-   *                   deep-copied to the other vector
-   *  @param toVec     Vector of pointers to a templated class. This will be
-   *                   overwritten and on return will be a copy of the fromVec
-   */
-  template<class D>
-  void deepStdVectorPointerCopy(const std::vector<D *> &fromVec, std::vector<D *> &toVec) {
-    int is = toVec.size();
-    for (int i = 0; i < is; is++) {
-      if (toVec[i]) {
-        delete(toVec[i]);
-      }
-    }
-    is = fromVec.size();
-    toVec.resize(is);        
-    for (int i = 0; i < is; is++) {
-      toVec[i] = new D(*(fromVec[i]));
-    }
   }
 
   //@}

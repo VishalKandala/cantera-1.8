@@ -7,5 +7,5 @@ AqueousTransport.o: AqueousTransport.cpp ../thermo/ThermoPhase.h \
  ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
  ../base/Array.h AqueousTransport.h TransportBase.h \
  ../numerics/DenseMatrix.h ../base/Array.h TransportParams.h \
- ../base/XML_Writer.h LiquidTransportParams.h LiquidTransportData.h \
- ../base/FactoryBase.h TransportFactory.h ../numerics/ctlapack.h
+ ../base/XML_Writer.h TransportFactory.h ../base/FactoryBase.h \
+ ../numerics/ctlapack.h

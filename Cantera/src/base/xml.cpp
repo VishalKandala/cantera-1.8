@@ -6,8 +6,8 @@
  */
 
 /*
- * $Revision: 455 $
- * $Date: 2010-05-07 09:44:05 -0500 (Fri, 07 May 2010) $
+ * $Revision: 1.27 $
+ * $Date: 2009/07/22 01:21:35 $
  */
 
 // Copyright 2001  California Institute of Technology
@@ -51,8 +51,7 @@ namespace Cantera {
      * @param line Number number where the error occurred.
      */
     XML_Error(int line=0) :
-      m_line(line),
-      m_msg(0)
+      m_line(line)
     {
       m_msg = "Error in XML file";
       if (line > 0) {
@@ -246,7 +245,7 @@ namespace Cantera {
     }
   }
 
-  /*
+  /**
    *  Searches a string for the first occurrence of a valid
    *  quoted string. Quotes can start with either a single
    *  quote or a double quote, but must also end with the same
@@ -289,7 +288,7 @@ namespace Cantera {
     return static_cast<int>(iloc1)+1;	
   }
     
-  /*
+  /**
    * parseTag parses XML tags, i.e., the XML elements that are
    * inbetween angle brackets.
    */
@@ -393,8 +392,7 @@ namespace Cantera {
   //////////////////////////  XML_Node  /////////////////////////////////
 
   XML_Node::XML_Node(const char * cnm)  
-    : m_name(""),
-      m_value(""), 
+    : m_value(""), 
       m_parent(0),
       m_locked(false),
       m_nchildren(0), 
@@ -443,7 +441,6 @@ namespace Cantera {
     m_nchildren(0), 
     m_iscomment(false) 
   {
-    m_root = this;
     right.copy(this);
   }
 
@@ -483,27 +480,6 @@ namespace Cantera {
 	}
       }
     }
-  }
-
-  void XML_Node::clear() {
-    int n = static_cast<int>(m_children.size());
-    for (int i = 0; i < n; i++) {
-      if (m_children[i]) {
-        if (m_children[i]->parent() == this) {
-          delete m_children[i];
-          m_children[i] = 0;
-        }
-      }
-    }
-    m_value.clear();
-    m_childindex.clear();
-    m_attribs.clear();
-    m_children.clear();
-
-    m_nchildren = 0;
-    m_iscomment = false;
-    m_linenum = 0;
-
   }
 
   // Add a child node to the current node containing a comment
@@ -679,9 +655,9 @@ namespace Cantera {
     return child(cname).value();
   }
 
-  //  Overloaded parenthesis operator with one augment 
-  //  returns the value of an XML child node as a string
-  /*
+  //!  Overloaded parenthesis operator with one augment 
+  //!  returns the value of an XML child node as a string
+  /*!
    *  @param cname  Name of the child node to the current
    *                node, for which you want the value
    */
@@ -716,7 +692,7 @@ namespace Cantera {
     m_attribs[attrib] = fp2str(value, fmt);
   }
     
-  //  The operator[] is overloaded to provide a lookup capability
+  // The operator[] is overloaded to provide a lookup capability
   //  on attributes for the current XML element.
   /*
    * For example
@@ -754,7 +730,7 @@ namespace Cantera {
     return ""; 
   }
 
-  //  Returns a changeable value of the attributes map for the current node
+  // Returns a changeable value of the attributes map for the current node
   /*
    *  Note this is a simple accessor routine. And, it is a private function.
    *  It's used in some internal copy and assignment routines
@@ -861,9 +837,9 @@ namespace Cantera {
   }
 
 
-  //  This routine carries out a search for an XML node based
-  //  on both the xml element name and the attribute ID.
-  /*
+  //! This routine carries out a search for an XML node based
+  //! on both the xml element name and the attribute ID.
+  /*!
    * If exact matches are found for both fields, the pointer
    * to the matching XML Node is returned.
    * 
@@ -946,8 +922,8 @@ namespace Cantera {
     return 0;
   }
 
-  //  This routine carries out a recursive search for an XML node based
-  //  on an attribute of each XML node
+  // This routine carries out a recursive search for an XML node based
+  // on an attribute of each XML node
   /*
    * If exact match is found with respect to the attribute name and
    * value of the attribute, the pointer
@@ -1153,7 +1129,6 @@ namespace Cantera {
     XML_Node *sc, *dc;
     int ndc;
     node_dest->addValue(m_value);
-    node_dest->setName(m_name);
     if (m_name == "") return;
     map<string,string>::const_iterator b = m_attribs.begin();
     for (; b != m_attribs.end(); ++b) {
@@ -1236,7 +1211,7 @@ namespace Cantera {
     }
   }
     
-  /*
+  /**
    * Write an XML subtree to an output stream. This is the
    * main recursive routine. It doesn't put a final endl
    * on. This is fixed up in the public method.

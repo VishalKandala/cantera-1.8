@@ -10,7 +10,7 @@
 
 do_ranlib = 1
 
-LIB = /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu/libctmath.a
+LIB = /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu/libctmath.a
 
 all: $(LIB)
 

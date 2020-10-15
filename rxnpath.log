@@ -1,0 +1,78 @@
+
+Reaction 1: 2 O + M <=> O2 + M ... OK.
+
+Reaction 2: O + H + M <=> OH + M ... OK.
+
+Reaction 3: O + H2 <=> H + OH ... OK.
+
+Reaction 4: O + HO2 <=> OH + O2 ... ambiguous.
+     (O) + (O)(O-H) = (O)(O) + (O-H)   [<= default] 
+     (O) + (H)(O2) = (O)(H) + (O2)
+
+Reaction 5: O + H2O2 <=> OH + HO2 ... ambiguous.
+     (O) + (H)(O2-H) = (O)(H) + (O2-H)   [<= default] 
+     (O) + (O-H)(O-H) = (O)(O-H) + (O-H)
+
+Reaction 6: H + 2 O2 <=> HO2 + O2 ... OK.
+
+Reaction 7: H + O2 + H2O <=> HO2 + H2O ... OK.
+
+Reaction 8: H + O2 + AR <=> HO2 + AR ... OK.
+
+Reaction 9: H + O2 <=> O + OH ... OK.
+
+Reaction 10: 2 H + M <=> H2 + M ... OK.
+
+Reaction 11: 2 H + H2 <=> 2 H2 ... OK.
+
+Reaction 12: 2 H + H2O <=> H2 + H2O ... OK.
+
+Reaction 13: H + OH + M <=> H2O + M ... OK.
+
+Reaction 14: H + HO2 <=> O + H2O ... OK.
+
+Reaction 15: H + HO2 <=> O2 + H2 ... OK.
+
+Reaction 16: H + HO2 <=> 2 OH ... ambiguous.
+     (H) + (O)(O-H) = (H)(O) + (O-H)   [<= default] 
+     (H) + (O)(O-H) = (H)(O) + (O-H)
+
+Reaction 17: H + H2O2 <=> HO2 + H2 ... ambiguous.
+     (H) + (H)(O2-H) = (H)(H) + (O2-H)   [<= default] 
+     (H) + (O2)(H2) = (H)(O2) + (H2)
+
+Reaction 18: H + H2O2 <=> OH + H2O ... ambiguous.
+     (H) + (O)(O-H2) = (H)(O) + (O-H2)   [<= default] 
+     (H) + (O-H)(O-H) = (H)(O-H) + (O-H)
+
+Reaction 19: OH + H2 <=> H + H2O ... ambiguous.
+     (O-H) + (H)(H) = (O-H)(H) + (H)   [<= default] 
+     (H2) + (O)(H) = (H2)(O) + (H)
+
+Reaction 20: 2 OH (+ M) <=> H2O2 (+ M) ... OK.
+
+Reaction 21: 2 OH <=> O + H2O ... ambiguous.
+     (O-H) + (H)(O) = (O-H)(H) + (O)   [<= default] 
+     (O-H) + (H)(O) = (O-H)(H) + (O)
+
+Reaction 22: OH + HO2 <=> O2 + H2O
+     (O-H) + (H)(O2) = (O-H)(H) + (O2)
+
+Reaction 23: OH + H2O2 <=> HO2 + H2O ... ambiguous.
+     (O-H) + (H)(O2-H) = (O-H)(H) + (O2-H)   [<= default] 
+     (O-H) + (O)(O-H2) = (O-H)(O) + (O-H2)
+
+Reaction 24: OH + H2O2 <=> HO2 + H2O ... ambiguous.
+     (O-H) + (H)(O2-H) = (O-H)(H) + (O2-H)   [<= default] 
+     (O-H) + (O)(O-H2) = (O-H)(O) + (O-H2)
+
+Reaction 25: 2 HO2 <=> O2 + H2O2 ... ambiguous.
+     (O2-H) + (H)(O2) = (O2-H)(H) + (O2)   [<= default] 
+     (O2-H) + (H)(O2) = (O2-H)(H) + (O2)
+
+Reaction 26: 2 HO2 <=> O2 + H2O2 ... ambiguous.
+     (O2-H) + (H)(O2) = (O2-H)(H) + (O2)   [<= default] 
+     (O2-H) + (H)(O2) = (O2-H)(H) + (O2)
+
+Reaction 27: OH + HO2 <=> O2 + H2O
+     (O-H) + (H)(O2) = (O-H)(H) + (O2)

@@ -44,7 +44,7 @@ mkdirprog="${MKDIRPROG-mkdir}"
 verbose=""
 transformbasename=""
 transform_arg=""
-instcmd="$cpprog"
+instcmd="$mvprog"
 chmodcmd="$chmodprog 0755"
 chowncmd=""
 chgrpcmd=""
@@ -57,16 +57,9 @@ dir_arg=""
 
 while [ x"$1" != x ]; do
     case $1 in
-	-c) shift
-	    continue;;
-
-	-move) instcmd="$mvprog"
+	-c) instcmd="$cpprog"
 	    shift
 	    continue;;
-
-        -move) instcmd="$mvprog"
-            shift
-            continue;;
 
 	-d) dir_arg=true
 	    shift
@@ -124,7 +117,6 @@ else
 	true
 fi
 
-
 if [ x"$dir_arg" != x ]; then
 	dst=$src
 	src=""
@@ -146,13 +138,13 @@ else
 	then
 		true
 	else
-		echo "install: WARNING $src does not exist"
-		exit 0
+		echo "install:  $src does not exist"
+		exit 1
 	fi
 	
 	if [ x"$dst" = x ]
 	then
-		echo "       install:	no destination specified"
+		echo "install:	no destination specified"
 		exit 1
 	else
 		true

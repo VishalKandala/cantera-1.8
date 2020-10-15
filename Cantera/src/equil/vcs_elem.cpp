@@ -5,7 +5,7 @@
  *  of the element abundances constraints.
  */
 /*
- * $Id: vcs_elem.cpp 368 2010-01-04 00:46:26Z hkmoffa $
+ * $Id: vcs_elem.cpp,v 1.12 2008/10/23 01:13:35 hkmoffa Exp $
  */
 
 #include "vcs_solve.h"

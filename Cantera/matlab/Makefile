@@ -27,7 +27,7 @@ SRCS = cantera/private/ctmethods.cpp \
        cantera/private/funcmethods.cpp 
 
 
-CANTERA_LIBDIR=/pkg/Cantera/build/lib/x86_64-unknown-linux-gnu
+CANTERA_LIBDIR=/Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu
 os_is_win=0
 
 ifeq ($(os_is_win),0)
@@ -51,11 +51,11 @@ all: cantera/ctmethods.mexglx
 
 cantera/ctmethods.mexglx: $(SRCS) $(LIBDEPS) Makefile
 ifeq ($(os_is_win),0)
-	/usr/bin/python2.6 setup_matlab.py /usr/local/cantera/bin /pkg/Cantera/build/lib/x86_64-unknown-linux-gnu clib '$(LIBS)'
+	/usr/bin/python2.6 setup_matlab.py /usr/local/cantera/bin /Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu clib '$(LIBS)'
 else
 	/usr/bin/python2.6 setup_winmatlab.py
 endif
-	( -nojvm -nosplash -r setup)
+	(default -nojvm -nosplash -r setup)
 	rm -f setup.m 
 
 install:

@@ -19,8 +19,8 @@
 #define CT_NASA9POLY1_H
 
 /* 
- * $Revision: 279 $
- * $Date: 2009-12-05 13:08:43 -0600 (Sat, 05 Dec 2009) $
+ * $Revision: 1.4 $
+ * $Date: 2009/01/04 19:21:28 $
  */
 
 

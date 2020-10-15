@@ -2,9 +2,9 @@
  *  @file ImplicitChem.cpp
  */
 
-/* $Author: hkmoffa $
- * $Revision: 377 $
- * $Date: 2010-01-13 16:12:27 -0600 (Wed, 13 Jan 2010) $
+/* $Author: dggoodwin $
+ * $Revision: 1.1 $
+ * $Date: 2007/05/04 14:27:23 $
  */
 
 // Copyright 2001  California Institute of Technology
@@ -38,7 +38,7 @@ namespace Cantera {
 
     // overloaded method of FuncEval. Called by the integrator to
     // get the initial conditions.
-    void ImplicitChem::getInitialConditions(doublereal t0, size_t leny, doublereal * y) 
+    void ImplicitChem::getInitialConditions(double t0, size_t leny, double* y) 
     {
         m_thermo->getMassFractions(y);
         m_h0 = m_thermo->enthalpy_mass();

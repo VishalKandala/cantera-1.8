@@ -14,13 +14,11 @@ ct.o: ct.cpp ct.h clib_defs.h ../../src/base/config.h \
  ../../src/kinetics/KineticsFactory.h ../../src/kinetics/Kinetics.h \
  ../../src/thermo/mix_defs.h ../../src/base/FactoryBase.h \
  ../../src/transport/TransportFactory.h \
- ../../src/transport/TransportBase.h \
- ../../src/transport/LiquidTransportData.h \
- ../../src/kinetics/importKinetics.h ../../src/thermo/ThermoFactory.h \
- ../../src/thermo/ThermoPhase.h ../../src/converters/ck2ct.h Storage.h \
- ../../src/kinetics/Kinetics.h ../../src/transport/TransportBase.h \
- Cabinet.h ../../src/kinetics/InterfaceKinetics.h \
- ../../src/kinetics/RateCoeffMgr.h ../../src/kinetics/RxnRates.h \
- ../../src/kinetics/reaction_defs.h \
+ ../../src/transport/TransportBase.h ../../src/kinetics/importKinetics.h \
+ ../../src/thermo/ThermoFactory.h ../../src/thermo/ThermoPhase.h \
+ ../../src/converters/ck2ct.h Storage.h ../../src/kinetics/Kinetics.h \
+ ../../src/transport/TransportBase.h Cabinet.h \
+ ../../src/kinetics/InterfaceKinetics.h ../../src/kinetics/RateCoeffMgr.h \
+ ../../src/kinetics/RxnRates.h ../../src/kinetics/reaction_defs.h \
  ../../src/kinetics/ReactionStoichMgr.h ../../src/thermo/PureFluidPhase.h \
  ../../src/thermo/mix_defs.h

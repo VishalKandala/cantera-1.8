@@ -46,7 +46,7 @@ INCLUDE_DIRS = -I../../src -I$(CANTERA_INCROOT)
 CXX_FLAGS = -O3 -Wall   $(INCLUDE_DIRS) -DUSE_VCSNONIDEAL
 #
 # Ending C++ linking libraries
-LCXX_END_LIBS = -lctf2c -lm -lm -lstdc++ 
+LCXX_END_LIBS = -lctf2c -lm
 
 # flags passed to the C++ compiler/linker for the linking step
 LCXX_FLAGS = -O3 -Wall  

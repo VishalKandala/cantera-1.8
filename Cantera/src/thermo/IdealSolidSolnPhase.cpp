@@ -5,7 +5,7 @@
  *      \link Cantera::IdealSolidSolnPhase IdealSolidSolnPhase\endlink).
  */
 /*
- * $Id: IdealSolidSolnPhase.cpp 398 2010-02-09 20:24:11Z hkmoffa $
+ * $Id: IdealSolidSolnPhase.cpp,v 1.11 2009/03/27 00:51:39 hkmoffa Exp $
  */
 /*
  * Copywrite 2006 Sandia Corporation. Under the terms of Contract
@@ -19,7 +19,7 @@ using namespace std;
 
 namespace Cantera {
 
-  /*
+  /**
    * Constructor for IdealSolidSolnPhase class:
    *  The default form for the generalized concentrations is 0
    * i.e., unity.
@@ -313,7 +313,7 @@ namespace Cantera {
     }
   }
 
-  /*
+  /**
    * setPressure(double)               (virtual from ThermoPhase)
    *
    * Set the pressure at constant temperature. Units: Pa.
@@ -331,7 +331,7 @@ namespace Cantera {
     calcDensity();
   }
 
-  /*
+  /**
    * setMolarDensity()                    (virtual from State)
    * Overwritten setMolarDensity() function is necessary because the
    * density is not an indendent variable.
@@ -346,7 +346,7 @@ namespace Cantera {
 		       "Density is not an independent variable");
   }
 
-  /*
+  /**
    * setMoleFractions()                     (virtual from State)
    *
    * Sets the mole fractions and adjusts the internal density.
@@ -366,7 +366,7 @@ namespace Cantera {
     calcDensity();
   }
 
-  /*
+  /**
    * setMassFractions()                      (virtual from State)
    *
    * Sets the mass fractions and adjusts the internal density.
@@ -376,7 +376,7 @@ namespace Cantera {
     calcDensity();
   }
 
-  /*
+  /**
    * setMassFractions_NoNorm()               (virtual from State)
    *
    * Sets the mass fractions and adjusts the internal density.
@@ -386,7 +386,7 @@ namespace Cantera {
     calcDensity();
   }
 
-  /*
+  /**
    * setConcentrations                        (virtual from State)
    *
    * Sets the concentrations and adjusts the internal density
@@ -494,10 +494,13 @@ namespace Cantera {
     switch (m_formGC) {
     case 0:
       return 1.0;
+      break;
     case 1:
       return 1.0 / m_speciesMolarVolume[k];
+      break;
     case 2:
       return 1.0/m_speciesMolarVolume[m_kk-1];
+      break;
     }
     return 0.0;
   }
@@ -506,10 +509,13 @@ namespace Cantera {
     switch (m_formGC) {
     case 0:
       return 1.0;
+      break;
     case 1:
       return 1.0 / m_speciesMolarVolume[k];
+      break;
     case 2:
       return 1.0 / m_speciesMolarVolume[m_kk-1];
+      break;
     }
     return 0.0;
   }
@@ -590,7 +596,7 @@ namespace Cantera {
     }
   }
 
-  /*
+  /********************************************************************
    * getActivityCoefficients():
    *
    */
@@ -600,8 +606,8 @@ namespace Cantera {
       ac[k] = 1.0;
     } 
   }
-  //================================================================================================
-  /*
+
+  /********************************************************************
    *
    * getChemPotentials():
    *
@@ -629,8 +635,8 @@ namespace Cantera {
 	+ delta_p * m_speciesMolarVolume[k];
     }
   }
-  //================================================================================================
-  /*
+
+  /***************************************************************** 
    *
    * getChemPotentials_RT()
    *
@@ -783,9 +789,9 @@ namespace Cantera {
    *  \f[
    *  \mu^0_k(T,P) = \mu^{ref}_k(T) + (P - P_{ref}) * V_k
    * \f]
-   * where \f$V_k\f$ is the molar volume of pure species <I>k</I>.
+   * where \f$V_k\f$ is the molar volume of pure species <I>k<\I>.
    * \f$ \mu^{ref}_k(T)\f$ is the chemical potential of pure
-   * species <I>k</I> at the reference pressure, \f$P_{ref}\f$.
+   * species <I>k<\I> at the reference pressure, \f$P_{ref}\f$.
    *
    * @param grt Vector of length m_kk, which on return sr[k]
    *           will contain the nondimensional 
@@ -914,7 +920,7 @@ namespace Cantera {
     }
   }
 
-  /*
+  /**
    *  Returns the vector of non-dimensional Gibbs function
    *  of the reference state at the current temperature
    *  of the solution and the reference pressure for the species.
@@ -927,7 +933,7 @@ namespace Cantera {
     }
   }
 
-  /*
+  /**
    *  Returns the vector of Gibbs function
    *  of the reference state at the current temperature
    *  of the solution and the reference pressure for the species.
@@ -941,7 +947,7 @@ namespace Cantera {
     }
   }
 
-  /*
+  /**
    *  Returns the vector of nondimensional
    *  internal Energies of the standard state at the current temperature
    *  of the solution and current pressure for each species.
@@ -955,7 +961,7 @@ namespace Cantera {
     }
   }
 
-  /*
+  /**
    *  Returns the vector of non-dimensional Entropy function
    *  of the reference state at the current temperature
    *  of the solution and the reference pressure for the species.
@@ -968,7 +974,7 @@ namespace Cantera {
     }
   }
 
-  /*
+  /**
    *  Returns the vector of non-dimensional Entropy function
    *  of the reference state at the current temperature
    *  of the solution and the reference pressure for the species.
@@ -981,7 +987,7 @@ namespace Cantera {
     }
   }
     
-  /*
+  /**
    *  Returns a reference to the vector of nondimensional
    *  enthalpies of the reference state at the current temperature.
    *  Real reason for its existence is that it also checks
@@ -993,7 +999,7 @@ namespace Cantera {
     return m_h0_RT;
   }
 
-  /*
+  /**
    *  Returns a reference to the vector of nondimensional
    *  enthalpies of the reference state at the current temperature.
    *  Real reason for its existence is that it also checks
@@ -1007,7 +1013,7 @@ namespace Cantera {
     return m_expg0_RT;
   }
 
-  /*
+  /**
    *  Returns a reference to the vector of nondimensional
    *  enthalpies of the reference state at the current temperature.
    *  Real reason for its existence is that it also checks
@@ -1022,7 +1028,7 @@ namespace Cantera {
   /*********************************************************************
    *    Utility Functions
    *********************************************************************/
-  /*
+  /**
    * initThermo() function initializes the object for use.
    * 
    * Before its invokation, the class isn't ready for calculation.
@@ -1030,7 +1036,7 @@ namespace Cantera {
   void IdealSolidSolnPhase::initThermo() {
   }
 
-  /*
+  /**
    *   Import and initialize an IdealSolidSolnPhase phase 
    *   specification in an XML tree into the current object.
    *   Here we read an XML description of the phase.
@@ -1115,7 +1121,7 @@ namespace Cantera {
     }
   }
 
-  /*
+  /**
    * Initialization of an IdealSolidSolnPhase phase using an
    * xml file
    *
@@ -1160,7 +1166,7 @@ namespace Cantera {
     delete fxml;
   }
 
-  /*
+  /**
    * @internal
    *   Import and initialize a ThermoPhase object
    *   using an XML tree.
@@ -1257,7 +1263,7 @@ namespace Cantera {
     ThermoPhase::initThermoXML(phaseNode, id);
   }
 
-  /*
+  /**
    * This internal function adjusts the lengths of arrays
    */
   void IdealSolidSolnPhase::
@@ -1293,7 +1299,7 @@ namespace Cantera {
     m_speciesMolarVolume.resize(leng);
   }
 
-  /*
+  /** 
    * Set mixture to an equilibrium state consistent with specified 
    * element potentials and temperature.
    *
@@ -1320,8 +1326,8 @@ namespace Cantera {
     doublereal *dptr = DATA_PTR(m_pp);
     setState_PX(pres, dptr);
   }
-  //================================================================================================
-  /*
+
+  /************************************************************************
    *
    * speciesMolarVolume()
    *
@@ -1335,7 +1341,7 @@ namespace Cantera {
     return  m_speciesMolarVolume[k];
   }
     
-  /*
+  /**
    *
    * getSpeciesMolarVolumes():
    *
@@ -1347,8 +1353,8 @@ namespace Cantera {
   {
     copy(m_speciesMolarVolume.begin(), m_speciesMolarVolume.end(), smv);
   }
-  //================================================================================================
-  /*
+    
+  /*************************************************************************
    *
    * _updateThermo()
    *
@@ -1380,6 +1386,4 @@ namespace Cantera {
       m_tlast = tnow;
     }
   }
-  //================================================================================================
-}  // end namespace Cantera
-//==================================================================================================
+}

@@ -7,7 +7,7 @@
  */
 
 /*
- * $Id: PDSS_HKFT.cpp 444 2010-04-21 18:05:44Z hkmoffa $
+ * $Id: PDSS_HKFT.cpp,v 1.22 2009/03/13 03:21:34 hkmoffa Exp $
  */
 
 /*
@@ -155,7 +155,7 @@ namespace Cantera {
     *this = b;
   }
 
-  /*
+  /**
    * Assignment operator
    */
   PDSS_HKFT& PDSS_HKFT::operator=(const PDSS_HKFT& b) {
@@ -199,14 +199,14 @@ namespace Cantera {
     return *this;
   }
   
-  /*
+  /**
    * Destructor for the PDSS_HKFT class
    */
   PDSS_HKFT::~PDSS_HKFT() { 
     delete m_waterProps;
   }
   
-  // Duplicator
+  //! Duplicator
   PDSS* PDSS_HKFT::duplMyselfAsPDSS() const {
     PDSS_HKFT * idg = new PDSS_HKFT(*this);
     return (PDSS *) idg;
@@ -490,7 +490,7 @@ namespace Cantera {
     return ee;
   }
   
-  /*
+  /**
    * Calculate the pressure (Pascals), given the temperature and density
    *  Temperature: kelvin
    *  rho: density in kg m-3
@@ -518,20 +518,20 @@ namespace Cantera {
     setPressure(pres);
   }
 
-  // critical temperature 
+  /// critical temperature 
   doublereal 
   PDSS_HKFT::critTemperature() const { 
     throw CanteraError("PDSS_HKFT::critTemperature()", "unimplemented");
     return (0.0);
   }
         
-  // critical pressure
+  /// critical pressure
   doublereal PDSS_HKFT::critPressure() const {
     throw CanteraError("PDSS_HKFT::critPressure()", "unimplemented");
     return (0.0);
   }
         
-  // critical density
+  /// critical density
   doublereal PDSS_HKFT::critDensity() const {
     throw CanteraError("PDSS_HKFT::critDensity()", "unimplemented");
     return (0.0);
@@ -621,10 +621,10 @@ namespace Cantera {
   void PDSS_HKFT::constructPDSSXML(VPStandardStateTP *tp, int spindex,
 				   const XML_Node& speciesNode, 
 				   const XML_Node& phaseNode, bool spInstalled) {
-    int hasDGO = 0;
-    int hasSO = 0;
-    int hasDHO = 0;
-   
+    //PDSS::initThermo();
+    
+    // m_p0 = OneAtm;
+
     if (!spInstalled) {
       throw CanteraError("PDSS_HKFT::constructPDSSXML", "spInstalled false not handled");
     }
@@ -666,25 +666,22 @@ namespace Cantera {
     if (hh->hasChild("DG0_f_Pr_Tr")) {
       doublereal val = getFloat(*hh, "DG0_f_Pr_Tr");
       m_deltaG_formation_tr_pr = val;
-      hasDGO = 1;
     } else {
-      // throw CanteraError("PDSS_HKFT::constructPDSSXML", " missing DG0_f_Pr_Tr field");
+      throw CanteraError("PDSS_HKFT::constructPDSSXML", " missing DG0_f_Pr_Tr field");
     }
 
     if (hh->hasChild("DH0_f_Pr_Tr")) {
       doublereal val = getFloat(*hh, "DH0_f_Pr_Tr");
       m_deltaH_formation_tr_pr = val;
-      hasDHO = 1;
     } else {
-      //  throw CanteraError("PDSS_HKFT::constructPDSSXML", " missing DH0_f_Pr_Tr field");
+      throw CanteraError("PDSS_HKFT::constructPDSSXML", " missing DH0_f_Pr_Tr field");
     }
 
     if (hh->hasChild("S0_Pr_Tr")) {
       doublereal val = getFloat(*hh, "S0_Pr_Tr");
       m_Entrop_tr_pr= val;
-      hasSO = 1;
     } else {
-      //  throw CanteraError("PDSS_HKFT::constructPDSSXML", " missing S0_Pr_Tr field");
+      throw CanteraError("PDSS_HKFT::constructPDSSXML", " missing S0_Pr_Tr field");
     }
 
     const XML_Node *ss = speciesNode.findByName("standardState");
@@ -723,57 +720,24 @@ namespace Cantera {
       throw CanteraError("PDSS_HKFT::constructPDSSXML", " missing a4 field");
     }
     
-    if (ss->hasChild("c1")) {
+   if (ss->hasChild("c1")) {
       doublereal val = getFloat(*ss, "c1");
       m_c1 = val;
-    } else {
-      throw CanteraError("PDSS_HKFT::constructPDSSXML", " missing c1 field");
-    }
-    if (ss->hasChild("c2")) {
+   } else {
+     throw CanteraError("PDSS_HKFT::constructPDSSXML", " missing c1 field");
+   }
+   if (ss->hasChild("c2")) {
       doublereal val = getFloat(*ss, "c2");
       m_c2 = val;
-    } else {
-      throw CanteraError("PDSS_HKFT::constructPDSSXML", " missing c2 field");
-    }
-    if (ss->hasChild("omega_Pr_Tr")) {
+   } else {
+     throw CanteraError("PDSS_HKFT::constructPDSSXML", " missing c2 field");
+   }
+   if (ss->hasChild("omega_Pr_Tr")) {
       doublereal val = getFloat(*ss, "omega_Pr_Tr");
       m_omega_pr_tr = val;
-    } else {
-      throw CanteraError("PDSS_HKFT::constructPDSSXML", " missing omega_Pr_Tr field");
-    }
-
-
-    int isum = hasDGO + hasDHO + hasSO;
-    if (isum < 2) {
-      throw CanteraError("PDSS_HKFT::constructPDSSXML", 
-			 "Missing 2 or more of DG0_f_Pr_Tr, DH0_f_Pr_Tr, or S0_f_Pr_Tr fields. "
-			 "Need to supply at least two of these fields");
-    }
-    // Ok, if we are missing one, then we construct its value from the other two.
-    // This code has been internally verified.
-    if (hasDHO == 0) {
-      m_charge_j = m_tp->charge(m_spindex);
-      convertDGFormation();
-      doublereal Hcalc = m_Mu0_tr_pr + 298.15 * (m_Entrop_tr_pr * 1.0E3 * 4.184);
-      m_deltaH_formation_tr_pr = Hcalc / (1.0E3 * 4.184);
-    }
-    if (hasDGO == 0) {
-      doublereal DHjmol = m_deltaH_formation_tr_pr * 1.0E3 * 4.184;
-      m_Mu0_tr_pr = DHjmol -  298.15 * (m_Entrop_tr_pr * 1.0E3 * 4.184);
-      m_deltaG_formation_tr_pr =   m_Mu0_tr_pr / (1.0E3 * 4.184);
-      double tmp =   m_Mu0_tr_pr;
-      m_charge_j = m_tp->charge(m_spindex);
-      convertDGFormation();
-      double totalSum =  m_Mu0_tr_pr - tmp;
-      m_Mu0_tr_pr = tmp;
-      m_deltaG_formation_tr_pr =   (m_Mu0_tr_pr - totalSum)/ (1.0E3 * 4.184);
-    }
-    if (hasSO == 0) {
-      m_charge_j = m_tp->charge(m_spindex);
-      convertDGFormation();
-      doublereal DHjmol = m_deltaH_formation_tr_pr * 1.0E3 * 4.184;
-      m_Entrop_tr_pr = (DHjmol - m_Mu0_tr_pr) / (298.15 * 1.0E3 * 4.184); 
-    }
+   } else {
+     throw CanteraError("PDSS_HKFT::constructPDSSXML", " missing omega_Pr_Tr field");
+   }
     
   }
 
@@ -1153,7 +1117,7 @@ namespace Cantera {
 #ifdef OLDWAY
 
   /* awData structure */
-  /*!
+  /**
    * Database for atomic molecular weights
    *
    *  Values are taken from the 1989 Standard Atomic Weights, CRC
@@ -1197,8 +1161,9 @@ namespace Cantera {
    *
    *   This static function looks up the argument string in the
    *   database above and returns the associated Gibbs Free energies.
+   
    *
-   *  @param  elemName  String. Only the first 3 characters are significant
+   *  @param  ElemName  String. Only the first 3 characters are significant
    *
    *  @return
    *    Return value contains the Gibbs free energy for that element

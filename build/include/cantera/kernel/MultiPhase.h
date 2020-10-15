@@ -5,8 +5,8 @@
  */
 
 /*
- *  $Date: 2010-01-12 15:23:08 -0600 (Tue, 12 Jan 2010) $
- *  $Revision: 373 $
+ *  $Date: 2009/04/17 00:40:48 $
+ *  $Revision: 1.11 $
  */
 
 //  Copyright 2004  California Institute of Technology
@@ -496,8 +496,7 @@ namespace Cantera {
 
     //! Adds moles of a certain species to the mixture
     /*!
-     *   @param indexS   Index of the species in the MultiPhase object
-     *   @param addedMoles   Value of the moles that are added to the species.
+     *
      */
     void addSpeciesMoles(const int indexS, const doublereal addedMoles);
 
@@ -825,11 +824,6 @@ namespace Cantera {
 		    vector_int & orderVectorElements);
 
 #ifdef DEBUG_MODE
-  //! External int that is used to turn on debug printing for the
-  //! BasisOptimze program.
-  /*!
-   *   Set this to 1 if you want debug printing from BasisOptimize.
-   */
   extern int BasisOptimize_print_lvl;
 #endif
 }

@@ -10,7 +10,7 @@
  * U.S. Government retains certain rights in this software.
  */
 /*
- *  $Id: PDSS_IdealGas.h 279 2009-12-05 19:08:43Z hkmoffa $
+ *  $Id: PDSS_IdealGas.h,v 1.4 2008/10/13 21:01:48 hkmoffa Exp $
  */
 
 #ifndef CT_PDSS_IDEALGAS_H
@@ -101,6 +101,8 @@ namespace Cantera {
      * @name  Utilities  
      * @{
      */
+    virtual int pdssType() const { return -1; }
+
   
     /**
      * @} 

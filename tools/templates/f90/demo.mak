@@ -55,7 +55,7 @@ CANTERA_INCDIR=/usr/local/cantera/include
 CANTERA_MODULE_DIR=/usr/local/cantera/include/cantera
 
 # flags passed to the C++ compiler/linker for the linking step
-LCXXFLAGS = -L$(CANTERA_LIBDIR)  -L/pkg/Cantera/build/lib/x86_64-unknown-linux-gnu -L/usr/local/bin//lib
+LCXXFLAGS = -L$(CANTERA_LIBDIR)  -L/Cantera1.8-Radcal/build/lib/x86_64-unknown-linux-gnu -L/usr/local/bin//lib
 
 # how to compile C++ source files to object files
 %.o : %.cpp

@@ -6,11 +6,9 @@ ThermoFactory.o: ThermoFactory.cpp ThermoFactory.h ThermoPhase.h Phase.h \
  ../base/vec_functions.h ../base/utilities.h ../base/ctml.h ../base/xml.h \
  ../base/Array.h ../base/FactoryBase.h speciesThermoTypes.h \
  ../base/global.h SpeciesThermoFactory.h IdealGasPhase.h mix_defs.h \
- VPSSMgr.h VPSSMgrFactory.h IdealSolidSolnPhase.h MargulesVPSSTP.h \
- PseudoBinaryVPSSTP.h GibbsExcessVPSSTP.h VPStandardStateTP.h \
- IonsFromNeutralVPSSTP.h PureFluidPhase.h ConstDensityThermo.h \
- SurfPhase.h EdgePhase.h MetalPhase.h StoichSubstance.h MineralEQ3.h \
- SingleSpeciesTP.h StoichSubstanceSSTP.h MetalSHEelectrons.h \
+ VPSSMgr.h VPSSMgrFactory.h IdealSolidSolnPhase.h PureFluidPhase.h \
+ ConstDensityThermo.h SurfPhase.h EdgePhase.h MetalPhase.h \
+ StoichSubstance.h MineralEQ3.h SingleSpeciesTP.h StoichSubstanceSSTP.h \
  LatticeSolidPhase.h ../base/config.h LatticePhase.h HMWSoln.h \
- MolalityVPSSTP.h electrolytes.h DebyeHuckel.h ../base/Array.h \
- IdealMolalSoln.h IdealSolnGasVPSS.h
+ MolalityVPSSTP.h VPStandardStateTP.h electrolytes.h DebyeHuckel.h \
+ ../base/Array.h IdealMolalSoln.h IdealSolnGasVPSS.h

@@ -306,7 +306,9 @@ AC_SUBST(CXX_DEPENDS)
 
 #----------------------------------------
 
-########################################################
+
+
+#########################################################
 #  User Code
 #########################################################
 USERDIR=""
@@ -363,45 +365,29 @@ sundials_lib_dep=
 
 
 if test ${use_sundials} = 1; then
+AC_DEFINE(HAS_SUNDIALS)
 echo "using CVODES from SUNDIALS... Sensitivity analysis enabled."
 
 CVODE_LIBS='-lsundials_cvodes -lsundials_nvecserial' 
 IDA_LIBS='-lsundials_ida -lsundials_nvecserial' 
 
 if test "$SUNDIALS_VERSION" = "2.2"; then
-  AC_DEFINE(HAS_SUNDIALS)
-  AC_DEFINE(SUNDIALS_VERSION_22)
-  sundials_include='-I'${SUNDIALS_HOME}'/include -I'${SUNDIALS_HOME}'/include/sundials -I'${SUNDIALS_HOME}'/include/cvodes -I'${SUNDIALS_HOME}'/include/ida'
-  echo "sundials include directory: " ${sundials_include}
-  echo "sundials library directory: " $SUNDIALS_LIB_DIR
-  sundials_lib_dir=$SUNDIALS_LIB_DIR
-  sundials_lib="-L$SUNDIALS_LIB_DIR -lsundials_cvodes -lsundials_ida -lsundials_nvecserial"
-  sundials_lib_dep="$SUNDIALS_LIB_DIR/libsundials_cvodes.a $SUNDIALS_LIB_DIR/libsundials_ida.a $SUNDIALS_LIB_DIR/libsundials_nvecserial.a"
-elif test "$SUNDIALS_VERSION" = "2.3"; then
-  AC_DEFINE(HAS_SUNDIALS)
-  AC_DEFINE(SUNDIALS_VERSION_23)
-  sundials_include='-I'${SUNDIALS_INC_DIR}
-  echo "sundials include directory: " ${sundials_include}
-  echo "sundials library directory: " $SUNDIALS_LIB_DIR
-  sundials_lib_dir=$SUNDIALS_LIB_DIR
-  sundials_lib="-L$SUNDIALS_LIB_DIR -lsundials_cvodes -lsundials_ida -lsundials_nvecserial"
-  sundials_lib_dep="$SUNDIALS_LIB_DIR/libsundials_cvodes.a $SUNDIALS_LIB_DIR/libsundials_ida.a $SUNDIALS_LIB_DIR/libsundials_nvecserial.a"
-#   python tools/src/sundials_version.py $SUNDIALS_HOME
-elif test "$SUNDIALS_VERSION" = "2.4"; then
-  AC_DEFINE(HAS_SUNDIALS)
-  AC_DEFINE(SUNDIALS_VERSION_24)
-  sundials_include='-I'${SUNDIALS_INC_DIR}
-  echo "sundials include directory: " ${sundials_include}
-  echo "sundials library directory: " $SUNDIALS_LIB_DIR
-  sundials_lib_dir=$SUNDIALS_LIB_DIR
-  sundials_lib="-L$SUNDIALS_LIB_DIR -lsundials_cvodes -lsundials_ida -lsundials_nvecserial"
-  sundials_lib_dep="$SUNDIALS_LIB_DIR/libsundials_cvodes.a $SUNDIALS_LIB_DIR/libsundials_ida.a $SUNDIALS_LIB_DIR/libsundials_nvecserial.a"
-#  python tools/src/sundials_version.py $SUNDIALS_HOME
+AC_DEFINE(SUNDIALS_VERSION_22)
+sundials_include='-I'${SUNDIALS_HOME}'/include -I'${SUNDIALS_HOME}'/include/sundials -I'${SUNDIALS_HOME}'/include/cvodes -I'${SUNDIALS_HOME}'/include/ida'
+echo "sundials include directory: " ${sundials_include}
+echo "sundials library directory: " $SUNDIALS_LIB_DIR
+sundials_lib_dir=$SUNDIALS_LIB_DIR
+sundials_lib="-L$SUNDIALS_LIB_DIR -lsundials_cvodes -lsundials_ida -lsundials_nvecserial"
+sundials_lib_dep="$SUNDIALS_LIB_DIR/libsundials_cvodes.a $SUNDIALS_LIB_DIR/libsundials_ida.a $SUNDIALS_LIB_DIR/libsundials_nvecserial.a"
 else
-  echo "ERROR: unknown or unsupported sundials version #: $SUNDIALS_VERSION" 
-  echo "       Supported versions are 2.2, 2.3, and 2.4"
-  echo "       Please fix or turn off the sundials option by setting USE_SUNDIALS to no"
-  use_sundials=0
+AC_DEFINE(SUNDIALS_VERSION_23)
+sundials_include='-I'${SUNDIALS_INC_DIR}
+echo "sundials include directory: " ${sundials_include}
+echo "sundials library directory: " $SUNDIALS_LIB_DIR
+sundials_lib_dir=$SUNDIALS_LIB_DIR
+sundials_lib="-L$SUNDIALS_LIB_DIR -lsundials_cvodes -lsundials_ida -lsundials_nvecserial"
+sundials_lib_dep="$SUNDIALS_LIB_DIR/libsundials_cvodes.a $SUNDIALS_LIB_DIR/libsundials_ida.a $SUNDIALS_LIB_DIR/libsundials_nvecserial.a"
+# python tools/src/sundials_version.py $SUNDIALS_HOME
 fi
 fi
 
@@ -775,13 +761,15 @@ fi
 build_lapack=0
 build_blas=0
 if test -z "$BLAS_LAPACK_LIBS"; then
-  BLAS_LAPACK_LIBS="-lctlapack -lctblas"
-  BLAS_LAPACK_DIR="$buildlib"
-  BLAS_LAPACK_LINK="-L$BLAS_LAPACK_DIR $BLAS_LAPACK_LIBS"
-  build_blas=1
-  build_lapack=1
+  if test "x$OS_IS_DARWIN" = "x0"; then 
+    BLAS_LAPACK_LIBS="-lctlapack -lctblas"
+    BLAS_LAPACK_DIR="$buildlib"
+    BLAS_LAPACK_LINK="-L$BLAS_LAPACK_DIR $BLAS_LAPACK_LIBS"
+    build_blas=1
+    build_lapack=1
+  fi
 else
-  BLAS_LAPACK_LINK="-L$BLAS_LAPACK_DIR $BLAS_LAPACK_LIBS"
+BLAS_LAPACK_LINK="-L$BLAS_LAPACK_DIR $BLAS_LAPACK_LIBS"
 fi
 
 AC_SUBST(build_lapack)
@@ -1348,19 +1336,11 @@ AC_PROG_INSTALL
 #  doesn't have this problem. So, I changed the default
 #  install program to config/install-sh, which should work
 #  on all platforms since its a bourne shell script
-# HKM 12/24/2009 - Ran into another problem with the new cygwin 1.7.1.
-#     THe install (and even cp -f in some cases) program will fail
-#     when an existing different file is in place. This occurs sometimes
-#     and I can not quite nail down when. However replacing
-#     the install command for cygwin. Note, install no longer
-#     needs to have a wildcard capability within Cantera.
 
-case $ac_sys_system in
-  CYGWIN* ) 
-     INSTALL=${INSTALL_BIN:=config/install-sh}
-     echo 'INSTALL program has been set to ' $INSTALL;;
-esac
-
+# problem: install-sh does not handle wildcards in filename.
+# commenting this out (DGG)
+# INSTALL=${INSTALL_BIN:=config/install-sh}
+echo 'INSTALL program has been set to ' $INSTALL
 #
 #  precompile_headers still relevant?
 #
@@ -1461,23 +1441,11 @@ if test "$BUILD_WITH_F2C"="n"; then
 fi
 
 AC_SUBST(LCXX_FLAGS)
-
 #
 # Ending Libs for compiling static applications and 
 # dynamically loaded libraries
 #  (sunpro solaris needs a few for dynamic linking)
 #
-#
-# Check to see if we have a -lm line
-#
-AC_CHECK_LIB(m, printf, [add_stm=1], [add_stm=0], [ ])
-
-#
-# Check to see if we have a -lstdc++ line
-#
-AC_CHECK_LIB(stdc++, printf, [add_stdc=1], [add_stdc=0], [])
-
-
 if test -n "$NEED_F2C" ; then 
    LCXX_END_LIBS="-lctf2c ""$LCXX_END_LIBS"
 fi
@@ -1488,18 +1456,6 @@ case $ac_sys_system in
             LCXX_END_LIBS="$LCXX_END_LIBS"" -lCrun -lCstd -lfsu" ;;
       esac ;;
 esac
-if test $add_stm = 1 ; then
-  echo 'Adding -lm to the end of the LCXX_END_LIBS variable'
-  LCXX_END_LIBS="$LCXX_END_LIBS"" -lm"
-  echo 'LCXX_END_LIBS = ' $LCXX_END_LIBS
-fi
-if test $add_stdc = 1 ; then
-  echo 'Adding -lstdc++ to the end of the LCXX_END_LIBS variable'
-  LCXX_END_LIBS="$LCXX_END_LIBS"" -lstdc++ "
-  echo 'LCXX_END_LIBS = ' $LCXX_END_LIBS
-fi
-
-
 AC_SUBST(LCXX_END_LIBS)
 
 
@@ -1973,7 +1929,6 @@ AC_OUTPUT(Makefile \
           test_problems/cathermo/DH_graph_bdotak/Makefile \
           test_problems/cathermo/HMW_dupl_test/Makefile \
           test_problems/cathermo/VPissp/Makefile \
-          test_problems/cathermo/wtWater/Makefile \
           test_problems/VCSnonideal/Makefile \
           test_problems/VPsilane_test/Makefile \
           test_problems/VPsilane_test/runtest \

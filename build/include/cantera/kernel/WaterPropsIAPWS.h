@@ -2,7 +2,7 @@
  * @file WaterPropsIAPWS.h
  * Headers for a class for calculating the equation of state of water
  * from the IAPWS 1995 Formulation based on the steam tables thermodynamic
- * basis (See class \link Cantera::WaterPropsIAPWS WaterPropsIAPWS\endlink).
+ * basis (See class \link WaterPropsIAPWS WaterPropsIAPWS\endlink).
  */
 /*
  * Copywrite (2005) Sandia Corporation. Under the terms of
@@ -10,7 +10,7 @@
  * U.S. Government retains certain rights in this software.
  */
 /*
- * $Id: WaterPropsIAPWS.h 279 2009-12-05 19:08:43Z hkmoffa $
+ * $Id: WaterPropsIAPWS.h,v 1.16 2008/09/29 20:03:57 hkmoffa Exp $
  */
 
 #ifndef WATERPROPSIAPWS_H
@@ -18,8 +18,6 @@
 
 #include "WaterPropsIAPWSphi.h"
 #include "config.h"
-
-namespace Cantera {
 /**
  *  @name Names for the phase regions
  *
@@ -136,25 +134,6 @@ namespace Cantera {
  *   - WATER_LIQUID
  *   - WATER_SUPERCRIT
  *
- * There are only three functions which actually change the value of the internal
- * state of this object after it's been instantiated
-
- *   - setState_TR(temperature, rho)
- *   - density(temperature, pressure, phase, rhoguess) 
- *   - psat(temperature, waterState);
- *
- * The setState_TR() is the main function that sets the temperature and rho value.
- * The density() function serves as a setState_TP() function, in that it sets 
- * internal state to a temperature and pressure. However, note that this is potentially
- * multivalued. Therefore, we need to supply in addition a phase guess and a rho guess
- * to the input temperature and pressure.
- * The psat() function sets the internal state to the saturated liquid or saturated gas
- * state, dependeing on the waterState parameter.
- *
- * Because the underlying object WaterPropsIAPWSphi is privately held, you can be 
- * sure that the underlying state of this object doesn't change except due to the
- * three function calls listed above.
- *
  * @ingroup thermoprops
  *
  */
@@ -264,7 +243,6 @@ public:
    * a particular value of the temperature and pressure. It may therefore be 
    * multivalued or potentially there may be no answer from this function. It therefore
    * takes a phase guess and a density guess as optional parameters. If no guesses are
-
    * supplied to density(), a gas phase guess is assumed. This may or may not be what
    * is wanted. Therefore, density() should usually at leat be supplied with a phase
    * guess so that it may manufacture an appropriate density guess. 
@@ -286,16 +264,8 @@ public:
   //! Returns the density (kg m-3)
   /*!
    * The density is an independent variable in the underlying equation of state
-   *
-   * @return  Returns the density (kg m-3)
    */
   doublereal density() const;
-
-  //! Returns the temperature (Kelvin)
-  /*!
-   * @return  Returns the internally storred temperature 
-   */
-  doublereal temperature() const;
 
   //! Returns the coefficient of thermal expansion.
   /*!
@@ -306,7 +276,7 @@ public:
    */
   doublereal coeffThermExp() const;
 
-  //! Returns the isochoric pressure derivative wrt temperature 
+  //! Returns the isochoric pressure-temperature coefficient
   /*!
    *
    *     beta = M / (rho * Rgas) (d (pressure) / dT) at constant rho
@@ -352,22 +322,14 @@ public:
    */
   doublereal psat_est(doublereal temperature) const;
 
-  //! This function returns the saturation pressure given the
-  //! temperature as an input parameter, and sets the internal state to the saturated 
-  //! conditions.
+  //!  This function returns the saturation pressure given the
+  //! temperature as an input parameter.
   /*!
-   *  Note this function will return the saturation pressure, given the temperature.
-   *  It will then set the state of the system to the saturation condition. The input
-   *  parameter waterState is used to either specify the liquid state or the 
-   *  gas state at the desired temperatue and saturated pressure.
-   *
-   *  If the input temperature, T, is above T_c, this routine will set the internal
-   *  state to T and the pressure to P_c. Then, return P_c.
-   *
    * @param temperature   input temperature (kelvin)
    * @param waterState    integer specifying the water state
    *
-   * @return Returns the saturation pressure
+   * @return 
+   * Returns the saturation pressure
    *                units = Pascal
    */
   doublereal psat(doublereal temperature, int waterState = WATER_LIQUID);
@@ -402,24 +364,23 @@ public:
   /*!
    *  This is hard coded to the value 647.096 Kelvin
    */
-  doublereal Tcrit() const { return 647.096;}
+  doublereal Tcrit() { return 647.096;}
 
   //! Returns the critical pressure of water (22.064E6 Pa)
   /*!
    *  This is hard coded to the value of 22.064E6 pascals
    */
-  doublereal Pcrit() const { return 22.064E6;}
+  doublereal Pcrit() { return 22.064E6;}
 
   //! Return the critical density of water (kg m-3)
   /*!
    * This is equal to 322 kg m-3.
    */
-  doublereal Rhocrit() const { return 322.;}
+  doublereal Rhocrit() { return 322.;}
 
 private:
-  //! Calculate the dimensionless temp and rho and store internally.
-  /*!
-   *  Private routine
+  /**
+   * Calculate the dimensionless temp and rho and store internally.
    *
    * @param temperature   input temperature (kelvin)
    *  @param rho          density in kg m-3
@@ -428,8 +389,6 @@ private:
 
   //! Utility routine in the calculation of the saturation pressure
   /*!
-   *  Private routine
-   *
    * @param temperature    temperature (kelvin)
    * @param pressure       pressure (Pascal)
    * @param densLiq        Output density of liquid
@@ -441,8 +400,6 @@ private:
 
   //! Utility routine in the calculation of the saturation pressure
   /*!
-   *  Private routine
-   *
    * @param temperature    temperature (kelvin)
    * @param pressure       pressure (Pascal)
    * @param densLiq        Output density of liquid
@@ -472,6 +429,4 @@ private:
   //! Current state of the system
   mutable int iState;
 };
-
-}
 #endif
